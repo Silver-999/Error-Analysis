@@ -1,0 +1,148 @@
+\documentclass[a4paper,zihao=-4]{ctexart}
+\usepackage[a4paper,left=2.0cm,right=2.0cm,top=1cm,bottom=1.7cm]{geometry}
+\usepackage{amsmath,amssymb,booktabs,array}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+
+\linespread{1.12}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.16em}
+\setlist[enumerate]{leftmargin=2.2em,itemsep=0.2em,topsep=0.15em,parsep=0pt,partopsep=0pt}
+\setlist[enumerate,2]{leftmargin=2.8em,itemsep=0.12em,topsep=0.08em,parsep=0pt,partopsep=0pt}
+\renewcommand\arraystretch{1.2}
+
+\pagestyle{fancy}
+\fancyhf{}
+\cfoot{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+
+\newcommand{\chap}[1]{\vspace{0.5em}{\centering\zihao{-4}\bfseries #1\par}\vspace{0.18em}}
+\newcommand{\subtopic}[1]{\vspace{0.5em}\textbf{#1}\par}
+
+\begin{document}
+
+\begin{center}
+    {\zihao{4}\bfseries 《误差理论与数据处理》知识点清单}
+\end{center}
+\vspace{-0.2em}
+
+\chap{第一章\quad 绪论}
+\begin{enumerate}[label=\arabic*、]
+    \item 误差的定义：误差 $=$ 测得值 $-$ 真值（或约定真值）。
+    \item 误差的表示方法：绝对误差、相对误差、引用误差。
+    \item 误差的来源：装置、环境、方法、人员。
+    \item 误差的分类：随机误差、系统误差、粗大误差。
+    \item 仪表精度等级：仪表的引用误差、绝对误差、相对误差。
+    \item 有效数字与数据运算：有效数字、数字舍入规则、数据运算规则。
+\end{enumerate}
+
+\chap{第二章\quad 误差的基本性质与处理}
+\subtopic{（一）随机误差}
+\begin{enumerate}[label=\arabic*、]
+    \item 服从正态分布的随机误差特征。
+    \item 算术平均值的计算。
+    \item 标准差的计算方法：方法、公式、适用条件，算术平均值的标准差。
+    \item 极限误差：单位测量的极限误差、算术平均值的极限误差。
+    \item 不等精度测量：权的概念、权的确定、单位权化、加权算术平均值的标准差。
+    \item 随机误差的其他分布。
+\end{enumerate}
+
+\subtopic{（二）系统误差}
+\begin{enumerate}[label=\arabic*、]
+    \item 系统误差的特征：不变、线性变化、周期性变化、复杂规律变化。
+    \item 系统误差的发现方法：实验对比法、残余误差观察法；残余误差校核法：马利科夫准则、阿卑--赫梅特准则；不同公式计算标准差比较法、计算数据比较法、秩和检验法、$t$ 检验法；以及各方法适用发现系统误差的类型。
+    \item 系统误差的消除方法：方法、适用类型。
+\end{enumerate}
+
+\subtopic{（三）粗大误差}
+判断粗大误差的准则：$3\sigma$ 准则（莱以特准则）、罗曼诺夫斯基准则、格罗布斯准则、狄克松准则，以及不同准则的适用条件。
+
+\subtopic{（四）测量结果的数据处理}
+求测量结果的步骤；等精度测量的数据处理、不等精度测量的数据处理。
+
+\chap{第三章\quad 误差的合成与分配}
+\begin{enumerate}[label=\arabic*、]
+    \item 函数误差的计算方法：函数系统误差、函数随机误差、相关系数。
+    \item 随机误差的合成方法：标准差的合成、极限误差的合成。
+    \item 系统误差的合成方法：已定系统误差的合成、未定系统误差的合成。
+    \item 系统误差与随机误差的合成方法：标准差的合成、极限误差的合成。
+    \item 误差分配：按等作用原则分配方法。
+    \item 微小误差取舍准则。
+\end{enumerate}
+
+\chap{第四章\quad 测量不确定度}
+\subtopic{（一）测量不确定度基本概念}
+\begin{enumerate}[label=\arabic*、]
+    \item 测量不确定度定义：标准不确定度、展伸不确定度。
+    \item 测量不确定度与误差：定义、分类、区别、联系。
+\end{enumerate}
+
+\subtopic{（二）标准不确定度}
+\begin{enumerate}[label=\arabic*、]
+    \item 标准不确定度的定义：表征参数（标准差）。
+    \item 标准不确定度评定方法：A 类评定（统计方法）。
+    \item 标准不确定度评定方法：B 类评定（非统计方法）。
+    \begin{enumerate}[label=（\arabic*）]
+        \item 已知测量结果的扩展不确定度 $U_x$ 为标准差的 $k$ 倍。
+        \item 已知测量结果的“置信区间 $(x-\alpha,x+\alpha)$”和“置信水平”。
+        \item 已知测量结果的“置信区间”：$k=3$（正态分布），$k=\sqrt{3}$（均匀分布），$k=\sqrt{6}$（三角分布）。
+        \item 已知测量结果的扩展不确定度 $U_x$ 以及置信概率 $P$ 与有效自由度 $\nu_{\mathrm{eff}}$。
+        \item 标准不确定度 B 类评定的流程。
+    \end{enumerate}
+    \item 自由度及其确定。
+    \begin{enumerate}[label=（\arabic*）]
+        \item 自由度的概念。
+        \item A 类评定的自由度：不同计算方法的自由度。
+        \item B 类评定的自由度：相对标准差--自由度。
+    \end{enumerate}
+\end{enumerate}
+
+\subtopic{（三）测量不确定度的合成}
+\begin{enumerate}[label=\arabic*、]
+    \item 合成标准不确定度 $u_c$：方和根法。
+    \item 展伸不确定度。
+    \begin{enumerate}[label=（\arabic*）]
+        \item 展伸不确定度 $U$ 由合成标准不确定度 $u_c$ 乘以包含因子 $k$ 得到。
+        \item 标准不确定度 $u_c$ 的自由度 $\nu$ 计算方法。
+    \end{enumerate}
+    \item 不确定度报告：报告的基本内容、测量结果的表示。
+\end{enumerate}
+
+\chap{第五章\quad 最小二乘法}
+\begin{enumerate}[label=\arabic*、]
+    \item 最小二乘原理。
+    \begin{enumerate}[label=（\arabic*）]
+        \item 等精度测量：在残余误差平方和 $\sum v_i^2$ 最小的条件下求最佳估计值。
+        \item 不等精度测量：在加权残余误差平方和 $\sum p_i v_i^2$ 最小的条件下求最佳估计值。
+    \end{enumerate}
+    \item 最小二乘法处理线性参数。
+    \begin{enumerate}[label=（\arabic*）]
+        \item 建立误差方程：
+        \begin{equation*}
+            V=L-AX .
+        \end{equation*}
+        \item 建立正规方程：
+        \begin{equation*}
+            A^{\mathrm T}AX=A^{\mathrm T}L .
+        \end{equation*}
+        \item 求解：
+        \begin{equation*}
+            X=(A^{\mathrm T}A)^{-1}A^{\mathrm T}L .
+        \end{equation*}
+    \end{enumerate}
+    \item 精度估计。
+    \begin{enumerate}[label=（\arabic*）]
+        \item 测量数据的精度估计：标准差 $\sigma$。
+        \item 最小二乘估计量的精度估计：待求参数的标准差
+        \begin{equation*}
+            \sigma_j=\sigma_0\sqrt{d_{jj}},\qquad d_{jj}\text{ 为 }(A^{\mathrm T}A)^{-1}\text{ 的第 }j\text{ 个对角元} .
+        \end{equation*}
+    \end{enumerate}
+    \item 组合测量。
+    \begin{enumerate}[label=（\arabic*）]
+        \item 对多个被测量进行不同组合的直接测量。
+        \item 建立测量方程组，用最小二乘法求解。
+    \end{enumerate}
+\end{enumerate}
+
+\end{document}

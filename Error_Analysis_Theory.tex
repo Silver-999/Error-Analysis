@@ -1,0 +1,562 @@
+\documentclass[12pt,a4paper]{ctexart}
+\usepackage[a4paper,margin=2cm]{geometry}
+\usepackage{amsmath,amssymb,booktabs}
+
+\begin{document}
+
+\begin{center}
+    {\LARGE \textbf{误差理论与数据处理}}
+\end{center}
+
+\section{基本概念}
+
+\begin{equation*}
+\text{绝对误差}=\text{测得值}-\text{真值}
+\end{equation*}
+
+\begin{equation*}
+\text{修正值}=\text{真值}-\text{测得值}
+\end{equation*}
+
+\begin{equation*}
+\text{相对误差}=\frac{\text{绝对误差}}{\text{真值}} \approx \frac{\text{绝对误差}}{\text{测得值}}
+\end{equation*}
+
+\begin{equation*}
+\text{引用误差}=\frac{\text{绝对误差}}{\text{特定值}}=\frac{\text{示值误差}}{\text{测量范围上限}}
+\end{equation*}
+
+数字舍入规则：四舍六入五成双（舍入部分的数值而非下一位的数值）。
+
+数据运算规则：
+\begin{itemize}
+\item 加减运算：以小数位数最少的数据位数为准，其他多取一位小数，最后结果与小数位数最少的数据小数位相同。
+\item 乘除运算：以有效位数最少的数据位数为准，其他多取一位小数，最后结果与有效位数最少的数据小数位相同。
+\item 平方开方：平方相当于乘法运算，开方等价于平方的逆运算。
+\end{itemize}
+
+\section{误差的基本性质与处理}
+
+\subsection{随机误差}
+
+残余误差校核：
+
+\begin{enumerate}
+    \item 残余误差代数和应符合：
+    \begin{equation*}
+    \begin{alignedat}{3}
+        &\sum_{i=1}^{n} l_i = n\bar{x},\quad
+        &&\bar{x}\text{ 为非凑整的准确数时，}\quad
+        &&\sum_{i=1}^{n} v_i = 0;\\
+        &\sum_{i=1}^{n} l_i > n\bar{x},\quad
+        &&\bar{x}\text{ 为凑整的非准确数时，}\quad
+        &&\sum_{i=1}^{n} v_i > 0,\ \text{其大小为求 }\bar{x}\text{ 时的余数};\\
+        &\sum_{i=1}^{n} l_i < n\bar{x},\quad
+        &&\bar{x}\text{ 为凑整的非准确数时，}\quad
+        &&\sum_{i=1}^{n} v_i < 0,\ \text{其大小为求 }\bar{x}\text{ 时的亏数}.
+    \end{alignedat}
+    \end{equation*}
+
+    \item 残余误差代数和绝对值应符合：
+    \begin{equation*}
+    \begin{alignedat}{2}
+        &n\text{ 为偶数时，}\quad
+        &&\left|\sum_{i=1}^{n} v_i\right| \leq \frac{n}{2}A;\\
+        &n\text{ 为奇数时，}\quad
+        &&\left|\sum_{i=1}^{n} v_i\right| \leq \left(\frac{n}{2}-0.5\right)A.
+    \end{alignedat}
+    \end{equation*}
+    式中的 $A$ 为实际求得的算术平均值 $\bar{x}$ 末位数的一个单位。
+\end{enumerate}
+
+等精度测量中，单次测量的标准差如下，其中 $n$ 为测量次数，$\delta_i$ 为测量值与真值之差。
+\begin{equation*}
+\sigma=\sqrt{\frac{\sum_{i=1}^{n}\delta_i^2}{n}}
+\end{equation*}
+
+被测量的真值未知时，采用贝塞尔公式，其中 $v_i$ 为残余误差。
+\begin{equation*}
+\sigma=\sqrt{\frac{\sum_{i=1}^{n}v_i^2}{n-1}}
+\end{equation*}
+
+或然误差
+\begin{equation*}
+\rho=\frac{2}{3}\sqrt{\frac{\sum_{i=1}^{n}v_i^2}{n-1}}
+\end{equation*}
+
+平均误差
+\begin{equation*}
+\theta=\frac{4}{5}\sqrt{\frac{\sum_{i=1}^{n}v_i^2}{n-1}}
+\end{equation*}
+
+\subsection{算术平均值误差评定}
+
+算术平均值的标准差
+\begin{equation*}
+\sigma_{\bar{x}}=\frac{\sigma}{\sqrt{n}}
+\end{equation*}
+
+或然误差 $R$
+\begin{equation*}
+R=\frac{\rho}{\sqrt{n}}=\frac{2}{3}\sqrt{\frac{\sum_{i=1}^{n}v_i^2}{n(n-1)}}
+\end{equation*}
+
+平均误差 $T$
+\begin{equation*}
+T=\frac{\theta}{\sqrt{n}}=\frac{4}{5}\sqrt{\frac{\sum_{i=1}^{n}v_i^2}{n(n-1)}}
+\end{equation*}
+
+标准差计算：别捷尔斯法
+\begin{equation*}
+\sigma=1.253\,\frac{\sum_{i=1}^{n}\lvert v_i\rvert}{\sqrt{n(n-1)}}
+\end{equation*}
+
+标准差计算：极差法（$n<10$）
+\begin{equation*}
+\sigma=\frac{x_{\max}-x_{\min}}{d_n}
+\end{equation*}
+
+标准差计算：最大误差法
+\begin{equation*}
+\sigma=\dfrac{{\lvert \delta_i\rvert}_{\max}}{K_n}=\frac{{\lvert v_i\rvert}_{\max}}{K_n^{\prime}}
+\end{equation*}
+
+\subsection{不等精度测量}
+
+$t$分布计算测量列算术平均值的极限误差：
+\begin{equation*}
+\delta_{\lim}\bar{x}=\pm t_{\alpha} \sigma_{\bar{x}}
+\end{equation*}
+
+权的计算：
+\begin{equation*}
+p_1:p_2:\ldots:p_m=\frac{1}{\sigma_{\bar{x}_1}^2}:\frac{1}{\sigma_{\bar{x}_2}^2}:\ldots:\frac{1}{\sigma_{\bar{x}_m}^2}
+\end{equation*}
+
+加权算术平均值：
+\begin{equation*}
+    \bar{x}=x_0+\frac{\displaystyle\sum_{i=1}^{m}p_i(x_i-x_0)}
+    {\displaystyle\sum_{i=1}^{m}p_i}
+\end{equation*}
+
+不等精度测量时的算术平均值的标准差（$\sigma$已知）：
+\begin{equation*}
+\sigma_{\bar{x}}=\frac{\sigma}{\sqrt{\sum_{i=1}^m p_i}}
+\end{equation*}
+
+不等精度测量时的算术平均值的标准差（$\sigma$未知）：
+\begin{equation*}
+\sigma_{\bar{x}}=\sqrt{\dfrac{\sum_{i=1}^{m}p_i\,v_{\bar{x}_i}^2}{(m-1)\sum_{i=1}^{m}p_i}}
+\end{equation*}
+
+\begin{table}[htbp]
+\centering
+\caption{常见误差分布的分布密度与标准差}
+\renewcommand{\arraystretch}{2.0}
+\setlength{\tabcolsep}{16pt}
+\begin{tabular}{lll}
+\hline
+分布 & 分布密度 $f(\delta)$ & 标准差 $\sigma$ \\
+\hline
+正态
+&
+$\displaystyle f(\delta)=\frac{1}{\sigma\sqrt{2\pi}}e^{-\frac{\delta^2}{2\sigma^2}}$
+&
+$\displaystyle \sigma$
+\\
+均匀
+&
+$\displaystyle f(\delta)=\frac{1}{2a}\quad |\delta|\le a$
+&
+$\displaystyle a/\sqrt{3}$
+\\
+反正弦
+&
+$\displaystyle f(\delta)=\frac{1}{\pi\sqrt{a^2-\delta^2}}\quad |\delta|<a$
+&
+$\displaystyle a/\sqrt{2}$
+\\
+三角
+&
+$\displaystyle
+f(\delta)=
+\begin{cases}
+\dfrac{a+\delta}{a^2}, & -a\le \delta<0 \\[8pt]
+\dfrac{a-\delta}{a^2}, & 0\le \delta\le a
+\end{cases}$
+&
+$\displaystyle a/\sqrt{6}$
+\\
+直角分布
+&
+$\displaystyle f(\delta)=\frac{\delta+a}{2a^2}\quad |\delta|\le a$
+&
+$\displaystyle \sqrt{2}\,a/3$
+\\
+椭圆分布
+&
+$\displaystyle f(\delta)=\frac{2}{\pi a^2}\sqrt{a^2-\delta^2}\quad |\delta|\le a$
+&
+$\displaystyle a/2$
+\\
+双三角
+&
+$\displaystyle f(\delta)=\frac{|\delta|}{a^2}\quad |\delta|\le a$
+&
+$\displaystyle a/\sqrt{2}$
+\\
+\hline
+\end{tabular}
+\end{table}
+
+\newpage
+
+\subsection{系统误差的判别}
+
+若满足以下公式，则认为存在系统误差。
+
+不同公式计算标准差比较法：
+\begin{equation*}
+\left|\frac{\sigma_2}{\sigma_1}-1\right|\geq \frac{2}{\sqrt{n-1}}
+\end{equation*}
+
+计算数据比较法：
+\begin{equation*}
+|\bar{x}_i-\bar{x}_j|<2\sqrt{\sigma_i^2+\sigma_j^2}
+\end{equation*}
+
+秩和检验法，$n_1,n_2\leq 10$ 时（同则平均）：
+\begin{equation*}
+T\notin(T_-,T_+)
+\end{equation*}
+
+秩和检验法，$n_1,n_2>10$ 时：
+\begin{equation*}
+\left|\frac{T-a}{\sigma}\right|
+=
+\left|
+\frac{T-\dfrac{n_1(n_1+n_2+1)}{2}}
+{\sqrt{\dfrac{n_1n_2(n_1+n_2+1)}{12}}}
+\right|
+>t_{\alpha}
+\end{equation*}
+
+$t$ 检验法
+\begin{equation*}
+|t|
+=
+(\bar{x}-\bar{y})\,
+\sqrt{
+\frac{n_x n_y (n_x+n_y-2)}
+{(n_x+n_y)(n_x \sigma_x^2+n_y \sigma_y^2)}
+}
+\geq t_\alpha
+\end{equation*}
+
+\subsection{粗大误差的判别}
+
+若满足以下公式，则认为存在粗大误差。
+
+莱以特准则（$3\sigma$ 准则）：
+\begin{equation*}
+|v_i|>3\sigma=3\sqrt{\frac{\sum_{i=1}^{n}v_i^2}{n-1}}
+\end{equation*}
+
+罗曼诺夫斯基准则：
+\begin{equation*}
+\frac{|x_j-\bar{x}|}{\sigma}
+=
+\frac{
+\left|x_j-\dfrac{1}{n-1}\sum_{i=1,i\neq j}^{n}x_i\right|
+}{
+\sqrt{\dfrac{\sum_{i=1}^{n}v_i^2}{n-2}}
+}
+>K(n,\alpha)
+\end{equation*}
+
+格罗布斯准则：
+\begin{equation*}
+g_{(1)}=\frac{\bar{x}-x_{(1)}}{\sigma}
+\quad
+g_{(n)}=\frac{x_{(n)}-\bar{x}}{\sigma}
+\quad
+g_{(i)}\geq g_0(n,\alpha)
+\end{equation*}
+
+狄克松准则（不需要计算标准差）：
+\begin{equation*}
+\begin{cases}
+r_{10}=\dfrac{x_{(2)}-x_{(1)}}{x_{(n)}-x_{(1)}} =\dfrac{x_{(n)}-x_{(n-1)}}{x_{(n)}-x_{(1)}} & > r_0(n,\alpha),\quad n\leq 7 \\[8pt]
+r_{11}=\dfrac{x_{(2)}-x_{(1)}}{x_{(n-1)}-x_{(1)}} =\dfrac{x_{(n)}-x_{(n-1)}}{x_{(n)}-x_{(2)}} & > r_0(n,\alpha),\quad 8\leq n\leq 10 \\[8pt]
+r_{21}=\dfrac{x_{(3)}-x_{(1)}}{x_{(n-1)}-x_{(1)}} =\dfrac{x_{(n)}-x_{(n-2)}}{x_{(n)}-x_{(2)}} & > r_0(n,\alpha),\quad 11\leq n\leq 13 \\[8pt]
+r_{22}=\dfrac{x_{(3)}-x_{(1)}}{x_{(n-2)}-x_{(1)}} =\dfrac{x_{(n)}-x_{(n-2)}}{x_{(n)}-x_{(3)}} & > r_0(n,\alpha),\quad n\geq 14
+\end{cases}
+\end{equation*}
+
+\section{误差合成与分配}
+
+函数的系统误差
+\begin{equation*}
+\Delta y = \frac{\partial f}{\partial x_1} \Delta x_1 + \frac{\partial f}{\partial x_2} \Delta x_2 + \cdots + \frac{\partial f}{\partial x_n} \Delta x_n
+\end{equation*}
+
+函数的标准差合成
+{\small
+\begin{equation*}
+\sigma_y=
+\sqrt{
+\left(\frac{\partial f}{\partial x_1}\right)^2 \sigma_{x_1}^2
++
+\left(\frac{\partial f}{\partial x_2}\right)^2 \sigma_{x_2}^2
++ \cdots +
+\left(\frac{\partial f}{\partial x_n}\right)^2 \sigma_{x_n}^2
++
+2 \sum_{1 \le i < j}^{n}
+\left(
+\frac{\partial f}{\partial x_i}
+\frac{\partial f}{\partial x_j}
+\rho_{ij}\sigma_{x_i}\sigma_{x_j}
+\right)
+}
+\end{equation*}
+}
+
+函数的极限误差
+\begin{equation*}
+\delta_{\lim y} = \pm \sqrt{\delta_{\lim x_1}^{2}+\delta_{\lim x_2}^{2}+\cdots+\delta_{\lim x_n}^{2}}
+\end{equation*}
+
+按等作用原则进行误差分配，各分量标准差
+\begin{equation*}
+\sigma_i=\frac{\sigma_y}{\sqrt{n}}\frac{1}{\partial f/\partial x_i}
+=\frac{\sigma_y}{\sqrt{n}}\frac{1}{a_i}
+\end{equation*}
+
+按等作用原则进行误差分配，各分量极限误差
+\begin{equation*}
+\delta_i=\frac{\delta}{\sqrt{n}}\frac{1}{\partial f/\partial x_i}
+=\frac{\delta}{\sqrt{n}}\frac{1}{a_i}
+\end{equation*}
+
+\section{不确定度}
+
+根据分布区间半宽$a$和包含因子$k_p$估计标准不确定度
+
+\begin{table}[htbp]
+\centering
+\caption{标准不确定度的常用估计公式}
+\begin{tabular}{ll}
+\toprule
+分布类型/已知条件 & 标准不确定度 \\
+\midrule
+正态分布 & $u_x = a/k_p$ \\
+已知扩展不确定度 & $u_x = U_x/k$ \\
+均匀分布 & $u_x = a/\sqrt{3}$ \\
+三角分布 & $u_x = a/\sqrt{6}$ \\
+反正弦分布 & $u_x = a/\sqrt{2}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+A类评定时，自由度（最大误差法，$n=1$）
+\begin{equation*}
+\nu=0.9
+\end{equation*}
+
+A类评定时，自由度（贝塞尔公式）
+\begin{equation*}
+\nu=n-1
+\end{equation*}
+
+B类评定时，自由度
+\begin{equation*}
+\nu=\frac{1}{2\left(\sigma_u/u\right)^2}
+\end{equation*}
+
+不确定度的合成
+\begin{equation*}
+u_c=\sqrt{\sum_{i=1}^{N}\left(\frac{\partial f}{\partial x_i}\right)^2u_{x_i}^2}
+=\sqrt{\sum_{i=1}^{N}u_i^2}
+\end{equation*}
+
+展伸不确定度
+\begin{equation*}
+U=ku_c
+\end{equation*}
+
+自由度合成
+\begin{equation*}
+\nu=\frac{U_c^{4}}{\sum_{i=1}^{n} \frac{u_i^4}{v_i}}
+\end{equation*}
+
+\section{最小二乘法}
+
+线性测量参数的误差方程式
+\begin{equation*}
+V=L-A\hat{X}
+\end{equation*}
+
+正规方程的解（等精度）
+\begin{equation*}
+X=C^{-1} A^T L={(A^T A)}^{-1} A^T L
+\end{equation*}
+
+正规方程的解（不等精度）
+\begin{equation*}
+X=C^{-1} A^T L={(A^T PA)}^{-1} A^T PL
+\end{equation*}
+
+标准差（$n$ 为方程个数，$t$ 为未知量个数）（等精度）
+\begin{equation*}
+\sigma=\sqrt{\frac{\sum_{i=1}^{n}v_i^2}{n-t}}
+\end{equation*}
+
+标准差（$n$ 为方程个数，$t$ 为未知量个数）（不等精度）
+\begin{equation*}
+\sigma=\sqrt{\frac{\sum_{i=1}^{n}p_i v_i^2}{n-t}}
+\end{equation*}
+
+各估计量的标准差
+\begin{equation*}
+\left.
+\begin{aligned}
+\sigma_{x_1} &= \sigma \sqrt{d_{11}} \\
+\sigma_{x_2} &= \sigma \sqrt{d_{22}} \\
+&\ \ \vdots \\
+\sigma_{x_t} &= \sigma \sqrt{d_{tt}}
+\end{aligned}
+\right\}
+\end{equation*}
+
+协方差矩阵
+\begin{equation*}
+C^{-1}
+=
+\begin{pmatrix}
+d_{11} & d_{12} & \cdots & d_{1t} \\
+d_{21} & d_{22} & \cdots & d_{2t} \\
+\vdots & \vdots & \ddots & \vdots \\
+d_{t1} & d_{t2} & \cdots & d_{tt}
+\end{pmatrix}
+\end{equation*}
+
+\section{回归分析}
+
+设一元线性回归方程为
+\begin{equation*}
+\hat{y}=b_0+bx
+\end{equation*}
+
+其中，$b$ 为回归系数，$b_0$ 为截距。
+
+样本均值
+\begin{equation*}
+\bar{x}=\frac{1}{N}\sum_{t=1}^{N}x_t
+\end{equation*}
+
+\begin{equation*}
+\bar{y}=\frac{1}{N}\sum_{t=1}^{N}y_t
+\end{equation*}
+
+回归系数
+\begin{equation*}
+b=\frac{l_{xy}}{l_{xx}}
+\end{equation*}
+
+截距
+\begin{equation*}
+b_0=\bar{y}-b\bar{x}
+\end{equation*}
+
+自变量离差平方和
+\begin{equation*}
+l_{xx}=\sum_{t=1}^{N}(x_t-\bar{x})^2
+=\sum_{t=1}^{N}x_t^2-\frac{1}{N}\left(\sum_{t=1}^{N}x_t\right)^2
+\end{equation*}
+
+离差积和
+\begin{equation*}
+l_{xy}=\sum_{t=1}^{N}(x_t-\bar{x})(y_t-\bar{y})
+=\sum_{t=1}^{N}x_t y_t-\frac{1}{N}\left(\sum_{t=1}^{N}x_t\right)\left(\sum_{t=1}^{N}y_t\right)
+\end{equation*}
+
+因变量离差平方和
+\begin{equation*}
+l_{yy}=\sum_{t=1}^{N}(y_t-\bar{y})^2
+=\sum_{t=1}^{N}y_t^2-\frac{1}{N}\left(\sum_{t=1}^{N}y_t\right)^2
+\end{equation*}
+
+总离差平方和
+\begin{equation*}
+S=l_{yy}
+\end{equation*}
+
+回归平方和
+\begin{equation*}
+U=b l_{xy}
+\end{equation*}
+
+残差平方和
+\begin{equation*}
+Q=l_{yy}-bl_{xy}
+\end{equation*}
+
+平方和关系
+\begin{equation*}
+S=U+Q
+\end{equation*}
+
+统计量
+\begin{equation*}
+F=\frac{U/\nu_U}{Q/\nu_Q}=\frac{U/1}{Q/(N-2)}
+\end{equation*}
+
+自由度
+\begin{equation*}
+\nu_S=N-1, \qquad \nu_U=1, \qquad \nu_Q=N-2
+\end{equation*}
+
+残余标准差
+\begin{equation*}
+\sigma=\sqrt{\frac{Q}{N-2}}
+\end{equation*}
+
+相关指数
+\begin{equation*}
+R^2=1-\frac{\sum_{t=1}^{N}(y_t-\hat{y}_t)^2}{\sum_{t=1}^{N}(y_t-\bar{y})^2}
+=1-\frac{Q}{S}
+\end{equation*}
+
+\begin{table}[h]
+\centering
+\renewcommand{\arraystretch}{1.3}
+\caption{回归方差分析表}
+\begin{tabular}{cccccc}
+\toprule
+来源 & 平方和 & 自由度 & 方差 & $F$ & 显著性 \\
+\midrule
+回归 &
+$U=b\,l_{xy}$ &
+$1$ &
+-- &
+$\dfrac{U/1}{Q/(N-2)}$ &
+$\alpha$ \\
+
+残余 &
+$Q=l_{yy}-b\,l_{xy}$ &
+$N-2$ &
+$Q/(N-2)$ &
+-- &
+-- \\
+\midrule
+总计 &
+$S=l_{yy}$ &
+$N-1$ &
+-- &
+-- &
+-- \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\end{document}

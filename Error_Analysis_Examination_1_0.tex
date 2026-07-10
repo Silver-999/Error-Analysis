@@ -1,0 +1,142 @@
+\documentclass[UTF8,12pt,a4paper]{ctexart}
+\usepackage[a4paper,margin=2.15cm]{geometry}
+\usepackage{amsmath,amssymb,bm,booktabs,array,longtable,multirow}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\linespread{1.3}
+\setlength{\parindent}{2em}
+\setlength{\parskip}{0.2em}
+\setlist[enumerate]{leftmargin=2.5em,itemsep=0.45em,topsep=0.3em}
+\setlist[itemize]{leftmargin=2.2em,itemsep=0.25em,topsep=0.2em}
+\renewcommand\arraystretch{1.18}
+\newcommand{\blank}[1][2.4cm]{\underline{\hspace{#1}}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\ee}{\mathrm{e}}
+\newcommand{\jj}{\mathrm{j}}
+\newcommand{\prob}{\mathsf{P}}
+\pagestyle{fancy}
+\fancyhf{}
+\cfoot{第\thepage 页 / 共\pageref{LastPage}页}
+\renewcommand{\headrulewidth}{0pt}
+\begin{document}
+
+\begin{center}
+    {\zihao{2}\bfseries 误差理论与数据处理试卷（一）}\par
+    \vspace{0.8em}
+    考试形式：闭卷\quad 考试时间：120 分钟\quad 满分：100 分
+\end{center}
+\vspace{0.3em}
+\noindent 姓名：\blank[2cm]\quad 学号：\blank[2.5cm]\quad 专业：\blank[2.5cm]\quad 班级：\blank[2cm]
+\vspace{0.6em}
+
+\section*{一、填空题}
+\begin{enumerate}[label=\arabic*、]
+\item 测量误差等于\blank 与真值之差。
+\item 误差的来源包括\blank[2cm]、\blank[2cm]、\blank[2cm]、\blank[2cm]。
+\item 按误差的性质与特点，可将误差分为\blank[2cm]、\blank[2cm]、\blank[2cm]三类。
+\item 保留三位有效数字时，$3.1415$ 应为\blank[1.5cm]，$0.3145$ 应为\blank[1.5cm]。
+\item 扩展不确定度 $U$ 由合成标准不确定度 $u_c$ 乘以\blank[2cm] $k$ 得到。
+\item 量块的公称尺寸为 $10\,\mathrm{mm}$，实际尺寸为 $10.001\,\mathrm{mm}$，若按公称尺寸使用，始终会存在\blank[1.6cm] $\mathrm{mm}$ 的系统误差。采用修正方法消除，则修正值为\blank[1.6cm] $\mathrm{mm}$。当用此量块作为标准件测得圆柱体直径为 $10.002\,\mathrm{mm}$，则此圆柱体的最可信赖值为\blank[1.8cm] $\mathrm{mm}$。
+\item 设校准证书给出名义值 $10\Omega$ 的标准电阻器的电阻为 $10.000742\Omega\pm129\mu\Omega$，测量结果服从正态分布，置信水平为 $99\%$，则其标准不确定度 $u$ 为\blank[2cm]。这属于\blank[1cm]类评定。
+\end{enumerate}
+
+\section*{二、选择题}
+\begin{enumerate}[label=\arabic*、]
+\item $2.5$ 级电压表是指其（\quad）为 $2.5\%$。
+\par\noindent A. 绝对误差\quad B. 相对误差\quad C. 引用误差\quad D. 误差绝对值
+\item 用算术平均值作为被测量的最佳估计值是为了减少（\quad）的影响。
+\par\noindent A. 系统误差\quad B. 随机误差\quad C. 粗大误差
+\item 单位权化的实质是：使任何一个量值乘以（\quad），得到新的量值的权数为 $1$。
+\par\noindent A. $P$\quad B. $1/\sigma^2$\quad C. $\sqrt{P}$\quad D. $1/\sigma$
+\item 对于随机误差和未定系统误差，微小误差舍去准则是被舍去的误差必须小于或等于测量结果总标准差的（\quad）。
+\par\noindent A. $1/3\sim1/4$\quad B. $1/3\sim1/8$\quad C. $1/3\sim1/10$\quad D. $1/4\sim1/10$
+\item 判别粗大误差的 $3\sigma$ 准则称为（\quad）。
+\par\noindent A. 罗曼诺夫斯基准则\quad B. 狄克松准则\quad C. 莱以特准则
+\item 不确定度用合成标准不确定度 $u_c$ 表示时，测量结果为 $Y=100.02147(35)\,\mathrm{g}$，则合成标准不确定度 $u_c$ 为（\quad）。
+\par\noindent A. $3.5\,\mathrm{mg}$\quad B. $0.35\,\mathrm{mg}$\quad C. $0.35\,\mathrm{g}$\quad D. $35\,\mathrm{g}$
+\item 误差和不确定度都可作为评定测量结果精度的参数，则下列结论正确的是（\quad）。
+\par\noindent A. 误差小，则不确定度就小\quad B. 误差小，则不确定度就大\quad C. 误差小，则不确定度可能小也可能大
+\item 极差法计算实验标准差的公式为 $\sigma=\omega_n/d_n$，其中 $\omega_n$ 表示（\quad）。
+\par\noindent A. 极差系数\quad B. 极差\quad C. 自由度\quad D. 方差
+\item 由温度变化引起的测量误差属于（\quad）。为了减小温度变化对测量的影响，实际测量中通常采用（\quad）测量。
+\par\noindent A. 测量装置误差\quad B. 环境误差\quad C. 方法误差\quad D. 代替法\quad E. 抵消法\quad F. 对称法\quad G. 半周期法
+\end{enumerate}
+
+\section*{三、判断题}
+\begin{enumerate}[label=\arabic*、]
+\item 研究误差的目的之一是正确组织实验，合理设计或选用仪器和测量方法，以获得经济合理测量结果。（\quad）
+\item 测量不确定度是客观存在的，且不以人的认识程度而改变。（\quad）
+\item 在近似数乘除运算时，最后结果应与有效位数最少的数据位数相同。（\quad）
+\item 标准不确定度的评定方法有 A 类评定和 B 类评定，其中 A 类评定精度比 B 类评定精度高。（\quad）
+\item 电视歌手大奖赛中去除最高分与最低分的做法是为了排除系统误差的影响。（\quad）
+\item 用贝塞尔公式计算标准不确定度者属于 B 类评定。（\quad）
+\item 不确定度的可信程度与其自由度有密切关系，自由度越大，则不确定度越可信。（\quad）
+\item 残余误差校核法可以发现固定系统误差和变化系统误差。（\quad）
+\item 根据两个变量 $x$ 和 $y$ 的一组数据 $(x_i,y_i)$，$i=1,2,\ldots,n$，由最小二乘法得到回归直线，由此可以推断 $x$ 和 $y$ 线性关系密切。（\quad）
+\item 观察数据本身的精度越高，则所得到的回归方程越稳定。（\quad）
+\end{enumerate}
+
+\section*{四、计算题}
+\begin{enumerate}[label=\arabic*、]
+\item 某一量 $u$ 由 $x$ 和 $y$ 之和求得，$x$ 的值是由 $16$ 次测量的平均值得出，其单次测量标准差为 $0.2\,\mathrm{mm}$；$y$ 的值是由 $25$ 次测量的平均值得出，其单次测量标准差为 $0.3\,\mathrm{mm}$，$\rho_{xy}=0$，求 $u$ 的标准差。
+
+\vspace{4cm}
+
+\item 用数字电压表在标准条件下对 $10\,\mathrm{V}$ 直流电压进行 $10$ 次测量，数据如下表。该数字电压表的检定证书给出，其示值误差按 $3$ 倍标准差计算为 $3.5\times10^{-6}\,\mathrm{V}$。测量前又进行 $24$ 小时校准，在 $10\,\mathrm{V}$ 点测量时，$24$ 小时示值稳定度不超过 $\pm15\,\mu\mathrm{V}$，假设服从均匀分布。求测量结果最佳估计值、各不确定度分量和合成标准不确定度。
+\begin{center}
+\begin{tabular}{c|ccccc}
+\toprule
+$n$ & 1 & 2 & 3 & 4 & 5 \\
+\midrule
+$v_i/\mathrm{V}$ & 10.000107 & 10.000103 & 10.000097 & 10.000111 & 10.000091 \\
+\midrule
+$n$ & 6 & 7 & 8 & 9 & 10 \\
+\midrule
+$v_i/\mathrm{V}$ & 10.000108 & 10.000121 & 10.000101 & 10.000110 & 10.000094 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\newpage
+
+\item 用组合测量法测量 $2$ 个参数，等精度测量方程如下，试求两参数值的最小二乘估计及其相应精度。
+\begin{equation*}
+\left\{
+\begin{aligned}
+3x_1+x_2&=2.9,\\
+x_1-2x_2&=0.9,\\
+2x_1-3x_2&=1.9.
+\end{aligned}
+\right.
+\end{equation*}
+
+\vspace{3cm}
+
+\item 等精度测量方程如下，对 $Y$ 的测量值分别为 $l_1=0.8,l_2=0.2,l_3=-0.3$，试求 $X_1,X_2$ 的最小二乘估计及其精度估计。
+\begin{equation*}
+\left\{
+\begin{aligned}
+Y_1&=5X_1-0.2X_2,\\
+Y_2&=2X_1-0.5X_2,\\
+Y_3&=X_1-X_2.
+\end{aligned}
+\right.
+\end{equation*}
+
+\vspace{3cm}
+
+\item 用一标准件测某一被测量 $12$ 次，测得值如下（单位：$\mathrm{mm}$）：
+\begin{equation*}
+\begin{gathered}
+30.0364,\ 30.0365,\ 30.0362,\ 30.0364,\ 30.0367,\ 30.0363,\\
+30.0366,\ 30.0364,\ 30.0363,\ 30.0366,\ 30.0364,\ 30.0360.
+\end{gathered}
+\end{equation*}
+已知标准量的偏差为 $-0.005\,\mathrm{mm}$，要求置信概率 $P=99.73\%$，求被测量的测量结果。
+
+\vspace{3cm}
+
+\item 已知某高精度标准电池检定仪的主要不确定度分量为：仪器示值误差不超过 $\pm0.15\,\mu\mathrm{V}$，按均匀分布，其相对标准差为 $25\%$；输入电流的重复性经 $9$ 次测量，其平均值的标准差为 $0.05\,\mu\mathrm{V}$；仪器分辨率为 $0.10\,\mu\mathrm{V}$，按均匀分布，其相对标准差为 $15\%$。求该检定仪的不确定度分量，并估计其合成标准不确定度及其自由度。
+\end{enumerate}
+\end{document}

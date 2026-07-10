@@ -1,0 +1,132 @@
+\documentclass[UTF8,12pt,a4paper]{ctexart}
+\usepackage[a4paper,margin=2.15cm]{geometry}
+\usepackage{amsmath,amssymb,bm,booktabs,array,longtable,multirow}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\linespread{1.3}
+\setlength{\parindent}{2em}
+\setlength{\parskip}{0.2em}
+\setlist[enumerate]{leftmargin=2.5em,itemsep=0.45em,topsep=0.3em}
+\setlist[itemize]{leftmargin=2.2em,itemsep=0.25em,topsep=0.2em}
+\renewcommand\arraystretch{1.18}
+\newcommand{\blank}[1][2.4cm]{\underline{\hspace{#1}}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\ee}{\mathrm{e}}
+\newcommand{\jj}{\mathrm{j}}
+\newcommand{\prob}{\mathsf{P}}
+\pagestyle{fancy}
+\fancyhf{}
+\cfoot{第\thepage 页 / 共\pageref{LastPage}页}
+\renewcommand{\headrulewidth}{0pt}
+\begin{document}
+
+\begin{center}
+    {\zihao{2}\bfseries 误差理论与数据处理试卷（二）}\par
+    \vspace{0.8em}
+    考试形式：闭卷\quad 考试时间：120 分钟\quad 满分：100 分
+\end{center}
+\vspace{0.3em}
+\noindent 姓名：\blank[2cm]\quad 学号：\blank[2.5cm]\quad 专业：\blank[2.5cm]\quad 班级：\blank[2cm]
+\vspace{0.6em}
+
+\section*{一、填空题（每空 0.5 分，共 10 分）}
+\begin{enumerate}[label=\arabic*、]
+\item 服从正态分布的随机误差具有四个特征：\blank[1.8cm]、\blank[1.8cm]、\blank[1.8cm]、\blank[1.8cm]。
+\item 保留四位有效数字时 $4.51050$ 应为\blank[1.6cm]，$6.378501$ 应为\blank[1.6cm]。
+\item 用二等标准活塞压力计测量某压力，测得值为 $9000.5\,\mathrm{N/cm^2}$，若该压力用高一等级的精确方法测得值为 $9000.2\,\mathrm{N/cm^2}$，则二等标准活塞压力计的测量误差为\blank[1.6cm] $\mathrm{N/cm^2}$。
+\item 量块的公称尺寸为 $10\,\mathrm{mm}$，实际尺寸为 $10.001\,\mathrm{mm}$，若按公称尺寸使用，始终会存在\blank[1.6cm] $\mathrm{mm}$ 的系统误差，可用\blank[1.8cm]方法发现。采用修正方法消除，则修正值为\blank[1.6cm] $\mathrm{mm}$，当用此量块作为标准件测得圆柱体直径为 $10.002\,\mathrm{mm}$，则此圆柱体的最可信赖值为\blank[1.6cm] $\mathrm{mm}$。
+\item 使用\blank[1.3cm]准则（莱以特准则）判别粗差，观测次数必须大于\blank[1cm]次。
+\item 按公式 $V=\pi D^2h/4$ 求圆柱体体积，已给定体积测量的允许极限误差为 $\delta_V$，按等作用原则确定直径 $D$ 和高 $h$ 的测量极限误差分别为 $\delta_D=$\blank[2.2cm]，$\delta_h=$\blank[2.2cm]。
+\item 设校准证书给出名义值 $10\Omega$ 的标准电阻器的电阻 $10.000742\Omega\pm129\mu\Omega$，测量结果服从正态分布，置信水平为 $99\%$，则其标准不确定度 $u$ 为\blank[1.8cm]。这属于\blank[1cm]类评定。如评定 $u$ 的相对不确定度为 $0.25$，则 $u$ 的自由度为\blank[1cm]。
+\item 对某量重复测量 $49$ 次，已知每次测量的标准差为 $0.7\,\mathrm{mH}$，则算术平均值的或然误差为\blank[1.8cm] $\mathrm{mH}$。
+\item 对于相同的被测量，采用\blank[1.5cm]误差评定不同测量方法的精度高低；而对于不同的被测量，采用\blank[1.5cm]误差评定不同测量方法的精度高低。
+\end{enumerate}
+
+\newpage
+
+\section*{二、单项选择题（每题 2 分，共 20 分）}
+\begin{enumerate}[label=\arabic*、]
+\item 进行两次测量过程时，数据凑整的误差服从（\quad）。
+\par\noindent A. 均匀分布\quad B. 三角误差\quad C. 反正弦分布\quad D. 正态分布
+\item 用算术平均值作为被测量的量值估计值是为了减小（\quad）的影响。
+\par\noindent A. 随机误差\quad B. 系统误差\quad C. 粗大误差
+\item 线性变化的系统误差可用（\quad）发现。
+\par\noindent A. 马利科夫准则\quad B. 阿卑-赫梅特准则\quad C. 秩和检验法
+\item （\quad）是消除线性系统误差的有效方法。
+\par\noindent A. 代替法\quad B. 抵消法\quad C. 对称法\quad D. 半周期法
+\item $2.5$ 级电压表是指其（\quad）为 $2.5\%$。
+\par\noindent A. 绝对误差\quad B. 相对误差\quad C. 引用误差\quad D. 误差绝对值
+\item 极差法计算实验标准差的公式为 $\sigma=\omega_n/d_n$，其式中 $\omega_n$ 表示（\quad）。
+\par\noindent A. 极差系数\quad B. 极差\quad C. 自由度\quad D. 方差
+\item 自由度 $\nu$ 是表明标准不确定度可靠程度的一个量，所以（\quad）。
+\par\noindent A. $\nu$ 越大越可靠\quad B. $\nu$ 越小越可靠\quad C. $\nu$ 越稳定越可靠\quad D. 以上说法均不成立
+\item 对于随机误差和未定系统误差，微小误差舍去准则是被舍去的误差必须小于或等于测量结果总标准差的（\quad）。
+\par\noindent A. $1/3\sim1/4$\quad B. $1/3\sim1/8$\quad C. $1/3\sim1/10$\quad D. $1/4\sim1/10$
+\item 误差和不确定度都可作为评定测量结果精度的参数，则下列结论正确的是（\quad）。
+\par\noindent A. 误差小，则不确定度就小\quad B. 误差小，则不确定度就大\quad C. 误差小，则不确定度可能小也可能大
+\item 单位权化的实质是：使任何一个量值乘以（\quad），得到新的量值的权数为 $1$。
+\par\noindent A. $P$\quad B. $1/\sigma^2$\quad C. $1/\sigma$\quad D. $\sqrt{P}$
+\end{enumerate}
+
+\newpage
+
+\section*{三、判断题（每题 1 分，共 10 分）}
+\begin{enumerate}[label=\arabic*、]
+\item accuracy of measurement 反映了测量结果中系统误差和随机误差综合的影响程度。（\quad）
+\item 在使用微安表等各种电表时，总希望指针在各量程的 $2/3$ 范围内使用。（\quad）
+\item 在等精度直接测量中，由于各次测得值不相同，所以各次测量的标准差不一样。（\quad）
+\item 秩和检验法可发现测量列组内的系统误差。（\quad）
+\item 根据两个变量 $x$ 和 $y$ 的一组数据 $(x_i,y_i)$，由最小二乘法得到回归直线，由此可以推断 $x$ 和 $y$ 线性关系密切。（\quad）
+\item 直接测量列的测量次数较少时，应按 $t$ 分布来计算测量列算术平均值的极限误差。（\quad）
+\item 测量仪器的最大允许误差不是测量不确定度，但可以作为测量不确定度评定的依据。（\quad）
+\item 测量不确定度表明测量结果偏离真值的大小。（\quad）
+\item 近似数加减运算时，应以小数位数最少的数据位数为准。（\quad）
+\item 标准不确定度的评定方法有 A 类评定和 B 类评定，其中 A 类评定精度比 B 类评定精度高。（\quad）
+\end{enumerate}
+
+\newpage
+
+\section*{四、计算题（共 60 分）}
+\begin{enumerate}[label=\arabic*、]
+\item 对某物理量进行 $6$ 次不等精度测量，数据如下，求加权算术平均值及其标准差。
+\begin{center}
+\begin{tabular}{c|cccccc}
+\toprule
+序号 & 1&2&3&4&5&6\\
+\midrule
+$x_i$ & 10.3&10.2&10.4&10.3&10.5&10.1\\
+$p_i$ & 2&3&1&2&4&5\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\vspace{1.5cm}
+
+\item 测量某电路电阻 $R$ 和两端电压 $U$，各重复测量 $4$ 次，$\bar{U}=16.50\,\mathrm{V}$，电压每次测量标准差 $0.1\,\mathrm{V}$；$\bar{R}=4.26\Omega$，电阻每次测量标准差 $0.04\Omega$；相关系数 $\rho_{UR}=-0.36$。求电流 $I=U/R$ 的最可信赖值及其标准不确定度、有效自由度，以及 $P=99\%$ 时的扩展不确定度。（$t_{0.01}(10)=3.17,t_{0.01}(11)=3.11,t_{0.01}(12)=3.05$）
+
+\vspace{1.5cm}
+
+\item 等精度测量方程
+\begin{equation*}
+Y_1=5X_1-0.2X_2,
+\quad Y_2=2X_1-0.5X_2,
+\quad Y_3=X_1-X_2,
+\end{equation*}
+观测值为 $l_1=0.8,l_2=0.2,l_3=-0.3$。试求 $X_1,X_2$ 的最小二乘估计及其精度估计。
+
+\vspace{1.5cm}
+
+\item 用 X 光机检查镁合金铸件内部缺陷时，透视电压 $y$ 应随厚度 $x$ 改变，数据如下。设 $x$ 无误差，利用最小二乘法求经验公式，并进行方差分析和显著性检验。
+\begin{center}
+\begin{tabular}{c|cccccccccc}
+\toprule
+$x/\mathrm{mm}$&12&13&14&15&16&18&20&22&24&26\\
+\midrule
+$y/\mathrm{kV}$&52.0&55.0&58.0&61.0&65.0&70.0&75.0&80.0&85.0&91.0\\
+\bottomrule
+\end{tabular}
+\end{center}
+已知 $F_{0.01}(1,8)=11.26$。
+\end{enumerate}
+\end{document}

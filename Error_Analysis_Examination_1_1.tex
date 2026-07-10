@@ -1,0 +1,210 @@
+\documentclass[UTF8,12pt,a4paper]{ctexart}
+\usepackage[a4paper,margin=2.15cm]{geometry}
+\usepackage{amsmath,amssymb,bm,booktabs,array,longtable,multirow}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\linespread{1.3}
+\setlength{\parindent}{2em}
+\setlength{\parskip}{0.2em}
+\setlist[enumerate]{leftmargin=2.5em,itemsep=0.45em,topsep=0.3em}
+\setlist[itemize]{leftmargin=2.2em,itemsep=0.25em,topsep=0.2em}
+\renewcommand\arraystretch{1.18}
+\newcommand{\blank}[1][2.4cm]{\underline{\hspace{#1}}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\ee}{\mathrm{e}}
+\newcommand{\jj}{\mathrm{j}}
+\newcommand{\prob}{\mathsf{P}}
+\pagestyle{fancy}
+\fancyhf{}
+\cfoot{第\thepage 页 / 共\pageref{LastPage}页}
+\renewcommand{\headrulewidth}{0pt}
+\begin{document}
+
+\begin{center}
+    {\zihao{2}\bfseries 误差理论与数据处理试卷（一）}\par
+    \vspace{0.8em}
+\end{center}
+\vspace{0.6em}
+
+\section*{一、填空题答案}
+\begin{enumerate}[label=\arabic*、]
+\item 测得值。
+\item 测量装置误差、人员误差、环境误差、方法误差。
+\item 系统误差、随机误差、粗大误差。
+\item $3.14$，$0.314$。
+\item 包含因子。
+\item $-0.001$，$+0.001$，$10.003$。
+\item $0.00005\Omega$，B 类评定。
+\end{enumerate}
+
+\section*{二、选择题答案}
+\begin{center}
+\begin{tabular}{ccccccccc}
+\toprule
+1&2&3&4&5&6&7&8&9\\
+\midrule
+C&B&B&C&C&B&C&B&B、F\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section*{三、判断题答案}
+\begin{center}
+\begin{tabular}{cccccccccc}
+\toprule
+1&2&3&4&5&6&7&8&9&10\\
+\midrule
+错&错&对&错&错&错&对&错&对&错\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\newpage
+
+\section*{四、计算题答案}
+\begin{enumerate}[label=\arabic*、]
+\item $u=x+y$，且 $\rho_{xy}=0$。平均值的标准差分别为
+\begin{equation*}
+    s_{\bar{x}}=0.2/\sqrt{16}=0.05\,\mathrm{mm},\qquad
+    s_{\bar{y}}=0.3/\sqrt{25}=0.06\,\mathrm{mm}.
+\end{equation*}
+故
+\begin{equation*}
+    s_u=\sqrt{s_{\bar{x}}^2+s_{\bar{y}}^2+2\rho_{xy}s_{\bar{x}}s_{\bar{y}}}
+    =\sqrt{0.05^2+0.06^2}=0.078\,\mathrm{mm}.
+\end{equation*}
+
+\item 测量平均值为
+\begin{equation*}
+    \bar{v}=10.0001043\,\mathrm{V}.
+\end{equation*}
+由重复测量引入的 A 类标准不确定度为
+\begin{equation*}
+    s=8.982\times10^{-6}\,\mathrm{V},\qquad
+    u_1=s/\sqrt{10}=2.840\times10^{-6}\,\mathrm{V}.
+\end{equation*}
+检定证书示值误差按 $3$ 倍标准差给出，故
+\begin{equation*}
+    u_2=3.5\times10^{-6}/3=1.167\times10^{-6}\,\mathrm{V}.
+\end{equation*}
+$24$ 小时示值稳定度按均匀分布处理，得
+\begin{equation*}
+    u_3=15\times10^{-6}/\sqrt{3}=8.660\times10^{-6}\,\mathrm{V}.
+\end{equation*}
+合成标准不确定度为
+\begin{equation*}
+    u_c=\sqrt{u_1^2+u_2^2+u_3^2}=9.19\times10^{-6}\,\mathrm{V}.
+\end{equation*}
+测量结果可写为
+\begin{equation*}
+    V=10.0001043\,\mathrm{V},\qquad u_c=9.19\,\mu\mathrm{V}.
+\end{equation*}
+
+\newpage
+
+\item 写成矩阵形式 $A\hat{X}=L$，其中
+\begin{equation*}
+A=\begin{bmatrix}3&1\\1&-2\\2&-3\end{bmatrix},\qquad
+L=\begin{bmatrix}2.9\\0.9\\1.9\end{bmatrix}.
+\end{equation*}
+最小二乘估计为
+\begin{equation*}
+\hat{X}=(A^TA)^{-1}A^TL,
+\end{equation*}
+其中
+\begin{equation*}
+A^TA=\begin{bmatrix}14&-5\\-5&14\end{bmatrix},\qquad
+(A^TA)^{-1}=\begin{bmatrix}0.08187&0.02924\\0.02924&0.08187\end{bmatrix}.
+\end{equation*}
+代入得
+\begin{equation*}
+    \hat{X}=\begin{bmatrix}0.9626\\0.0152\end{bmatrix}.
+\end{equation*}
+残差为
+\begin{equation*}
+    v=L-A\hat{X}=\begin{bmatrix}-0.0029\\-0.0322\\0.0205\end{bmatrix},\qquad
+    \sum v_i^2=0.001462.
+\end{equation*}
+由于 $n=3,t=2$，单位权标准差为
+\begin{equation*}
+    \sigma=\sqrt{\sum v_i^2/(n-t)}=\sqrt{0.001462}=0.0382.
+\end{equation*}
+于是
+\begin{equation*}
+    \sigma_{x_1}=\sigma\sqrt{d_{11}}=0.0109,
+    \qquad \sigma_{x_2}=\sigma\sqrt{d_{22}}=0.0109.
+\end{equation*}
+
+\newpage
+
+\item 误差方程可写为 $v=L-A\hat{X}$，其中
+\begin{equation*}
+A=\begin{bmatrix}5&-0.2\\2&-0.5\\1&-1\end{bmatrix},\qquad
+L=\begin{bmatrix}0.8\\0.2\\-0.3\end{bmatrix}.
+\end{equation*}
+有
+\begin{equation*}
+A^TA=\begin{bmatrix}30&-3\\-3&1.29\end{bmatrix},
+\qquad
+(A^TA)^{-1}=\frac{1}{29.7}\begin{bmatrix}1.29&3\\3&30\end{bmatrix}.
+\end{equation*}
+所以
+\begin{equation*}
+    \hat{X}=(A^TA)^{-1}A^TL=\begin{bmatrix}0.182\\0.455\end{bmatrix}.
+\end{equation*}
+残差平方和为 $\sum v_i^2=0.0051$，故
+\begin{equation*}
+    \sigma=\sqrt{0.0051/(3-2)}=0.071.
+\end{equation*}
+由 $(A^TA)^{-1}$ 得 $d_{11}=0.0434,d_{22}=1.01$，所以
+\begin{equation*}
+    \sigma_{X_1}=0.071\sqrt{0.0434}=0.015,
+    \qquad
+    \sigma_{X_2}=0.071\sqrt{1.01}=0.071.
+\end{equation*}
+
+\item 测量平均值为
+\begin{equation*}
+    \bar{x}=30.0364\,\mathrm{mm}.
+\end{equation*}
+贝塞尔公式给出单次测量标准差
+\begin{equation*}
+    s=0.000191\,\mathrm{mm},
+    \qquad s_{\bar{x}}=s/\sqrt{12}=0.0000550\,\mathrm{mm}.
+\end{equation*}
+标准量偏差为 $-0.005\,\mathrm{mm}$，故修正后的测量结果中心值为
+\begin{equation*}
+    x=\bar{x}-0.005=30.0314\,\mathrm{mm}.
+\end{equation*}
+当 $P=99.73\%$ 时按 $3s$ 估计，极限误差为
+\begin{equation*}
+    \Delta=3s_{\bar{x}}=0.000165\,\mathrm{mm}\approx0.00017\,\mathrm{mm}.
+\end{equation*}
+测量结果为
+\begin{equation*}
+    x=(30.0314\pm0.00017)\,\mathrm{mm},\qquad P=99.73\%.
+\end{equation*}
+
+\item 各分量为
+\begin{equation*}
+    u_1=0.15/\sqrt{3}=0.087\,\mu\mathrm{V},\qquad
+    \nu_1=\frac{1}{2(0.25)^2}=8,
+\end{equation*}
+\begin{equation*}
+    u_2=0.05\,\mu\mathrm{V},\qquad \nu_2=9-1=8,
+\end{equation*}
+\begin{equation*}
+    u_3=(0.10/2)/\sqrt{3}=0.029\,\mu\mathrm{V},\qquad
+    \nu_3=\frac{1}{2(0.15)^2}=22.
+\end{equation*}
+合成标准不确定度为
+\begin{equation*}
+    u_c=\sqrt{u_1^2+u_2^2+u_3^2}=0.11\,\mu\mathrm{V}.
+\end{equation*}
+用 Welch--Satterthwaite 公式估计自由度：
+\begin{equation*}
+    \nu_{\mathrm{eff}}=\frac{u_c^4}{u_1^4/\nu_1+u_2^4/\nu_2+u_3^4/\nu_3}=18.36.
+\end{equation*}
+\end{enumerate}
+\end{document}

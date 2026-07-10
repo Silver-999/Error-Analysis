@@ -1,0 +1,2763 @@
+
+\documentclass[UTF8,zihao=-4]{ctexart}
+
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{longtable}
+
+\setlength{\parindent}{2em}
+\setlength{\parskip}{0.25em}
+\setlength{\abovedisplayskip}{4pt}
+\setlength{\belowdisplayskip}{4pt}
+\setlength{\abovedisplayshortskip}{2pt}
+\setlength{\belowdisplayshortskip}{2pt}
+\renewcommand{\arraystretch}{1.12}
+
+\newcommand{\problem}[1]{\subsection*{#1}}
+\newcommand{\timu}{\noindent\textbf{题目：}}
+\newcommand{\jieda}{\noindent\textbf{解答：}}
+
+\begin{document}
+
+\begin{center}
+    {\LARGE \textbf{误差理论与数据处理}}
+\end{center}
+
+\section*{第一章\quad 绪论}
+\problem{例1-1}
+
+\timu 某台标称示值范围为 $0\sim150\,\mathrm{V}$ 的电压表（即满量程为 $150\,\mathrm{V}$），在示值为 $100\,\mathrm{V}$ 处，用标准电压表检定得到的电压表实际示值为 $99.4\,\mathrm{V}$，求使用该电压表在测得示值为 $100\,\mathrm{V}$ 时的绝对误差、相对误差和引用误差？
+
+\jieda 该电压表在 $100\,\mathrm{V}$ 处的
+\begin{equation*}
+\begin{aligned}
+    \text{绝对误差}
+    &=100\,\mathrm{V}-99.4\,\mathrm{V}
+    =0.6\,\mathrm{V}\\
+    \text{相对误差}
+    &=
+    \frac{0.6\,\mathrm{V}}{99.4\,\mathrm{V}}\times100\%
+    \approx
+    \frac{0.6\,\mathrm{V}}{100\,\mathrm{V}}\times100\%
+    =0.6\%\\
+    \text{引用误差}
+    &=
+    \frac{100\,\mathrm{V}-99.4\,\mathrm{V}}{150\,\mathrm{V}}\times100\%
+    =0.4\%
+\end{aligned}
+\end{equation*}
+
+\section*{第二章\quad 误差的基本性质与处理}
+
+\problem{例2-1}
+\timu 测量某物理量 $10$ 次，得到结果见表2-1，求算术平均值。
+
+\begin{center}
+\scriptsize
+\setlength{\tabcolsep}{7pt}
+\begin{tabular}{c|cccccccccc}
+\toprule
+序号 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10\\
+\midrule
+$l_i/\mathrm{mm}$ & 1879.64 & 1879.69 & 1879.60 & 1879.69 & 1879.57 & 1879.62 & 1879.64 & 1879.65 & 1879.66 & 1879.62\\
+$\Delta l_i/\mathrm{mm}$ & $-0.01$ & $+0.04$ & $-0.05$ & $+0.04$ & $-0.08$ & $-0.03$ & $-0.01$ & 0 & $+0.01$ & $-0.03$\\
+$v_i/\mathrm{mm}$ & 0 & $+0.05$ & $-0.04$ & $+0.05$ & $-0.07$ & $-0.02$ & 0 & $+0.01$ & $+0.02$ & $-0.02$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\jieda 任选参考值 $l_0=1879.65\,\mathrm{mm}$，计算差值 $\Delta l_i$ 和 $\Delta\bar{x}_0$，有
+\begin{equation*}
+    \Delta\bar{x}_0=\frac{\sum_{i=1}^{10}\Delta l_i}{10}=-0.01\,\mathrm{mm}
+\end{equation*}
+所以
+\begin{equation*}
+    \bar{x}=l_0+\Delta\bar{x}_0=1879.65-0.01=1879.64\,\mathrm{mm}
+\end{equation*}
+
+\problem{例2-2}
+\timu 用例2-1数据，对计算结果进行校核。
+
+\jieda 因 $n$ 为偶数，$n/2=10/2=5$，且 $A=0.01$，由表知
+\begin{equation*}
+    \sum_{i=1}^{10}v_i=0.01<\frac{n}{2}A=0.05
+\end{equation*}
+故计算结果正确。
+
+\problem{例2-3}
+\timu 测量某量 $11$ 次，求算术平均值并进行校核。
+
+\begin{center}
+\scriptsize
+\setlength{\tabcolsep}{7pt}
+\begin{tabular}{c|ccccccccccc}
+\toprule
+序号 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11\\
+\midrule
+$l_i/\mathrm{mm}$ & 2000.07 & 2000.09 & 2000.09 & 2000.06 & 2000.07 & 2000.07 & 2000.06 & 2000.08 & 2000.08 & 2000.06 & 2000.07\\
+$v_i/\mathrm{mm}$ & $+0.003$ & $+0.023$ & $+0.023$ & $-0.007$ & $+0.003$ & $+0.003$ & $-0.007$ & $+0.013$ & $+0.013$ & $-0.007$ & $+0.003$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\jieda 算术平均值为
+\begin{equation*}
+    \bar{x}=\frac{\sum_{i=1}^{11}l_i}{11}=\frac{22000.74}{11}=2000.0673\,\mathrm{mm}\approx2000.067\,\mathrm{mm}
+\end{equation*}
+用第一种规则校核：
+\begin{equation*}
+    \sum_{i=1}^{11}l_i=22000.74\,\mathrm{mm}>11\times2000.067\,\mathrm{mm}=22000.737\,\mathrm{mm}
+\end{equation*}
+用第二种规则校核：
+\begin{equation*}
+    \sum_{i=1}^{11}v_i=0.003\,\mathrm{mm}<\left(\frac{11}{2}-0.5\right)A=0.005\,\mathrm{mm}
+\end{equation*}
+故用两种规则校核均说明计算结果正确。
+
+\problem{例2-4}
+\timu 用游标卡尺对某一尺寸测量 $10$ 次，假定已消除系统误差和粗大误差，得到数据如下表。求算术平均值及其标准差。
+
+\begin{center}
+\scriptsize
+\setlength{\tabcolsep}{6pt}
+\begin{tabular}{c|cccccccccc}
+\toprule
+序号 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10\\
+\midrule
+$l_i/\mathrm{mm}$ & 75.01 & 75.04 & 75.07 & 75.00 & 75.03 & 75.09 & 75.06 & 75.02 & 75.05 & 75.08\\
+$v_i/\mathrm{mm}$ & $-0.035$ & $-0.005$ & $+0.025$ & $-0.045$ & $-0.015$ & $+0.045$ & $+0.015$ & $-0.025$ & $+0.005$ & $+0.035$\\
+$v_i^2/\mathrm{mm}^2$ & 0.001225 & 0.000025 & 0.000625 & 0.002025 & 0.000225 & 0.002025 & 0.000225 & 0.000625 & 0.000025 & 0.001225\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\jieda 由表得 $\bar{x}=75.045\,\mathrm{mm}$，$\sum v_i=0$，$\sum v_i^2=0.00825\,\mathrm{mm}^2$。根据贝塞尔公式及算术平均值标准差公式，有
+\begin{equation*}
+    \sigma=\sqrt{\frac{\sum_{i=1}^{n} v_i^2}{n-1}}=\sqrt{\frac{0.00825}{10-1}}=0.0303\,\mathrm{mm},\qquad
+    \sigma_{\bar{x}}=\frac{\sigma}{\sqrt{n}}=\frac{0.0303}{\sqrt{10}}=0.0096\,\mathrm{mm}
+\end{equation*}
+或然误差和平均误差分别为
+\begin{equation*}
+    R=0.6745\sigma_{\bar{x}}=0.0065\,\mathrm{mm},\qquad
+    T=0.7979\sigma_{\bar{x}}=0.0076\,\mathrm{mm}
+\end{equation*}
+
+\problem{例2-5}
+\timu 仍用例2-4的测量数据，用别捷尔斯法求得标准差。
+
+\jieda 由例2-4数据得 $\sum |v_i|=0.250\,\mathrm{mm}$，故
+\begin{equation*}
+    \sigma=1.253\frac{\sum_{i=1}^{10}|v_i|}{\sqrt{10(10-1)}}
+    =1.253\frac{0.250}{\sqrt{10\times9}}=0.0330\,\mathrm{mm}
+\end{equation*}
+算术平均值的标准差为
+\begin{equation*}
+    \sigma_{\bar{x}}=\frac{0.0330}{\sqrt{10}}=0.0104\,\mathrm{mm}
+\end{equation*}
+
+\problem{例2-6}
+\timu 仍用例2-4的测量数据，用极差法求得标准差。
+
+\jieda 极差为 $\omega_n=75.09-75.00=0.09\,\mathrm{mm}$。当 $n=10$ 时，查表得 $d_n=3.08$，故
+\begin{equation*}
+    \sigma=\frac{\omega_n}{d_n}=\frac{0.09}{3.08}=0.0292\,\mathrm{mm}
+\end{equation*}
+
+\problem{例2-7}
+\timu 仍用例2-4的测量数据，用最大误差法求得标准差。
+
+\jieda 由例2-4数据得 $|v_i|_{\max}=0.045\,\mathrm{mm}$。由表查得 $1/K_n=0.57$，则
+\begin{equation*}
+    \sigma=\frac{|v_i|_{\max}}{K_n}=0.57\times0.045=0.0256\,\mathrm{mm}
+\end{equation*}
+
+\problem{例2-8}
+\timu 某激光管发出的氖光波长检定为 $\lambda=0.63299130\,\mu\mathrm{m}$。若用来复现更准确的方法测得该波长为 $\lambda=0.63299144\,\mu\mathrm{m}$，试求测定波长的标准差。
+
+\jieda 因原测得的波长是平均值，故可认为其测得值为实际波长，并采用最大误差法估计标准差。取 $1/K_i=1.25$，则系统误差为
+\begin{equation*}
+    \delta=0.63299130-0.63299144=-14\times10^{-8}\,\mu\mathrm{m}
+\end{equation*}
+故标准差为
+\begin{equation*}
+    \sigma=\frac{|\delta|}{K_i}=1.25\times14\times10^{-8}=1.75\times10^{-7}\,\mu\mathrm{m}
+\end{equation*}
+
+\newpage
+
+\problem{例2-9}
+\timu 对某量进行了 $6$ 次测量，测得数据为 $802.40,802.50,802.38,802.48,802.42,802.46$，求算术平均值及其极限误差。
+
+\jieda 算术平均值、标准差及算术平均值标准差为
+\begin{equation*}
+    \bar{x}=802.44,
+    \qquad
+    \sigma=0.047,
+    \qquad
+    \sigma_{\bar{x}}=\frac{0.047}{\sqrt{6}}=0.019
+\end{equation*}
+因测量次数较少，应按 $t$ 分布计算算术平均值的极限误差。已知 $n=6$，$\nu=n-1=5$，取 $\alpha=0.01$，查表得 $t=4.03$，故
+\begin{equation*}
+    \delta_{\lim}\bar{x}=\pm t\sigma_{\bar{x}}=\pm4.03\times0.019=\pm0.076
+\end{equation*}
+
+\problem{例2-10}
+\timu 对一线值长度的长短进行了三组不等精度测量，其结果为
+$x_1=2000.45\,\mathrm{mm}$，$\sigma_1=0.05\,\mathrm{mm}$；
+$x_2=2000.15\,\mathrm{mm}$，$\sigma_2=0.20\,\mathrm{mm}$；
+$x_3=2000.60\,\mathrm{mm}$，$\sigma_3=0.10\,\mathrm{mm}$。求各测量结果的权。
+
+\jieda 由权与方差成反比可得
+\begin{equation*}
+    p_1:p_2:p_3=\frac{1}{0.05^2}:\frac{1}{0.20^2}:\frac{1}{0.10^2}=16:1:4
+\end{equation*}
+因比值的权可取为 $p_1=16$，$p_2=1$，$p_3=4$。
+
+\problem{例2-11}
+\timu 三个工作基准米尺在实验室中与国家基准器相比较，得到工作基准米尺的平均长度分别为 $999.9425\,\mathrm{mm}$、$999.9416\,\mathrm{mm}$、$999.9419\,\mathrm{mm}$，其权分别为 $3,2,5$，求加权算术平均值。
+
+\jieda 选取参考值 $999.9400\,\mathrm{mm}$，有
+\begin{equation*}
+    \bar{x}=999.9400\,\mathrm{mm}+\frac{3\times0.0025+2\times0.0016+5\times0.0019}{3+2+5}
+    =999.9420\,\mathrm{mm}
+\end{equation*}
+
+\problem{例2-12}
+\timu 用 A、B 两种电压表对 $5\,\mathrm{V}$ 电压进行测量。A 表测得 $U_A=5.005\,\mathrm{V}$，$\sigma_A=0.006\,\mathrm{V}$；B 表测得 $U_B=5.002\,\mathrm{V}$，$\sigma_B=0.008\,\mathrm{V}$。求该电压的最佳估计值。
+
+\jieda 按照测量结果标准差确定权，有
+\begin{equation*}
+    p_A:p_B=\frac{1}{\sigma_A^2}:\frac{1}{\sigma_B^2}
+    =\frac{1}{0.006^2}:\frac{1}{0.008^2}=16:9
+\end{equation*}
+故最佳估计值为
+\begin{equation*}
+    \bar{U}=\frac{5.005\times16+5.002\times9}{16+9}=5.004\,\mathrm{V}
+\end{equation*}
+
+\problem{例2-13}
+\timu 求例2-11的加权算术平均值的标准差。
+
+\jieda 由加权算术平均值 $\bar{x}=999.9420\,\mathrm{mm}$，可得各组测量结果的残余误差为
+\begin{equation*}
+    v_{\bar{x}_1}=+0.5\,\mu\mathrm{m},\qquad
+    v_{\bar{x}_2}=-0.4\,\mu\mathrm{m},\qquad
+    v_{\bar{x}_3}=-0.1\,\mu\mathrm{m}
+\end{equation*}
+已知 $m=3$，$p_1=3$，$p_2=2$，$p_3=5$，代入式得
+\begin{equation*}
+    \sigma_{\bar{x}}
+    =\sqrt{\frac{3\times0.5^2+2\times(-0.4)^2+5\times(-0.1)^2}{(3-1)(3+2+5)}}\,\mu\mathrm{m}
+    =\sqrt{\frac{1.12}{20}}\,\mu\mathrm{m}=0.24\,\mu\mathrm{m}\approx0.0002\,\mathrm{mm}
+\end{equation*}
+
+\problem{例2-14}
+\timu 求例2-12的加权算术平均值的标准差。
+
+\jieda 按照例2-12中两个测量值选取的权 $p_A=16$ 和 $p_B=9$，以及测量结果 $5.005\,\mathrm{V}$ 的标准差 $\sigma_A=0.006\,\mathrm{V}$，可得
+\begin{equation*}
+    \sigma_{\bar{V}}=\sigma_A\sqrt{\frac{p_A}{\sum_{i=1}^{2}p_i}}
+    =0.006\sqrt{\frac{16}{16+9}}\,\mathrm{V}=0.0048\,\mathrm{V}\approx0.005\,\mathrm{V}
+\end{equation*}
+
+\problem{例2-15}
+\timu 对恒温箱温度测量 $10$ 次，测得数据见下表。
+
+\begin{center}
+\scriptsize
+\setlength{\tabcolsep}{8pt}
+\begin{tabular}{c|cccccccccc}
+\toprule
+序号 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10\\
+\midrule
+$t_i/{}^\circ\mathrm{C}$ & 20.06 & 20.07 & 20.06 & 20.08 & 20.10 & 20.12 & 20.14 & 20.18 & 20.18 & 20.21\\
+$v_i/{}^\circ\mathrm{C}$ & $-0.06$ & $-0.05$ & $-0.06$ & $-0.04$ & $-0.02$ & 0 & $+0.02$ & $+0.06$ & $+0.06$ & $+0.09$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\jieda 由表得 $\bar{x}=20.12{}^\circ\mathrm{C}$，$\sigma=0.055{}^\circ\mathrm{C}$，且
+\begin{equation*}
+    \sum_{i=1}^{5}v_i=-0.23{}^\circ\mathrm{C},\qquad
+    \sum_{i=6}^{10}v_i=+0.23{}^\circ\mathrm{C},\qquad
+    \sum_{i=1}^{10}v_i=0
+\end{equation*}
+由表和残余误差图可知，残余误差符号由负变正，误差值由小到大，故测量列中存在线性系统误差。
+
+\problem{例2-16}
+\timu 仍用例2-15的测量数据，按残余误差校核法判断是否含有线性系统误差。
+
+\jieda 此时 $n=10$，$K=5$，而
+\begin{equation*}
+    \Delta=(-0.06-0.05-0.06-0.04-0.02){}^\circ\mathrm{C}
+    -(0+0.02+0.06+0.06+0.09){}^\circ\mathrm{C}
+    =-0.46{}^\circ\mathrm{C}
+\end{equation*}
+因为差值 $\Delta$ 显著不为零，故测量列中含有线性系统误差。
+
+\problem{例2-17}
+\timu 雷莱用不同方法制取氮，测得氮气相对密度平均值及其标准差为：由化学法制取氮，$\bar{x}_1=2.29971$，$\sigma_1=0.00041$；由大气中提取氮，$\bar{x}_2=2.31022$，$\sigma_2=0.00019$。判断两种方法间是否存在系统误差。
+
+\jieda 两者差值为
+\begin{equation*}
+    \Delta=\bar{x}_2-\bar{x}_1=0.01051
+\end{equation*}
+而标准差为
+\begin{equation*}
+    \sigma=\sqrt{\sigma_1^2+\sigma_2^2}
+    =\sqrt{0.00041^2+0.00019^2}=0.00045
+\end{equation*}
+因
+\begin{equation*}
+    \Delta\gg2\sqrt{\sigma_1^2+\sigma_2^2}=2\times0.00045=0.0009
+\end{equation*}
+故两种方法间存在系统误差。
+
+\problem{例2-18}
+\timu 对某量测得两组数据如下，判断两组间有无系统误差。
+\begin{equation*}
+    x_i:14.7,	14.8,	15.2,	15.6,
+    \qquad
+    y_i:14.6,	15.0,	15.1
+\end{equation*}
+
+\jieda 将两组数据混合后按大小顺序排列，得到秩次：$y_1$ 为 $1$，$x_1$ 为 $2$，$x_2$ 为 $3$，$y_2$ 为 $4$，$y_3$ 为 $5$，$x_3$ 为 $6$，$x_4$ 为 $7$。已知 $n_1=3$，$n_2=4$，计算秩和
+\begin{equation*}
+    T=1+4+5=10
+\end{equation*}
+查表得 $T_-=7$，$T_+=17$，因
+\begin{equation*}
+    T_-=7<T=10<17=T_+
+\end{equation*}
+故无根据怀疑两组间存在系统误差。
+
+\newpage
+
+\problem{例2-19}
+\timu 对某量测得两组数据
+\begin{equation*}
+\begin{gathered}
+    x:1.9,	0.8,	1.1,	0.1,	-0.1,	4.4,	5.5,	1.6,	4.6,	3.4,\\
+    y:0.7,	-1.6,	-0.2,	-1.2,	-0.1,	3.4,	3.7,	0.8,	0.0,	2.0
+\end{gathered}
+\end{equation*}
+用 $t$ 检验法判断两组间有无系统误差。
+
+\jieda 计算得
+\begin{equation*}
+    \bar{x}=2.33,	\bar{y}=0.75,	\sigma_x^2=3.61,	\sigma_y^2=2.89
+\end{equation*}
+则
+\begin{equation*}
+    t=(2.33-0.75)\sqrt{\frac{10\times10\times(10+10-2)}{(10+10)(10\times3.61+10\times2.89)}}=1.86
+\end{equation*}
+由 $\nu=10+10-2=18$ 及 $\alpha=0.05$，查 $t$ 分布表得 $t_a=2.10$。因 $|t|=1.86<t_a=2.10$，故无根据怀疑两组间有系统误差。
+
+\problem{例2-20}
+\timu 对某量进行 $15$ 次等精度测量，测得值如下表所列。设这些测得值已消除了系统误差，试判断该测量列中是否含有粗大误差的测得值。
+
+\begin{center}
+\scriptsize
+\setlength{\tabcolsep}{7pt}
+\begin{tabular}{c|ccccc}
+\toprule
+序号 & 1 & 2 & 3 & 4 & 5\\
+\midrule
+$l$ & 20.42 & 20.43 & 20.40 & 20.43 & 20.42\\
+$v$ & $+0.016$ & $+0.026$ & $-0.004$ & $+0.026$ & $+0.016$\\
+\midrule
+序号 & 6 & 7 & 8 & 9 & 10\\
+\midrule
+$l$ & 20.43 & 20.39 & 20.30 & 20.40 & 20.43\\
+$v$ & $+0.026$ & $-0.014$ & $-0.104$ & $-0.004$ & $+0.026$\\
+\midrule
+序号 & 11 & 12 & 13 & 14 & 15\\
+\midrule
+$l$ & 20.42 & 20.41 & 20.39 & 20.39 & 20.40\\
+$v$ & $+0.016$ & $+0.006$ & $-0.014$ & $-0.014$ & $-0.004$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\jieda 由表得
+\begin{equation*}
+    \bar{x}=20.404,	\sigma=\sqrt{\frac{0.0150}{14}}=0.033,	3\sigma=0.099
+\end{equation*}
+根据 $3\sigma$ 准则，第八个测得值的残余误差为
+\begin{equation*}
+    |v_8|=0.104>0.099
+\end{equation*}
+故第八个测得值含有粗大误差，应予剔除。删除后重新计算得
+\begin{equation*}
+    \bar{x}'=20.411,	\sigma'=\sqrt{\frac{0.00337}{13}}=0.016,	3\sigma'=0.048
+\end{equation*}
+剩下的 $14$ 个测得值的残余误差均满足 $|v_i'|<3\sigma'$，故可认为这些测得值不再含有粗大误差。
+
+\problem{例2-21}
+\timu 试判断例2-20中是否含有粗大误差。
+
+\jieda 首先怀疑第八测得值含有粗大误差，将其剔除。然后根据表2-11中剩下的 $14$ 个测量值计算平均值和标准差，得
+\begin{equation*}
+    \bar{x}=20.411,	\sigma=0.016
+\end{equation*}
+选取显著度 $\alpha=0.05$，已知 $n=15$，查表得 $K(15,0.05)=2.24$，则
+\begin{equation*}
+    K\sigma=2.24\times0.016=0.036
+\end{equation*}
+因
+\begin{equation*}
+    |x_8-\bar{x}|=|20.30-20.411|=0.111>0.036
+\end{equation*}
+故第八测量值含有粗大误差，应予剔除。然后对剩下 $14$ 个测量值进行判断，可知这些测量值不再含有粗大误差。
+
+\problem{例2-22}
+\timu 用例2-20测得值，试判断该测量列中的测得值是否含有粗大误差。
+
+\jieda 计算得 $\bar{x}=20.404$，$\sigma=0.033$。按测得值大小顺序排列有 $x_{(1)}=20.30$，$x_{(15)}=20.43$。首先判断 $x_{(1)}$ 是否含有粗大误差：
+\begin{equation*}
+    g_{(1)}=\frac{20.404-20.30}{0.033}=3.15
+\end{equation*}
+查表得 $g_0(15,0.05)=2.41$，故
+\begin{equation*}
+    g_{(1)}=3.15>g_0(15,0.05)=2.41
+\end{equation*}
+所以第八个测得值含有粗大误差，应予剔除。对剩下 $14$ 个数据再判别，得 $g_{(15)}=1.18<g_0(14,0.05)=2.37$，故其余测得值不含粗大误差。
+
+\newpage
+
+\problem{例2-23}
+\timu 同例2-20测量数据，将 $x_i$ 排成顺序量，按狄克松准则判断粗大误差。
+
+\begin{center}
+\scriptsize
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{c|ccccccccccccccc}
+\toprule
+$x_i$ & 20.30 & 20.39 & 20.39 & 20.39 & 20.40 & 20.40 & 20.40 & 20.41 & 20.42 & 20.42 & 20.42 & 20.43 & 20.43 & 20.43 & 20.43\\
+顺序号 $x_{(i)}$ & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14 & 15\\
+顺序号 $x'_{(i)}$ & -- & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\jieda 首先判断最大值 $x_{(15)}$。因 $n=15$，按式计算统计量
+\begin{equation*}
+    r_{22}=\frac{x_{(15)}-x_{(13)}}{x_{(15)}-x_{(3)}}=\frac{20.43-20.43}{20.43-20.39}=0
+\end{equation*}
+查表得 $r_0(15,0.05)=0.525$，故 $x_{(15)}$ 不含粗大误差。再判断最小值 $x_{(1)}$：
+\begin{equation*}
+    r_{22}=\frac{x_{(1)}-x_{(3)}}{x_{(1)}-x_{(13)}}=\frac{20.30-20.39}{20.30-20.43}=0.692
+\end{equation*}
+因 $r_{22}>r_0=0.525$，故 $x_{(1)}$ 含有粗大误差，应予剔除。剩下 $14$ 个数据再判别，可认为不再含有粗大误差。
+
+\problem{例2-24}
+
+\timu 对某一轴径等精度测量 $9$ 次，得到下表数据，求测量结果。
+
+\begin{center}
+\scriptsize
+\setlength{\tabcolsep}{6pt}
+\begin{tabular}{c|ccccccccc}
+\toprule
+序号 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9\\
+\midrule
+$l_i/\mathrm{mm}$ & 24.774 & 24.778 & 24.771 & 24.780 & 24.772 & 24.777 & 24.773 & 24.775 & 24.774\\
+$v_i/\mathrm{mm}$ & $-0.001$ & $+0.003$ & $-0.004$ & $+0.005$ & $-0.003$ & $+0.002$ & $-0.002$ & 0 & $-0.001$\\
+$v_i^2/\mathrm{mm}^2$ & 0.000001 & 0.000009 & 0.000016 & 0.000025 & 0.000009 & 0.000004 & 0.000004 & 0 & 0.000001\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\jieda 假定该测量列不存在固定的系统误差，则可按下列步骤求测量结果。
+
+\begin{enumerate}[label=\arabic*.]
+    \item 求算术平均值
+
+    测量列的算术平均值 $\bar{x}$ 为
+    \begin{equation*}
+        \bar{x}
+        =
+        \frac{\displaystyle\sum_{i=1}^{9}l_i}{n}
+        =
+        \frac{222.974}{9}\,\mathrm{mm}
+        =
+        24.7749\,\mathrm{mm}
+        \approx24.775\,\mathrm{mm}
+    \end{equation*}
+
+    \item 求残余误差
+
+    各测得值的残余误差 $v_i=l_i-\bar{x}$，并列入表中。
+\newpage
+    \item 校核算术平均值及其残余误差
+
+    根据残余误差代数和校核规则，现用规则 $2$ 进行校核，因
+    \begin{equation*}
+        A=0.001\,\mathrm{mm},\qquad n=9
+    \end{equation*}
+    由上表知
+    \begin{equation*}
+        \left|\sum_{i=1}^{9}v_i\right|
+        =
+        0.001\,\mathrm{mm}
+        <
+        \left(\frac{n}{2}-0.5\right)A
+        =
+        4\times0.001\,\mathrm{mm}
+        =
+        0.004\,\mathrm{mm}
+    \end{equation*}
+    故以上计算正确。若发现计算有误，应重新进行上述计算和校核。
+
+    \item 判断系统误差
+
+    根据残余误差观察法，由上表可以看出误差符号大体上正负相间，且无显著变化规律，因此可判断该测量列无变化的系统误差存在。
+
+    若按残余误差校核法，因 $n=9$，则
+    \begin{equation*}
+        K=\frac{n+1}{2}=5
+    \end{equation*}
+    \begin{equation*}
+        \Delta
+        =
+        \sum_{i=1}^{5}v_i-\sum_{j=6}^{9}v_j
+        =
+        [0-(-0.001)]\,\mathrm{mm}
+        =
+        0.001\,\mathrm{mm}
+    \end{equation*}
+    因差值 $A$ 较小，故也可判断该测量列无变化的系统误差存在。
+
+    \item 求测量列单次测量的标准差
+
+    根据贝塞尔公式或别捷尔斯公式，求得测量列单次测量的标准差 $\sigma$ 为
+    \begin{equation*}
+        \sigma
+        =
+        \sqrt{\frac{\displaystyle\sum_{i=1}^{9}v_i^2}{n-1}}
+        =
+        \sqrt{\frac{0.000069}{8}}\,\mathrm{mm}
+        =
+        0.0029\,\mathrm{mm}
+    \end{equation*}
+    \begin{equation*}
+        \sigma'
+        =
+        1.253
+        \frac{\displaystyle\sum_{i=1}^{n}|v_i|}
+        {\sqrt{n(n-1)}}
+        =
+        1.253\times
+        \frac{0.021}{\sqrt{9\times8}}\,\mathrm{mm}
+        =
+        0.0031\,\mathrm{mm}
+    \end{equation*}
+    用两种方法计算的标准差比值为
+    \begin{equation*}
+        \frac{\sigma'}{\sigma}
+        =
+        \frac{0.0031}{0.0029}
+        =
+        1.069
+        =
+        1+u
+    \end{equation*}
+    \begin{equation*}
+        u=0.069
+    \end{equation*}
+    因
+    \begin{equation*}
+        |u|
+        =
+        0.069
+        <
+        \frac{2}{\sqrt{n-1}}
+        =
+        \frac{2}{\sqrt{8}}
+        \approx0.707
+    \end{equation*}
+    故同样可判断该测量列无系统误差存在。
+
+    \item 判别粗大误差
+
+    根据 $3\sigma$ 判别准则的适用特点，本实例测量轴径的次数较少，因而不采用 $3\sigma$ 准则来判别粗大误差。
+
+    若按格罗布斯判别准则，将测得值按大小顺序排列后有
+    \begin{equation*}
+        x_{(1)}=24.771\,\mathrm{mm},
+        \qquad
+        x_{(9)}=24.780\,\mathrm{mm}
+    \end{equation*}
+    \begin{equation*}
+        x_{(2)}-x_{(1)}
+        =
+        24.775\,\mathrm{mm}
+        -
+        24.771\,\mathrm{mm}
+        =
+        0.004\,\mathrm{mm}
+    \end{equation*}
+    \begin{equation*}
+        x_{(9)}-x_{(8)}
+        =
+        24.780\,\mathrm{mm}
+        -
+        24.775\,\mathrm{mm}
+        =
+        0.005\,\mathrm{mm}
+    \end{equation*}
+
+    首先判断 $x_{(9)}$ 是否含有粗大误差：
+    \begin{equation*}
+        g_{(9)}
+        =
+        \frac{24.780-24.775}{0.0029}
+        =
+        1.72
+    \end{equation*}
+    查表得
+    \begin{equation*}
+        g_{(9)}(9,0.05)=2.11
+    \end{equation*}
+    因
+    \begin{equation*}
+        g_{(9)}=1.70<g_{(9)}(9,0.05)=2.11,
+        \qquad
+        \text{且}\quad
+        g_{(1)}<g_{(9)}
+    \end{equation*}
+    故可判断测量列不存在粗大误差。
+
+    若发现测量列存在粗大误差，应将含有粗大误差的测得值剔除，然后再按上述步骤重新计算，直至所有测得值皆不包含粗大误差时为止。
+
+    \item 求算术平均值的标准差
+
+    计算 $\sigma_{\bar{x}}$ 得
+    \begin{equation*}
+        \sigma_{\bar{x}}
+        =
+        \frac{\sigma}{\sqrt{n}}
+        =
+        \frac{0.0029}{\sqrt{9}}\,\mathrm{mm}
+        \approx0.001\,\mathrm{mm}
+    \end{equation*}
+
+    \item 求算术平均值的极限误差
+
+    因为测量列的测量次数较少，算术平均值的极限误差按 $t$ 分布计算。
+
+    已知 $\nu=n-1=8$，取 $\alpha=0.05$，查表得
+    \begin{equation*}
+        t_{\alpha}=2.31
+    \end{equation*}
+    求得算术平均值的极限误差 $\delta_{\lim}\bar{x}$ 为
+    \begin{equation*}
+        \delta_{\lim}\bar{x}
+        =
+        \pm t_{\alpha}\sigma_{\bar{x}}
+        =
+        \pm2.31\times0.001\,\mathrm{mm}
+        =
+        \pm0.0023\,\mathrm{mm}
+    \end{equation*}
+
+    \item 写出最后测量结果
+
+    最后测量结果通常用算术平均值及其极限误差来表示，即
+    \begin{equation*}
+        L
+        =
+        \bar{x}+\delta_{\lim}\bar{x}
+        =
+        (24.775\pm0.0023)\,\mathrm{mm}
+    \end{equation*}
+\end{enumerate}
+
+\newpage
+
+\problem{例2-25}
+\timu 对某一角度进行 $6$ 组不等精度测量，各组的单次测量均为等精度测量，其测量结果为：
+\begin{equation*}
+\begin{aligned}
+    \text{测 }6\text{ 次得 }\alpha_1
+    &=75^\circ18'06'',\qquad
+    \text{测 }30\text{ 次得 }\alpha_2
+    &=75^\circ18'10'',\\
+    \text{测 }24\text{ 次得 }\alpha_3
+    &=75^\circ18'08'',\qquad
+    \text{测 }12\text{ 次得 }\alpha_4
+    &=75^\circ18'16'',\\
+    \text{测 }12\text{ 次得 }\alpha_5
+    &=75^\circ18'13'',\qquad
+    \text{测 }36\text{ 次得 }\alpha_6
+    &=75^\circ18'09''
+\end{aligned}
+\end{equation*}
+求最后测量结果。
+
+\jieda 根据测量次数确定各组权：
+\begin{equation*}
+    p_1:p_2:p_3:p_4:p_5:p_6=1:5:4:2:2:6,
+    \qquad
+    \sum_{i=1}^{6}p_i=20
+\end{equation*}
+选取参考值 $\alpha_0=75^\circ18'06''$，则
+\begin{equation*}
+    \bar{\alpha}=75^\circ18'06''+\frac{1\times0''+5\times4''+4\times2''+2\times10''+2\times7''+6\times3''}{20}=75^\circ18'10''
+\end{equation*}
+残余误差为
+\begin{equation*}
+    v_1=-4'',	 v_2=0,	 v_3=-2'',	 v_4=6'',	 v_5=3'',	 v_6=-1''
+\end{equation*}
+并有 $\sum p_iv_i=0$，故计算正确。加权算术平均值标准差为
+\begin{equation*}
+    \sigma_{\bar{x}}=
+    \sqrt{\frac{1\times(4'')^2+5\times0''+4\times(2'')^2+2\times(6'')^2+2\times(3'')^2+6\times(1'')^2}{(6-1)\times20}}
+    =1.1''
+\end{equation*}
+取置信系数 $t=3$，则极限误差为
+\begin{equation*}
+    \delta_{\lim}\bar{x}=\pm3\sigma_{\bar{x}}=\pm3.3''
+\end{equation*}
+最后测量结果为
+\begin{equation*}
+    \alpha=\bar{\alpha}+\delta_{\lim}\bar{x}=75^\circ18'10''\pm3.3''
+\end{equation*}
+
+\newpage
+
+\problem{例2-26}
+\timu 电子电量 $e$ 与质量 $m$ 比值 $e/m$ 的两次观测结果为
+\begin{equation*}
+    x_1\pm\sigma_1=1.75080\pm0.00042,
+    \qquad
+    x_2\pm\sigma_2=1.75059\pm0.00036
+\end{equation*}
+单位为 $10^{11}\,\mathrm{C/kg}$。两次观测结果不存在系统误差和粗大误差，求最后的测量结果。
+
+\jieda 首先根据两次测量的标准差求权：
+\begin{equation*}
+    p_1:p_2=\frac{1}{\sigma_1^2}:\frac{1}{\sigma_2^2}
+    =\frac{1}{0.00042^2}:\frac{1}{0.00036^2}=36:49
+\end{equation*}
+取 $p_1=36$，$p_2=49$，则加权算术平均值为
+\begin{equation*}
+    \bar{x}=\frac{x_1p_1+x_2p_2}{p_1+p_2}
+    =\frac{1.75080\times36+1.75059\times49}{36+49}\times10^{11}\,\mathrm{C/kg}
+    =1.75068\times10^{11}\,\mathrm{C/kg}
+\end{equation*}
+残余误差为
+\begin{equation*}
+    v_1=0.00012\times10^{11}\,\mathrm{C/kg},
+    \qquad
+    v_2=-0.00009\times10^{11}\,\mathrm{C/kg}
+\end{equation*}
+加权平均值的标准差为
+\begin{equation*}
+    \sigma_{\bar{x}}=\sigma_{x_1}\sqrt{\frac{p_1}{p_1+p_2}}
+    =0.00042\sqrt{\frac{36}{36+49}}\times10^{11}\,\mathrm{C/kg}
+    =0.00027\times10^{11}\,\mathrm{C/kg}
+\end{equation*}
+若取置信系数 $t=3$，则最后极限误差为
+\begin{equation*}
+    \delta_{\lim}\bar{x}=\pm3\sigma_{\bar{x}}=\pm0.00081\times10^{11}\,\mathrm{C/kg}
+\end{equation*}
+最后测量结果为
+\begin{equation*}
+    x=\bar{x}+\delta_{\lim}\bar{x}=(1.75068\times10^{11}\pm0.00081\times10^{11})\,\mathrm{C/kg}
+\end{equation*}
+
+\section*{第三章\quad 误差的合成与分配}
+
+\problem{例3-1}
+\timu 用弓高弦长法间接测量大直径 $D$，直接测得弓高 $h$ 和弦长 $s$。若 $h=50\,\mathrm{mm}$，$\Delta h=-0.1\,\mathrm{mm}$，$s=500\,\mathrm{mm}$，$\Delta s=1\,\mathrm{mm}$，求测量结果。
+
+\jieda 由几何关系得
+\begin{equation*}
+    D=\frac{s^2}{4h}+h
+\end{equation*}
+若不考虑测得值的系统误差，则
+\begin{equation*}
+    D_0=\frac{500^2}{4\times50}\,\mathrm{mm}+50\,\mathrm{mm}=1300\,\mathrm{mm}
+\end{equation*}
+直径 $D$ 的系统误差为
+\begin{equation*}
+    \Delta D=\frac{\partial f}{\partial s}\Delta s+\frac{\partial f}{\partial h}\Delta h
+    =\frac{s}{2h}\Delta s-\left(\frac{s^2}{4h^2}-1\right)\Delta h
+\end{equation*}
+其中
+\begin{equation*}
+    \frac{\partial f}{\partial s}=\frac{500}{2\times50}=5,
+    \qquad
+    \frac{\partial f}{\partial h}=-\left(\frac{500^2}{4\times50^2}-1\right)=-24
+\end{equation*}
+故
+\begin{equation*}
+    \Delta D=5\times1\,\mathrm{mm}-24\times(-0.1)\,\mathrm{mm}=7.4\,\mathrm{mm}
+\end{equation*}
+通过修正可消除直径的系统误差，故被测直径的实际尺寸为
+\begin{equation*}
+    D=D_0-\Delta D=1300\,\mathrm{mm}-7.4\,\mathrm{mm}=1292.6\,\mathrm{mm}
+\end{equation*}
+
+\problem{例3-2}
+\timu 用某直流电桥测量电阻 $R_x$。当三个桥臂平衡时，$R_1=100.0\,\Omega$，$R_2=50.0\,\Omega$，$R_3=25.0\,\Omega$，且 $\Delta R_1=0.2\,\Omega$，$\Delta R_2=0.1\,\Omega$，$\Delta R_3=0.2\,\Omega$，求电阻 $R_x$ 的测量结果。
+
+\jieda 电桥平衡时
+\begin{equation*}
+    R_x=\frac{R_1}{R_2}R_3
+\end{equation*}
+不考虑测得值的系统误差时，
+\begin{equation*}
+    R_0=\frac{100}{50}\times25\,\Omega=50\,\Omega
+\end{equation*}
+误差传递系数为
+\begin{equation*}
+    \frac{\partial f}{\partial R_1}=\frac{R_3}{R_2}=0.5,
+    \qquad
+    \frac{\partial f}{\partial R_2}=-\frac{R_1R_3}{R_2^2}=-1,
+    \qquad
+    \frac{\partial f}{\partial R_3}=\frac{R_1}{R_2}=2
+\end{equation*}
+所以
+\begin{equation*}
+    \Delta R_x=0.5\times0.2-1\times0.1+2\times0.2=0.4\,\Omega
+\end{equation*}
+将系统误差修正后，被测电阻为
+\begin{equation*}
+    R_x=R_0-\Delta R_x=50\,\Omega-0.4\,\Omega=49.6\,\Omega
+\end{equation*}
+
+\problem{例3-3}
+\timu 对例3-1用弓高弦长法测量大直径 $D$，已知
+$h=50\,\mathrm{mm}$，$s=500\,\mathrm{mm}$，$\delta_{\lim}s=\pm0.1\,\mathrm{mm}$，$\delta_{\lim}h=\pm0.05\,\mathrm{mm}$，求直径的极限误差。
+
+\jieda 由例3-1知 $D=s^2/(4h)+h$，根据极限误差合成公式，有
+\begin{equation*}
+\begin{aligned}
+    \delta_{\lim}D
+    &=\pm\sqrt{\left(\frac{\partial f}{\partial s}\right)^2\delta_{\lim}^2s+
+    \left(\frac{\partial f}{\partial h}\right)^2\delta_{\lim}^2h}\\
+    &=\pm\sqrt{\left(\frac{500}{2\times50}\right)^2\times0.1^2+
+    \left(\frac{500^2}{4\times50^2}-1\right)^2\times0.05^2}\,\mathrm{mm}\\
+    &=\pm\sqrt{1.69}\,\mathrm{mm}=\pm1.3\,\mathrm{mm}
+\end{aligned}
+\end{equation*}
+故直径的最后结果为
+\begin{equation*}
+    D=1292.6\,\mathrm{mm}\pm1.3\,\mathrm{mm}
+\end{equation*}
+
+\problem{例3-4}
+\timu 在例3-2中，若各个电阻测量存在随机误差且互相独立，已知
+$\sigma_{R_1}=0.4\,\Omega$，$\sigma_{R_2}=0.2\,\Omega$，$\sigma_{R_3}=0.4\,\Omega$，求 $R_x$ 的标准差。
+
+\jieda 根据函数随机误差合成公式，
+\begin{equation*}
+\begin{aligned}
+    \sigma_{R_x}
+    &=\sqrt{\left(\frac{\partial f}{\partial R_1}\right)^2\sigma_{R_1}^2+
+    \left(\frac{\partial f}{\partial R_2}\right)^2\sigma_{R_2}^2+
+    \left(\frac{\partial f}{\partial R_3}\right)^2\sigma_{R_3}^2}\\
+    &=\sqrt{0.5^2\times0.4^2+(-1)^2\times0.2^2+2^2\times0.4^2}\,\Omega\\
+    &\approx0.82\,\Omega
+\end{aligned}
+\end{equation*}
+由例3-2结果和 $\sigma_{R_x}$ 可得
+\begin{equation*}
+    R_x=(50-0.4)\,\Omega\pm3\times0.82\,\Omega\approx49.6\,\Omega\pm2.5\,\Omega
+\end{equation*}
+
+\problem{例3-5}
+\timu 在万能工具显微镜上用影像法测量某一平面工件的长度共两次，测得 $l_1=50.026\,\mathrm{mm}$，$l_2=50.025\,\mathrm{mm}$。已知工件高度 $H=80\,\mathrm{mm}$，求测量结果及其极限误差。
+
+\begin{center}
+\small
+\setlength{\tabcolsep}{6pt}
+\begin{tabular}{c|c|c|c|c}
+\toprule
+序号 & 误差因素 & 随机误差$/\mu\mathrm{m}$ & 未定系统误差$/\mu\mathrm{m}$ & 备注\\
+\midrule
+1 & 阿贝误差 & -- & $\pm1$ & --\\
+2 & 光学刻尺刻度误差 & -- & $\pm1.25$ & 加修正值时不计入总误差\\
+3 & 温度误差 & -- & $\pm0.35$ & --\\
+4 & 读数误差 & $\pm0.8$ & -- & --\\
+5 & 瞄准误差 & $\pm1$ & -- & --\\
+6 & 光学刻尺检定误差 & -- & $\pm0.5$ & 不加修正值时不计入总误差\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\jieda 两次测量结果平均值为
+\begin{equation*}
+    L_0=\frac{1}{2}(l_1+l_2)=\frac{1}{2}(50.026+50.025)\,\mathrm{mm}=50.0255\,\mathrm{mm}
+\end{equation*}
+查刻度误差修正值 $\Delta=-0.0008\,\mathrm{mm}$，修正后
+\begin{equation*}
+    L=L_0+\Delta=50.0255\,\mathrm{mm}-0.0008\,\mathrm{mm}=50.0247\,\mathrm{mm}
+\end{equation*}
+未修正刻尺刻度误差时
+\begin{equation*}
+    \delta=\pm\sqrt{\frac{1}{2}(1^2+0.8^2)+(1^2+1.25^2+0.35^2)}\,\mu\mathrm{m}
+    =\pm1.87\,\mu\mathrm{m}\approx\pm1.9\,\mu\mathrm{m}
+\end{equation*}
+故 $L_0=(50.0255\pm0.0019)\,\mathrm{mm}$。已修正刻尺刻度误差时
+\begin{equation*}
+    \delta=\pm\sqrt{\frac{1}{2}(1^2+0.8^2)+(1^2+0.35^2+0.5^2)}\,\mu\mathrm{m}
+    =\pm1.48\,\mu\mathrm{m}\approx\pm1.5\,\mu\mathrm{m}
+\end{equation*}
+故测量结果为
+\begin{equation*}
+    L=(50.0247\pm0.0015)\,\mathrm{mm}
+\end{equation*}
+
+\problem{例3-6}
+\timu 用 TC328B 型天平，配用三等标准砝码称一不锈钢球质量，一次称量得钢球质量 $M=14.0040\,\mathrm{g}$，求测量结果的标准差。
+
+\jieda 天平示值变动性所引起的随机误差为 $\sigma_1=0.05\,\mathrm{mg}$。标准砝码误差中 $10\,\mathrm{g}$ 砝码标准差为 $u_{11}=0.4\,\mathrm{mg}$，$2\,\mathrm{g}$ 砝码标准差为 $u_{12}=0.2\,\mathrm{mg}$，则
+\begin{equation*}
+    u_1=\sqrt{u_{11}^2+2u_{12}^2}=\sqrt{0.4^2+2\times0.2^2}\,\mathrm{mg}\approx0.5\,\mathrm{mg}
+\end{equation*}
+天平示值误差对应的标准差为
+\begin{equation*}
+    u_2=2\times0.1\times\frac{40}{100}\times\frac{1}{3}\,\mathrm{mg}\approx0.03\,\mathrm{mg}
+\end{equation*}
+于是测量结果的总标准差为
+\begin{equation*}
+    \sigma=\sqrt{\sigma_1^2+u_1^2+u_2^2}
+    =\sqrt{0.05^2+0.5^2+0.03^2}\,\mathrm{mg}\approx0.5\,\mathrm{mg}
+\end{equation*}
+最后测量结果可表示为
+\begin{equation*}
+    M=14.0040\,\mathrm{g}\pm0.0005\,\mathrm{g}
+\end{equation*}
+
+\problem{例3-7}
+\timu 测量一圆柱体体积，可间接测量圆柱直径 $D$ 及高度 $h$，根据 $V=\pi D^2h/4$ 求体积 $V$。若要求测量体积的相对误差为 $1\%$，已知 $D_0=20\,\mathrm{mm}$，$h_0=50\,\mathrm{mm}$，试确定 $D$ 和 $h$ 的测量精度。
+
+\jieda 取 $\pi=3.1416$，可得
+\begin{equation*}
+    V_0=\frac{\pi D_0^2}{4}h_0=\frac{3.1416\times20^2}{4}\times50\,\mathrm{mm}^3=15708\,\mathrm{mm}^3
+\end{equation*}
+体积绝对误差为 $\delta_V=V_0\times1\%=157.08\,\mathrm{mm}^3$。按等作用原则分配误差，有
+\begin{equation*}
+    \delta_D=\frac{\delta_V}{\sqrt{2}}\frac{1}{\partial V/\partial D}
+    =\frac{157.08}{\sqrt{2}}\frac{2}{\pi\times20\times50}\,\mathrm{mm}=0.071\,\mathrm{mm}
+\end{equation*}
+\begin{equation*}
+    \delta_h=\frac{\delta_V}{\sqrt{2}}\frac{1}{\partial V/\partial h}
+    =\frac{157.08}{\sqrt{2}}\frac{4}{\pi\times20^2}\,\mathrm{mm}=0.351\,\mathrm{mm}
+\end{equation*}
+由此可知，测量直径 $D$ 的精度需要高些，测量高度 $h$ 的精度可以低些。
+
+\newpage
+
+\problem{例3-8}
+\timu 测量某箱体零件的轴心距 $L$，有三种方案：$L=L_1-\frac{1}{2}d_1-\frac{1}{2}d_2$，$L=L_2+\frac{1}{2}d_1+\frac{1}{2}d_2$，$L=\frac{1}{2}L_1+\frac{1}{2}L_2$。若 $\sigma_{d1}=5\,\mu\mathrm{m}$，$\sigma_{d2}=7\,\mu\mathrm{m}$，$\sigma_{L1}=8\,\mu\mathrm{m}$，$\sigma_{L2}=10\,\mu\mathrm{m}$，试选择最佳测量方案。
+
+\jieda 三种方法的函数标准差分别为
+
+第一种方法
+\begin{equation*}
+\begin{aligned}
+    \sigma_L
+    &=
+    \sqrt{
+    \left(\frac{\partial f}{\partial L_1}\right)^2\sigma_{L_1}^2
+    +
+    \left(\frac{\partial f}{\partial d_1}\right)^2\sigma_{d_1}^2
+    +
+    \left(\frac{\partial f}{\partial d_2}\right)^2\sigma_{d_2}^2
+    }\\
+    &=
+    \sqrt{
+    \sigma_{L_1}^2
+    +
+    \left(\frac{1}{2}\right)^2\sigma_{d_1}^2
+    +
+    \left(\frac{1}{2}\right)^2\sigma_{d_2}^2
+    }\\
+    &=
+    \sqrt{8^2+2.5^2+3.5^2}\,\mu\mathrm{m}
+    =
+    9.1\,\mu\mathrm{m}
+\end{aligned}
+\end{equation*}
+
+第二种方法
+\begin{equation*}
+\begin{aligned}
+    \sigma_L
+    &=
+    \sqrt{
+    \left(\frac{\partial f}{\partial L_2}\right)^2\sigma_{L_2}^2
+    +
+    \left(\frac{\partial f}{\partial d_1}\right)^2\sigma_{d_1}^2
+    +
+    \left(\frac{\partial f}{\partial d_2}\right)^2\sigma_{d_2}^2
+    }\\
+    &=
+    \sqrt{
+    \sigma_{L_2}^2
+    +
+    \left(\frac{1}{2}\right)^2\sigma_{d_1}^2
+    +
+    \left(\frac{1}{2}\right)^2\sigma_{d_2}^2
+    }\\
+    &=
+    \sqrt{10^2+2.5^2+3.5^2}\,\mu\mathrm{m}
+    =
+    10.9\,\mu\mathrm{m}
+\end{aligned}
+\end{equation*}
+
+第三种方法
+\begin{equation*}
+\begin{aligned}
+    \sigma_L
+    &=
+    \sqrt{
+    \left(\frac{\partial f}{\partial d_1}\right)^2\sigma_{d_1}^2
+    +
+    \left(\frac{\partial f}{\partial d_2}\right)^2\sigma_{d_2}^2
+    }\\
+    &=
+    \sqrt{
+    \left(\frac{1}{2}\right)^2\sigma_{d_1}^2
+    +
+    \left(\frac{1}{2}\right)^2\sigma_{d_2}^2
+    }\\
+    &=
+    \sqrt{4^2+5^2}\,\mu\mathrm{m}
+    =
+    6.4\,\mu\mathrm{m}
+\end{aligned}
+\end{equation*}
+由计算结果可知，第三种方法误差最小，故应选第三种测量方案。
+
+\problem{例3-9}
+\timu 对例3-3的弓高弦长法测量直径 $D$，已知 $D=s^2/(4h)+h$，试确定最佳测量方案。
+
+\jieda 直径标准差为
+\begin{equation*}
+    \sigma_D=\sqrt{\left(\frac{s}{2h}\right)^2\sigma_s^2+
+    \left(\frac{s^2}{4h^2}-1\right)^2\sigma_h^2}
+\end{equation*}
+欲使 $\sigma_D$ 最小，应使误差传递系数尽量小。若使 $s/(2h)=0$，则需 $s=0$，无实际意义；若使 $s^2/(4h^2)-1=0$，则 $s=2h$，即要求测量直径。由此可知，弓高越接近 $s/2$，直径测量误差越小。
+
+\problem{例3-10}
+\timu 测量金属导线的电导率 $\gamma$，已知函数式为
+\begin{equation*}
+    \gamma=\frac{4l}{\pi d^2R}
+\end{equation*}
+其中 $l,d,R$ 分别为导线长度、直径和电阻，试分析最佳测量方案。
+
+\jieda 电导率标准差为
+\begin{equation*}
+    \sigma_{\gamma}=\sqrt{
+    \left(\frac{4}{\pi d^2R}\right)^2\sigma_l^2+
+    \left(\frac{8l}{\pi d^3R}\right)^2\sigma_d^2+
+    \left(\frac{4l}{\pi d^2R^2}\right)^2\sigma_R^2}
+\end{equation*}
+由误差传递系数可知，为减小 $\sigma_{\gamma}$，宜选用长度较小、直径较大的金属导线，即用短而粗的导线测量金属电导率。同时导线直径的标准差对电导率影响较大，故需用高精度方法测量导线直径。
+
+\section*{第四章\quad 测量不确定度}
+
+\problem{例4-1}
+
+\timu 某校准证书说明，标称值 $1\,\mathrm{kg}$ 的标准砝码的质量 $m_s$ 为 $1000.000325\,\mathrm{g}$，该值的测量不确定度按三倍标准差计算为 $240\,\mu\mathrm{g}$，求该砝码质量的标准不确定度。
+
+\jieda 已知测量不确定度 $U_{m_s}=240\,\mu\mathrm{g}$，$k=3$，故标准不确定度为
+\begin{equation*}
+    u_{m_s}
+    =
+    \frac{U_{m_s}}{k}
+    =
+    \frac{240\,\mu\mathrm{g}}{3}
+    =
+    80\,\mu\mathrm{g}
+\end{equation*}
+
+\problem{例4-2}
+
+\timu 由于用查得纯铜在温度 $20^\circ\mathrm{C}$ 时的线膨胀系数 $\alpha$ 为 $16.52\times10^{-6}/^\circ\mathrm{C}$，并已知该系数的误差范围为 $\pm0.4\times10^{-6}/^\circ\mathrm{C}$，求线膨胀系数 $\alpha$ 的标准不确定度。
+
+\jieda 根据手册提供的信息可认为 $\alpha$ 的值以等概率落于区间 $(16.52-0.4)\times10^{-6}/^\circ\mathrm{C}$ 至 $(16.52+0.4)\times10^{-6}/^\circ\mathrm{C}$ 内，且不可能位于此区间之外，故假设 $\alpha$ 服从均匀分布。已知其区间半宽 $a=0.4\times10^{-6}/^\circ\mathrm{C}$，则纯铜在温度为 $20^\circ\mathrm{C}$ 的线膨胀系数 $\alpha$ 的标准不确定度为
+\begin{equation*}
+    u_{\alpha}
+    =
+    \frac{a}{\sqrt{3}}
+    =
+    \frac{0.4\times10^{-6}/^\circ\mathrm{C}}{\sqrt{3}}
+    =
+    0.23\times10^{-6}/^\circ\mathrm{C}
+\end{equation*}
+
+\problem{例4-3}
+
+\timu 用标准数字电压表在标准条件下，对直流电压源 $10\,\mathrm{V}$ 点的输出电压值进行重复测量 $10$ 次，测得值如下：
+
+\begin{center}
+\scriptsize
+\setlength{\tabcolsep}{6pt}
+\begin{tabular}{c|cccccccccc}
+\toprule
+$n$ & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10\\
+\midrule
+$V_i$ & 10.000107 & 10.000103 & 10.000097 & 10.000111 & 10.000091 & 10.000108 & 10.000121 & 10.000101 & 10.000110 & 10.000094\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+已知标准电压表的示值误差按 $3$ 倍标准差计算为 $\pm3.5\times10^{-6}\times U_x$（$U_x$ 为标准电压表的读数，相对标准差为 $25\%$），$24\mathrm{h}$ 的稳定度不超过 $\pm15\,\mu\mathrm{V}$（按均匀分布，相对标准差为 $10\%$）。若用 $10$ 次测量的平均值作为电压测量的估计值，试分析电压测量的不确定度来源，并分别计算其标准不确定度和自由度。
+
+\jieda 根据题意，引起电压测量不确定度的主要来源有电压测量的重复性、标准电压表的示值误差及其稳定性，并相应标定不确定度的分量计算如下：
+
+\begin{enumerate}[label=(\arabic*)]
+    \item 电压测量重复性引起的标准不确定度 $u_1$
+
+    由 $10$ 次测量数据计算的平均值 $\bar{V}=10.000104\,\mathrm{V}$，用贝塞尔法计算单次测量的标准差为
+    \begin{equation*}
+        \sigma
+        =
+        \sqrt{
+        \frac{\displaystyle\sum_{i=1}^{10}(V_i-\bar{V})^2}{10-1}
+        }
+        =
+        0.000009\,\mathrm{V}
+        =
+        9\,\mu\mathrm{V}
+    \end{equation*}
+
+    平均值的标准差
+    \begin{equation*}
+        \sigma_{\bar{V}}
+        =
+        \frac{\sigma}{\sqrt{10}}
+        =
+        2.8\,\mu\mathrm{V}
+    \end{equation*}
+
+    电压测量重复性引起的标准不确定度 $u_1$ 的计算属 A 类评定，则 $u_1=\sigma_{\bar{V}}=2.8\,\mu\mathrm{V}$，其自由度 $\nu_1=10-1=9$。
+
+    \item 标准电压表示值误差引起的标准不确定度 $u_2$
+
+    标准电压表的示值误差按 $3$ 倍标准差计算，不确定度 $u_2$ 的计算属 B 类评定， $U_x=3.5\times10^{-6}\times10\,\mathrm{V}$，$k=3$，则标准不确定度为
+    \begin{equation*}
+        u_2
+        =
+        \frac{3.5\times10^{-6}\times10\,\mathrm{V}}{3}
+        =
+        1.17\times10^{-5}\,\mathrm{V}
+        =
+        11.7\,\mu\mathrm{V}
+    \end{equation*}
+
+    其相对标准差为 $25\%$，则自由度为
+    \begin{equation*}
+        \nu_2
+        =
+        \frac{1}{2\left(\dfrac{\sigma_{u_2}}{u_2}\right)^2}
+        =
+        \frac{1}{2\times(25\%)^2}
+        =
+        8
+    \end{equation*}
+
+    \item 标准电压表的稳定度引起的标准不确定度 $u_3$
+
+    标准电压表的稳定度按均匀分布，其不确定度 $u_3$ 属 B 类评定，根据式（4-3）计算标准不确定度为
+    \begin{equation*}
+        u_3
+        =
+        \frac{15\,\mu\mathrm{V}}{\sqrt{3}}
+        =
+        8.7\,\mu\mathrm{V}
+    \end{equation*}
+
+    其相对标准差为 $10\%$，则自由度为
+    \begin{equation*}
+        \nu_3
+        =
+        \frac{1}{2\left(\dfrac{\sigma_{u_3}}{u_3}\right)^2}
+        =
+        \frac{1}{2\times(10\%)^2}
+        =
+        50
+    \end{equation*}
+\end{enumerate}
+
+\problem{例4-4}
+
+\timu 已知被测量的估计值为 $20.0005\,\mathrm{mm}$，若有两种情况：
+
+\textcircled{1} 展伸不确定度 $U=0.00124\,\mathrm{mm}$；
+
+\textcircled{2} 展伸不确定度 $U=0.00123\,\mathrm{mm}$。要求对 $U$ 进行修约。
+
+\jieda 根据被测量的估计值，取 $0.0001\,\mathrm{mm}$ 作为 $U$ 的基本单位。
+
+\textcircled{1} $U=0.00124\,\mathrm{mm}$，其整数部分为 $12$，小数部分为 $0.4$，大于基本单位的 $1/3$，故舍去后整数单位加 $1$。修约后，$U=0.0013\,\mathrm{mm}$；
+
+\textcircled{2} $U=0.00123\,\mathrm{mm}$，其整数部分为 $12$，小数部分为 $0.3$，小于基本单位的 $1/3$，故舍去。修约后，$U=0.0012\,\mathrm{mm}$。
+
+\problem{例4-5}
+
+\timu 根据例4-3计算的各标准不确定度，并取置信概率 $P=95\%$，求电压测量的展伸不确定度及其自由度。
+
+\jieda 在例4-3中，已计算出各误差源的标准不确定度 $u_i$；由于不确定度的传递系数 $\left|\dfrac{\partial f}{\partial x_i}\right|=1$，故各个不确定度分量与其标准不确定度相等，即 $u_i=u_{x_i}$。因不确定度分量 $u_1$、$u_2$、$u_3$ 相互独立，则不确定度的相关系数 $\rho_{ij}=0$。计算电压测量的合成标准不确定度为
+\begin{equation*}
+    u_c
+    =
+    \sqrt{u_1^2+u_2^2+u_3^2}
+    =
+    \sqrt{(2.8)^2+(11.7)^2+(8.7)^2}\,\mu\mathrm{V}
+    =
+    15\,\mu\mathrm{V}
+\end{equation*}
+
+计算自由度得
+\begin{equation*}
+    \nu
+    =
+    \frac{u_c^4}
+    {
+    \dfrac{u_1^4}{\nu_1}
+    +
+    \dfrac{u_2^4}{\nu_2}
+    +
+    \dfrac{u_3^4}{\nu_3}
+    }
+    =
+    \frac{(15)^4}
+    {
+    \dfrac{(2.8)^4}{9}
+    +
+    \dfrac{(11.7)^4}{8}
+    +
+    \dfrac{(8.7)^4}{50}
+    }
+    =
+    20
+\end{equation*}
+
+根据置信概率 $P=95\%$，自由度 $\nu=20$，查 $t$ 分布表得 $t_{0.95}(20)=2.09$，即包含因子 $k=2.09$。于是，由电测量的展伸不确定度为
+\begin{equation*}
+    U
+    =
+    ku_c
+    =
+    2.09\times15\,\mu\mathrm{V}
+    =
+    31.35\,\mu\mathrm{V}
+\end{equation*}
+
+依据“三分之一准则”对展伸不确定度进行修约，得展伸不确定度 $U=32\,\mu\mathrm{V}$。
+
+最后的不确定度报告：电压测量结果为
+\begin{equation*}
+    V=(10.000104\pm0.000032)\,\mathrm{V}
+\end{equation*}
+
+说明：以上测量结果中 $\pm$ 符号后的数值是展伸不确定度 $U=32\,\mu\mathrm{V}$，是由合成标准不确定度 $u_c=0.000015\,\mathrm{V}$ 及包含因子 $k=2.09$ 确定的。对应的置信概率 $P=95\%$，自由度 $\nu=20$。
+
+
+\section*{第五章\quad 线性测量的参数最小二乘法处理}
+
+\problem{例5-1}
+
+\timu 已知任意温度 $t$ 时的铜棒长度 $y_t$、$0^\circ\mathrm{C}$ 时的铜棒长度 $y_0$ 和铜的线膨胀系数 $\alpha$ 具有线性关系
+\begin{equation*}
+    y_t=y_0(1+\alpha t)
+\end{equation*}
+现测得在不同温度 $t_i$ 下铜棒长度 $l_i$ 如下表，试估计 $y_0$ 和 $\alpha$ 的最可信赖值。
+
+\begin{center}
+\small
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{c|cccccc}
+\toprule
+$i$ & 1 & 2 & 3 & 4 & 5 & 6\\
+\midrule
+$t_i/{}^\circ\mathrm{C}$ & 10 & 20 & 25 & 30 & 40 & 45\\
+$l_i/\mathrm{mm}$ & 2000.36 & 2000.72 & 2000.80 & 2001.07 & 2001.48 & 2001.60\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\jieda 列出误差方程为
+\begin{equation*}
+    v_i=l_i-y_0(1+\alpha t_i),
+    \qquad i=1,2,\cdots,6
+\end{equation*}
+其中，$l_i$ 为在温度 $t_i$ 下铜棒长度的测得值，$\alpha$ 为铜的线膨胀系数。
+
+令
+\begin{equation*}
+    y_0=a,\qquad \alpha y_0=b
+\end{equation*}
+则误差方程可写为
+\begin{equation*}
+    v_i=l_i-(a+t_i b),
+    \qquad i=1,2,\cdots,6
+\end{equation*}
+
+为计算方便，将数据列表如下：
+
+\begin{center}
+\small
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{c|c|c|c|c}
+\toprule
+$i$ & $t_i/{}^\circ\mathrm{C}$ & $t_i^2/{}^\circ\mathrm{C}^2$ & $l_i/\mathrm{mm}$ & $t_i l_i/({}^\circ\mathrm{C}\cdot\mathrm{mm})$\\
+\midrule
+1 & 10 & 100 & 2000.36 & 20003.6\\
+2 & 20 & 400 & 2000.72 & 40014.4\\
+3 & 25 & 625 & 2000.80 & 50020.0\\
+4 & 30 & 900 & 2001.07 & 60032.1\\
+5 & 40 & 1600 & 2001.48 & 80059.2\\
+6 & 45 & 2025 & 2001.60 & 90072.0\\
+\midrule
+$\sum$ & 170 & 5650 & 12006.03 & 340201.3\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+根据误差方程，列出正规方程为
+\begin{equation*}
+\left\{
+\begin{aligned}
+    na+\sum_{i=1}^{6}t_i b&=\sum_{i=1}^{6}l_i\\
+    \sum_{i=1}^{6}t_i a+\sum_{i=1}^{6}t_i^2 b&=\sum_{i=1}^{6}t_i l_i
+\end{aligned}
+\right.
+\end{equation*}
+
+将表中数据代入，得
+\begin{equation*}
+\left\{
+\begin{aligned}
+    6a+170b&=12006.03\\
+    170a+5650b&=340201.3
+\end{aligned}
+\right.
+\end{equation*}
+
+解得
+\begin{equation*}
+    a\approx1999.97\,\mathrm{mm},
+    \qquad
+    b\approx0.03654\,\mathrm{mm}/{}^\circ\mathrm{C}
+\end{equation*}
+
+即
+\begin{equation*}
+    y_0=a=1999.97\,\mathrm{mm}
+\end{equation*}
+\begin{equation*}
+    \alpha=\frac{b}{y_0}
+    =
+    \frac{0.03654\,\mathrm{mm}/{}^\circ\mathrm{C}}{1999.97\,\mathrm{mm}}
+    \approx1.83\times10^{-5}/{}^\circ\mathrm{C}
+\end{equation*}
+
+按矩阵形式求解，则有
+\begin{equation*}
+    C=
+    \begin{pmatrix}
+        n & \displaystyle\sum_{i=1}^{6}t_i\\
+        \displaystyle\sum_{i=1}^{6}t_i & \displaystyle\sum_{i=1}^{6}t_i^2
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+        6 & 170\\
+        170 & 5650
+    \end{pmatrix}
+,\quad
+    C^{-1}\approx
+    \begin{pmatrix}
+        1.13 & -0.034\\
+        -0.034 & 0.0012
+    \end{pmatrix}
+\end{equation*}
+\begin{equation*}
+    A^{\mathrm{T}}L=
+    \begin{pmatrix}
+        \displaystyle\sum_{i=1}^{6}l_i\\
+        \displaystyle\sum_{i=1}^{6}t_i l_i
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+        12006.03\\
+        340201.3
+    \end{pmatrix}
+\end{equation*}
+
+因此
+\begin{equation*}
+    \hat{X}
+    =
+    \begin{pmatrix}
+        a\\
+        b
+    \end{pmatrix}
+    =
+    C^{-1}A^{\mathrm{T}}L
+    =
+    \begin{pmatrix}
+        1999.97\\
+        0.03654
+    \end{pmatrix}
+\end{equation*}
+
+所以
+\begin{equation*}
+    y_0=1999.97\,\mathrm{mm},
+    \qquad
+    \alpha\approx1.83\times10^{-5}/{}^\circ\mathrm{C}
+\end{equation*}
+
+因此，铜棒长度 $y_t$ 随温度 $t$ 的线性变化规律为
+\begin{equation*}
+    y_t=1999.97\left(1+1.83\times10^{-5}t\right)\,\mathrm{mm}
+\end{equation*}
+
+\problem{例5-2}
+
+\timu 某测量过程中误差方程式及相应的标准差如下：
+\begin{equation*}
+\left\{
+\begin{aligned}
+    v_1&=6.44-(x_1+x_2),        & \sigma_1&=0.06\\
+    v_2&=8.60-(x_1+2x_2),       & \sigma_2&=0.06\\
+    v_3&=10.81-(x_1+3x_2),      & \sigma_3&=0.08\\
+    v_4&=13.22-(x_1+4x_2),      & \sigma_4&=0.08\\
+    v_5&=15.27-(x_1+5x_2),      & \sigma_5&=0.08
+\end{aligned}
+\right.
+\end{equation*}
+试求 $x_1$、$x_2$ 的最小二乘法处理正规方程的解。
+
+\jieda 首先确定各式的权，由权与方差成反比可得
+\begin{equation*}
+    p_1:p_2:p_3:p_4:p_5
+    =
+    \frac{1}{\sigma_1^2}:
+    \frac{1}{\sigma_2^2}:
+    \frac{1}{\sigma_3^2}:
+    \frac{1}{\sigma_4^2}:
+    \frac{1}{\sigma_5^2}
+    =
+    16:16:9:9:9
+\end{equation*}
+
+取各式的权为
+\begin{equation*}
+    p_1=16,\qquad p_2=16,\qquad p_3=9,\qquad p_4=9,\qquad p_5=9
+\end{equation*}
+
+现用表格计算给出正规方程常数项和系数项：
+
+\begin{center}
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{c|c|c|c|c|c|c|c|c|c}
+\toprule
+$i$ & $a_1$ & $a_2$ & $p_i$ & $p_i a_1^2$ & $p_i a_2^2$ & $p_i a_1a_2$ & $l_i$ & $p_i a_1l_i$ & $p_i a_2l_i$\\
+\midrule
+1 & 1 & 1 & 16 & 16 & 16 & 16 & 6.44 & 103.04 & 103.04\\
+2 & 1 & 2 & 16 & 16 & 64 & 32 & 8.60 & 137.60 & 275.20\\
+3 & 1 & 3 & 9 & 9 & 81 & 27 & 10.81 & 97.29 & 291.87\\
+4 & 1 & 4 & 9 & 9 & 144 & 36 & 13.22 & 118.98 & 475.92\\
+5 & 1 & 5 & 9 & 9 & 225 & 45 & 15.27 & 137.43 & 687.15\\
+\midrule
+$\sum$ &  &  &  & 59 & 530 & 156 &  & 594.34 & 1833.18\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+可得正规方程为
+\begin{equation*}
+\left\{
+\begin{aligned}
+    59x_1+156x_2&=594.34\\
+    156x_1+530x_2&=1833.18
+\end{aligned}
+\right.
+\end{equation*}
+
+解得最小二乘法处理结果为
+\begin{equation*}
+    x_1\approx4.186,
+    \qquad
+    x_2\approx2.227
+\end{equation*}
+
+\problem{例5-3}
+
+\timu 试求例5-1中铜棒长度的测量精度。
+
+\jieda 已知残余误差方程为
+\begin{equation*}
+    v_i=
+    \left[
+    l_i-1999.97\left(1+1.83\times10^{-5}t_i\right)
+    \right]\mathrm{mm},
+    \qquad i=1,2,\cdots,6
+\end{equation*}
+
+将 $t_i$、$l_i$ 值代入上式，可得残余误差为
+\begin{equation*}
+\begin{aligned}
+    v_1&=
+    \left[
+    2000.36-1999.97\left(1+1.83\times10^{-5}\times10\right)
+    \right]\mathrm{mm}
+    \approx0.03\,\mathrm{mm}\\
+    v_2&=
+    \left[
+    2000.72-1999.97\left(1+1.83\times10^{-5}\times20\right)
+    \right]\mathrm{mm}
+    \approx0.02\,\mathrm{mm}\\
+    v_3&=
+    \left[
+    2000.80-1999.97\left(1+1.83\times10^{-5}\times25\right)
+    \right]\mathrm{mm}
+    \approx-0.08\,\mathrm{mm}\\
+    v_4&=
+    \left[
+    2001.07-1999.97\left(1+1.83\times10^{-5}\times30\right)
+    \right]\mathrm{mm}
+    \approx0\,\mathrm{mm}\\
+    v_5&=
+    \left[
+    2001.48-1999.97\left(1+1.83\times10^{-5}\times40\right)
+    \right]\mathrm{mm}
+    \approx0.05\,\mathrm{mm}\\
+    v_6&=
+    \left[
+    2001.60-1999.97\left(1+1.83\times10^{-5}\times45\right)
+    \right]\mathrm{mm}
+    \approx-0.02\,\mathrm{mm}
+\end{aligned}
+\end{equation*}
+
+于是
+\begin{equation*}
+    \sum_{i=1}^{6}v_i^2=0.0106\,\mathrm{mm}^2
+\end{equation*}
+
+因 $n=6$，未知参数个数为 $t=2$，所以可得标准差为
+\begin{equation*}
+    \sigma
+    =
+    \sqrt{
+    \frac{\displaystyle\sum_{i=1}^{6}v_i^2}{n-t}
+    }
+    =
+    \sqrt{\frac{0.0106}{6-2}}\,\mathrm{mm}
+    =
+    0.051\,\mathrm{mm}
+\end{equation*}
+
+\problem{例5-4}
+
+\timu 试求例5-1中铜棒长度和线膨胀系数估计量的精度。
+
+\jieda 已知正规方程为
+\begin{equation*}
+\left\{
+\begin{aligned}
+    6a+170b&=12006.03\\
+    170a+5650b&=340201.3
+\end{aligned}
+\right.
+\end{equation*}
+
+测量数据 $l_i$ 的标准差为
+\begin{equation*}
+    \sigma=0.051\,\mathrm{mm}
+\end{equation*}
+
+由正规方程系数可列出求解不定乘数的方程组。设
+\begin{equation*}
+    C^{-1}=
+    \begin{pmatrix}
+        d_{11} & d_{12}\\
+        d_{21} & d_{22}
+    \end{pmatrix}
+\end{equation*}
+则对应方程为
+\begin{equation*}
+\left\{
+\begin{aligned}
+    6d_{11}+170d_{12}&=1\\
+    170d_{11}+5650d_{12}&=0\\
+    6d_{21}+170d_{22}&=0\\
+    170d_{21}+5650d_{22}&=1
+\end{aligned}
+\right.
+\end{equation*}
+
+分别解得
+\begin{equation*}
+    d_{11}=1.13,
+    \qquad
+    d_{22}=0.0012
+\end{equation*}
+
+则由参数标准差公式，可得估计量 $a$、$b$ 的标准差为
+\begin{equation*}
+    \sigma_a
+    =
+    \sigma\sqrt{d_{11}}
+    =
+    0.051\sqrt{1.13}\,\mathrm{mm}
+    =
+    0.054\,\mathrm{mm}
+\end{equation*}
+\begin{equation*}
+    \sigma_b
+    =
+    \sigma\sqrt{d_{22}}
+    =
+    0.051\sqrt{0.0012}\,\mathrm{mm}/{}^\circ\mathrm{C}
+    =
+    0.0018\,\mathrm{mm}/{}^\circ\mathrm{C}
+\end{equation*}
+
+因
+\begin{equation*}
+    y_0=a,
+    \qquad
+    \alpha=\frac{b}{y_0}
+\end{equation*}
+
+故
+\begin{equation*}
+    \sigma_{y_0}
+    =
+    \sigma_a
+    =
+    0.054\,\mathrm{mm}
+\end{equation*}
+\begin{equation*}
+    \sigma_{\alpha}
+    =
+    \frac{\sigma_b}{y_0}
+    =
+    \frac{0.0018}{1999.97}/{}^\circ\mathrm{C}
+    \approx9\times10^{-7}/{}^\circ\mathrm{C}
+\end{equation*}
+
+\problem{例5-5}
+
+\timu 为了测定公称值是 $10\,\mathrm{g}$、$20\,\mathrm{g}$、$50\,\mathrm{g}$ 的三只砝码质量 $m_1$、$m_2$、$m_3$，对三只砝码采用不同组合进行了 $7$ 次测量。测量无系统误差，按下列组合方式和测量后的结果为：
+\begin{equation*}
+\begin{aligned}
+    \text{对砝码 }m_1\text{ 单独测量，得}\quad &y_1=10.002\,\mathrm{g}\\
+    \text{对砝码 }m_2\text{ 单独测量，得}\quad &y_2=20.002\,\mathrm{g}\\
+    \text{对砝码 }m_3\text{ 单独测量，得}\quad &y_3=50.006\,\mathrm{g}\\
+    \text{对砝码 }m_1,m_2\text{ 之和组合测量，得}\quad &y_4=30.004\,\mathrm{g}\\
+    \text{对砝码 }m_1,m_3\text{ 之和组合测量，得}\quad &y_5=60.002\,\mathrm{g}\\
+    \text{对砝码 }m_2,m_3\text{ 之和组合测量，得}\quad &y_6=70.002\,\mathrm{g}\\
+    \text{对砝码 }m_1,m_2,m_3\text{ 之和组合测量，得}\quad &y_7=80.008\,\mathrm{g}
+\end{aligned}
+\end{equation*}
+求三只砝码的最佳估计值及其标准差。
+
+\jieda 首先列出误差方程：
+\begin{equation*}
+\left\{
+\begin{aligned}
+    v_1&=y_1-m_1\\
+    v_2&=y_2-m_2\\
+    v_3&=y_3-m_3\\
+    v_4&=y_4-(m_1+m_2)\\
+    v_5&=y_5-(m_1+m_3)\\
+    v_6&=y_6-(m_2+m_3)\\
+    v_7&=y_7-(m_1+m_2+m_3)
+\end{aligned}
+\right.
+\end{equation*}
+
+根据矩阵形式，上式可以写为
+\begin{equation*}
+    V=Y-A\hat{M}
+\end{equation*}
+其中
+\begin{equation*}
+    V=
+    \begin{pmatrix}
+        v_1\\
+        v_2\\
+        v_3\\
+        v_4\\
+        v_5\\
+        v_6\\
+        v_7
+    \end{pmatrix},
+    \qquad
+    Y=
+    \begin{pmatrix}
+        10.002\\
+        20.002\\
+        50.006\\
+        30.004\\
+        60.002\\
+        70.002\\
+        80.008
+    \end{pmatrix},
+    \qquad
+    A=
+    \begin{pmatrix}
+        1 & 0 & 0\\
+        0 & 1 & 0\\
+        0 & 0 & 1\\
+        1 & 1 & 0\\
+        1 & 0 & 1\\
+        0 & 1 & 1\\
+        1 & 1 & 1
+    \end{pmatrix},
+    \qquad
+    \hat{M}=
+    \begin{pmatrix}
+        m_1\\
+        m_2\\
+        m_3
+    \end{pmatrix}
+\end{equation*}
+
+由式
+\begin{equation*}
+    \hat{M}=C^{-1}A^{\mathrm{T}}Y
+\end{equation*}
+可得
+\begin{equation*}
+    C^{-1}
+    =
+    (A^{\mathrm{T}}A)^{-1}
+    =
+    \begin{pmatrix}
+        4 & 2 & 2\\
+        2 & 4 & 2\\
+        2 & 2 & 4
+    \end{pmatrix}^{-1}
+    =
+    \frac{1}{8}
+    \begin{pmatrix}
+        3 & -1 & -1\\
+        -1 & 3 & -1\\
+        -1 & -1 & 3
+    \end{pmatrix}
+\end{equation*}
+
+所以
+\begin{equation*}
+\begin{aligned}
+    \hat{M}
+    &=
+    \begin{pmatrix}
+        m_1\\
+        m_2\\
+        m_3
+    \end{pmatrix}
+    =
+    C^{-1}A^{\mathrm{T}}Y\\
+    &=
+    \frac{1}{8}
+    \begin{pmatrix}
+        3 & -1 & -1\\
+        -1 & 3 & -1\\
+        -1 & -1 & 3
+    \end{pmatrix}
+    \begin{pmatrix}
+        1 & 0 & 0 & 1 & 1 & 0 & 1\\
+        0 & 1 & 0 & 1 & 0 & 1 & 1\\
+        0 & 0 & 1 & 0 & 1 & 1 & 1
+    \end{pmatrix}
+    \begin{pmatrix}
+        10.002\\
+        20.002\\
+        50.006\\
+        30.004\\
+        60.002\\
+        70.002\\
+        80.008
+    \end{pmatrix}
+\end{aligned}
+\end{equation*}
+
+即
+\begin{equation*}
+    \hat{M}
+    =
+    \frac{1}{8}
+    \begin{pmatrix}
+        80.014\\
+        160.014\\
+        400.022
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+        10.00175\\
+        20.00175\\
+        50.00275
+    \end{pmatrix}
+\end{equation*}
+
+即解得
+\begin{equation*}
+    m_1=10.00175\,\mathrm{g},
+    \qquad
+    m_2=20.00175\,\mathrm{g},
+    \qquad
+    m_3=50.00275\,\mathrm{g}
+\end{equation*}
+
+这就是砝码质量 $m_1$、$m_2$、$m_3$ 的最佳估计值，再求其上述估计量的标准差。
+
+将最佳估计值代入误差方程可得
+\begin{equation*}
+\begin{aligned}
+    v_1&=y_1-m_1=10.002-10.00175=0.00025\,\mathrm{g}\\
+    v_2&=y_2-m_2=20.002-20.00175=0.00025\,\mathrm{g}\\
+    v_3&=y_3-m_3=50.006-50.00275=0.00325\,\mathrm{g}\\
+    v_4&=y_4-(m_1+m_2)=30.004-(10.00175+20.00175)=0.0005\,\mathrm{g}\\
+    v_5&=y_5-(m_1+m_3)=60.002-(10.00175+50.00275)=-0.0025\,\mathrm{g}\\
+    v_6&=y_6-(m_2+m_3)=70.002-(20.00175+50.00275)=-0.0025\,\mathrm{g}\\
+    v_7&=y_7-(m_1+m_2+m_3)=80.008-(10.00175+20.00175+50.00275)=0.00175\,\mathrm{g}
+\end{aligned}
+\end{equation*}
+
+于是
+\begin{equation*}
+\begin{aligned}
+    \sum_{i=1}^{7}v_i^2
+    &=
+    0.00025^2+0.00025^2+0.00325^2+0.0005^2\\
+    &\quad
+    +(-0.0025)^2+(-0.0025)^2+0.00175^2\\
+    &=
+    0.0000265\,\mathrm{g}^2
+\end{aligned}
+\end{equation*}
+
+因为是等精度测量，测得数据 $y_1,y_2,\cdots,y_7$ 的标准差相同，为
+\begin{equation*}
+    \sigma
+    =
+    \sqrt{
+    \frac{\displaystyle\sum_{i=1}^{7}v_i^2}{n-t}
+    }
+    =
+    \sqrt{\frac{0.0000265}{7-3}}\,\mathrm{g}
+    =
+    0.0026\,\mathrm{g}
+\end{equation*}
+
+为求估计量 $m_1,m_2,m_3$ 的标准差，首先求出不定乘数 $d_{ij}$。由式可知，不定乘数 $d_{ij}$ 的系数与正规方程的系数相同，因而 $d_{ij}$ 是矩阵 $C^{-1}$ 中的各元素，即
+\begin{equation*}
+    C^{-1}
+    =
+    \begin{pmatrix}
+        d_{11} & d_{12} & d_{13}\\
+        d_{21} & d_{22} & d_{23}\\
+        d_{31} & d_{32} & d_{33}
+    \end{pmatrix}
+    =
+    \frac{1}{8}
+    \begin{pmatrix}
+        3 & -1 & -1\\
+        -1 & 3 & -1\\
+        -1 & -1 & 3
+    \end{pmatrix}
+\end{equation*}
+
+则
+\begin{equation*}
+    d_{11}=\frac{3}{8}=0.375
+\end{equation*}
+
+\begin{equation*}
+    d_{22}=\frac{3}{8}=0.375
+\end{equation*}
+
+\begin{equation*}
+    d_{33}=\frac{3}{8}=0.375
+\end{equation*}
+
+按照参数估计量标准差公式，可得
+\begin{equation*}
+    \sigma_{m_1}
+    =
+    \sigma\sqrt{d_{11}}
+    =
+    0.0026\sqrt{0.375}\,\mathrm{g}
+    =
+    0.0016\,\mathrm{g}
+\end{equation*}
+\begin{equation*}
+    \sigma_{m_2}
+    =
+    \sigma\sqrt{d_{22}}
+    =
+    0.0026\sqrt{0.375}\,\mathrm{g}
+    =
+    0.0016\,\mathrm{g}
+\end{equation*}
+\begin{equation*}
+    \sigma_{m_3}
+    =
+    \sigma\sqrt{d_{33}}
+    =
+    0.0026\sqrt{0.375}\,\mathrm{g}
+    =
+    0.0016\,\mathrm{g}
+\end{equation*}
+
+所以三只砝码的最佳估计值及其标准差为
+\begin{equation*}
+    m_1=10.00175\,\mathrm{g},
+    \qquad
+    \sigma_{m_1}=0.0016\,\mathrm{g}
+\end{equation*}
+\begin{equation*}
+    m_2=20.00175\,\mathrm{g},
+    \qquad
+    \sigma_{m_2}=0.0016\,\mathrm{g}
+\end{equation*}
+\begin{equation*}
+    m_3=50.00275\,\mathrm{g},
+    \qquad
+    \sigma_{m_3}=0.0016\,\mathrm{g}
+\end{equation*}
+
+
+\section*{第六章\quad 回归分析}
+
+\problem{例6-1}
+
+\timu 测量某导线在一定温度 $x$ 下的电阻值 $y$ 得如下结果：
+
+\begin{center}
+\small
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{c|ccccccc}
+\toprule
+$x/{}^\circ\mathrm{C}$ & 19.1 & 25.0 & 30.1 & 36.0 & 40.0 & 46.5 & 50.0\\
+\midrule
+$y/\Omega$ & 76.30 & 77.80 & 79.75 & 80.80 & 82.35 & 83.90 & 85.10\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+试找出它们之间的内在关系。
+
+\jieda 由一元线性回归方程的计算公式可知，回归方程的具体计算通常可以通过列表进行。计算表如下：
+
+\begin{center}
+\small
+\setlength{\tabcolsep}{4.5pt}
+\begin{tabular}{c|c|c|c|c|c}
+\toprule
+序号 & $x_i/{}^\circ\mathrm{C}$ & $y_i/\Omega$ & $x_i^2/{}^\circ\mathrm{C}^2$ & $y_i^2/\Omega^2$ & $x_i y_i/(\Omega\cdot{}^\circ\mathrm{C})$\\
+\midrule
+1 & 19.1 & 76.30 & 364.81 & 5821.690 & 1457.330\\
+2 & 25.0 & 77.80 & 625.00 & 6052.840 & 1945.000\\
+3 & 30.1 & 79.75 & 906.01 & 6360.062 & 2400.475\\
+4 & 36.0 & 80.80 & 1296.00 & 6528.640 & 2908.800\\
+5 & 40.0 & 82.35 & 1600.00 & 6781.522 & 3294.000\\
+6 & 46.5 & 83.90 & 2162.25 & 7039.210 & 3901.350\\
+7 & 50.0 & 85.10 & 2500.00 & 7242.010 & 4255.000\\
+\midrule
+$\sum$ & 246.7 & 566.00 & 9454.07 & 45825.974 & 20161.955\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+由表中数据可得
+\begin{equation*}
+    \sum_{i=1}^{N}x_i=246.7{}^\circ\mathrm{C}, \qquad \bar{x}=35.243{}^\circ\mathrm{C}, \qquad \sum_{i=1}^{N}x_i^2=9454.07{}^\circ\mathrm{C}^2
+\end{equation*}
+
+\begin{equation*}
+    \frac{\left(\displaystyle\sum_{i=1}^{N}x_i\right)^2}{N} = 8694.413{}^\circ\mathrm{C}^2
+\end{equation*}
+
+于是
+\begin{equation*}
+    l_{xx} = \sum_{i=1}^{N}x_i^2 - \frac{\left(\displaystyle\sum_{i=1}^{N}x_i\right)^2}{N} = 759.657{}^\circ\mathrm{C}^2
+\end{equation*}
+
+同理有 $\sum_{i=1}^{N}y_i=566.00\Omega, \qquad \bar{y}=80.857\Omega, \qquad \sum_{i=1}^{N}y_i^2=45825.974\Omega^2$
+
+\begin{equation*}
+    \frac{\left(\displaystyle\sum_{i=1}^{N}y_i\right)^2}{N} = 45765.143\Omega^2
+\end{equation*}
+
+于是
+\begin{equation*}
+    l_{yy} = \sum_{i=1}^{N}y_i^2 - \frac{\left(\displaystyle\sum_{i=1}^{N}y_i\right)^2}{N} = 60.831\Omega^2
+\end{equation*}
+
+又因为 $\sum_{i=1}^{N}x_i y_i=20161.955\Omega\cdot{}^\circ\mathrm{C}$
+
+\begin{equation*}
+    \frac{\left(\displaystyle\sum_{i=1}^{N}x_i\right) \left(\displaystyle\sum_{i=1}^{N}y_i\right)}{N} = 19947.457\Omega\cdot{}^\circ\mathrm{C}
+\end{equation*}
+
+所以
+\begin{equation*}
+    l_{xy} = \sum_{i=1}^{N}x_i y_i - \frac{\left(\displaystyle\sum_{i=1}^{N}x_i\right) \left(\displaystyle\sum_{i=1}^{N}y_i\right)}{N} = 214.498\Omega\cdot{}^\circ\mathrm{C}
+\end{equation*}
+
+因此回归系数为 $b=l_{xy}/l_{xx}=214.498/759.657=0.2824\Omega/{}^\circ\mathrm{C}$，回归常数为 $b_0=\bar{y}-b\bar{x}=80.857-0.2824\times35.243=70.90\Omega$
+
+故所求回归方程为 $\hat{y} = 70.90\Omega + (0.2824\Omega/{}^\circ\mathrm{C})x$
+
+这条回归直线一定通过 $(\bar{x},\bar{y})$ 这一点。再令 $x=x_0$，代入回归方程，可求得相应的 $y_0$，连接 $(\bar{x},\bar{y})$ 和 $(x_0,y_0)$，即为所求回归直线。在本例中，回归系数 $b$ 的物理意义是温度每上升 $1{}^\circ\mathrm{C}$，电阻平均增加 $0.2824\Omega$。
+
+\problem{例6-2}
+
+\timu 在例6-1中，对电阻和温度的回归方程进行方差分析，判断回归方程是否显著。
+
+\jieda 把平方和及自由度进行分解的方法，可以归纳为方差分析表。对于一元线性回归，有如下形式：
+
+\begin{center}
+\small
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{c|c|c|c|c|c}
+\toprule
+来源 & 平方和 & 自由度 & 方差 & $F$ & 显著性\\
+\midrule
+回归 & $U=bl_{xy}$ & $1$ & -- & $\dfrac{U/1}{Q/(N-2)}$ & --\\
+残余 & $Q=l_{yy}-bl_{xy}$ & $N-2$ & $\sigma^2=\dfrac{Q}{N-2}$ & -- & --\\
+总计 & $S=l_{yy}$ & $N-1$ & -- & -- & --\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+由例6-1的计算结果可得 $U=bl_{xy}=0.2824\times214.498=60.574\Omega^2$，$Q=l_{yy}-U=60.831-60.574=0.257\Omega^2$，$\sigma^2=Q/(N-2)=0.257/(7-2)=0.0514\Omega^2$
+
+所以方差分析表为
+
+\begin{center}
+\small
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{c|c|c|c|c|c}
+\toprule
+来源 & 平方和$/\Omega^2$ & 自由度 & 方差$/\Omega^2$ & $F$ & 显著性\\
+\midrule
+回归 & 60.574 & 1 & 60.574 & $1.18\times10^3$ & $\alpha=0.01$\\
+残余 & 0.257 & 5 & 0.0514 & -- & --\\
+总计 & 60.831 & 6 & -- & -- & --\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+显著性一栏中的 $\alpha=0.01$，表明前面所得回归方程在 $\alpha=0.01$ 水平上显著，即可信赖程度为 $99\%$ 以上，这是高度显著的。
+
+\problem{例6-3}
+
+\timu 用标准压力计对某固体压力传感器进行检定，检定所得数据见下表。表中 $x_i$ 为标准压力，$y_i$ 为传感器输出电压，$\bar{y}_i$ 为 $4$ 次读数的算术平均值。试对仪器定标，并分析仪器的误差。
+
+\begin{center}
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{c|c|cccc|c}
+\toprule
+序号 & $x_i/(\mathrm{N}\cdot\mathrm{cm}^{-2})$ & \multicolumn{4}{c|}{$y_i/\mathrm{mV}$} & $\bar{y}_i/\mathrm{mV}$\\
+\cline{3-6}
+ &  & 升压 & 降压 & 升压 & 降压 & \\
+\midrule
+1 & 0  & 2.78 & 2.80 & 2.80 & 2.86 & 2.8100\\
+2 & 1  & 9.70 & 9.76 & 9.78 & 9.78 & 9.7550\\
+3 & 2  & 16.60 & 16.71 & 16.70 & 16.76 & 16.6925\\
+4 & 3  & 23.54 & 23.56 & 23.58 & 23.71 & 23.5975\\
+5 & 4  & 30.44 & 30.51 & 30.54 & 30.64 & 30.5325\\
+6 & 5  & 37.35 & 37.45 & 37.42 & 37.50 & 37.4300\\
+7 & 6  & 44.28 & 44.35 & 44.30 & 44.38 & 44.3275\\
+8 & 7  & 51.19 & 51.25 & 51.18 & 51.25 & 51.2175\\
+9 & 8  & 58.06 & 58.08 & 58.12 & 58.14 & 58.1000\\
+10 & 9 & 64.92 & 64.96 & 64.94 & 65.00 & 64.9550\\
+11 & 10 & 71.73 & 71.73 & 71.75 & 71.75 & 71.7400\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\jieda 要求线性定标，故应拟合一条回归直线。可以证明，用平均值的 $11$ 个点拟合的回归直线与用原来的 $44$ 个点拟合的回归直线完全一样。具体计算如下，其中 $y_i$ 即为上表中的 $\bar{y}_i$。
+
+\begin{center}
+\scriptsize
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{c|c|c|c|c|c}
+\toprule
+序号 & $x_i/(\mathrm{N}\cdot\mathrm{cm}^{-2})$ & $y_i/\mathrm{mV}$ & $x_i^2/(\mathrm{N}\cdot\mathrm{cm}^{-2})^2$ & $y_i^2/\mathrm{mV}^2$ & $x_i y_i/(\mathrm{mV}\cdot\mathrm{N}\cdot\mathrm{cm}^{-2})$\\
+\midrule
+1 & 0  & 2.8100 & 0 & 7.8961 & 0\\
+2 & 1  & 9.7550 & 1 & 95.1600 & 9.7550\\
+3 & 2  & 16.6925 & 4 & 278.6396 & 33.3850\\
+4 & 3  & 23.5975 & 9 & 556.8420 & 70.7925\\
+5 & 4  & 30.5325 & 16 & 932.2336 & 122.1300\\
+6 & 5  & 37.4300 & 25 & 1401.0049 & 187.1500\\
+7 & 6  & 44.3275 & 36 & 1964.9273 & 265.9650\\
+8 & 7  & 51.2175 & 49 & 2623.2323 & 358.5225\\
+9 & 8  & 58.1000 & 64 & 3375.6100 & 464.8000\\
+10 & 9 & 64.9550 & 81 & 4219.1520 & 584.5950\\
+11 & 10 & 71.7400 & 100 & 5146.6276 & 717.4000\\
+\midrule
+$\sum$ & 55 & 411.1575 & 385 & 20601.3254 & 2814.4950\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+由表中数据可得
+\begin{equation*}
+    \sum_{i=1}^{N}x_i=55\mathrm{N}\cdot\mathrm{cm}^{-2}, \qquad \bar{x}=5\mathrm{N}\cdot\mathrm{cm}^{-2}, \qquad \sum_{i=1}^{N}x_i^2=385(\mathrm{N}\cdot\mathrm{cm}^{-2})^2
+\end{equation*}
+
+\begin{equation*}
+    \frac{\left(\displaystyle\sum_{i=1}^{N}x_i\right)^2}{N} = 275(\mathrm{N}\cdot\mathrm{cm}^{-2})^2
+\end{equation*}
+
+所以
+\begin{equation*}
+    l_{xx} = \sum_{i=1}^{N}x_i^2 - \frac{\left(\displaystyle\sum_{i=1}^{N}x_i\right)^2}{N} = 110(\mathrm{N}\cdot\mathrm{cm}^{-2})^2
+\end{equation*}
+
+又有
+\begin{equation*}
+    \sum_{i=1}^{N}y_i=411.1575\mathrm{mV}, \qquad \bar{y}=37.3780\mathrm{mV}, \qquad \sum_{i=1}^{N}y_i^2=20601.3254\mathrm{mV}^2
+\end{equation*}
+
+\begin{equation*}
+    \frac{\left(\displaystyle\sum_{i=1}^{N}y_i\right)^2}{N} = 15368.226\mathrm{mV}^2
+\end{equation*}
+
+于是
+\begin{equation*}
+    l_{yy} = \sum_{i=1}^{N}y_i^2 - \frac{\left(\displaystyle\sum_{i=1}^{N}y_i\right)^2}{N} = 5233.0990\mathrm{mV}^2
+\end{equation*}
+
+又因为 $\sum_{i=1}^{N}x_i y_i=2814.4950\mathrm{mV}\cdot\mathrm{N}\cdot\mathrm{cm}^{-2}$
+
+\begin{equation*}
+    \frac{\left(\displaystyle\sum_{i=1}^{N}x_i\right) \left(\displaystyle\sum_{i=1}^{N}y_i\right)}{N} = 2055.7875\mathrm{mV}\cdot\mathrm{N}\cdot\mathrm{cm}^{-2}
+\end{equation*}
+
+所以
+\begin{equation*}
+    l_{xy} = \sum_{i=1}^{N}x_i y_i - \frac{\left(\displaystyle\sum_{i=1}^{N}x_i\right) \left(\displaystyle\sum_{i=1}^{N}y_i\right)}{N} = 758.7075\mathrm{mV}\cdot\mathrm{N}\cdot\mathrm{cm}^{-2}
+\end{equation*}
+
+因此 $b = \frac{l_{xy}}{l_{xx}} = \frac{758.7075}{110} = 6.8973\mathrm{mV}/(\mathrm{N}\cdot\mathrm{cm}^{-2})$
+
+$b_0 = \bar{y}-b\bar{x} = 37.3780-6.8973\times5 = 2.8913\mathrm{mV}$
+
+故回归方程为 $\hat{y} = 2.8913\mathrm{mV} + \left[ 6.8973\mathrm{mV}/(\mathrm{N}\cdot\mathrm{cm}^{-2}) \right]x$
+
+现在进行方差分析。当用 $\bar{y}_i$ 求回归直线时，各平方和可按下列顺序计算：
+\begin{equation*}
+\left\{
+\begin{aligned}
+    U&=mbl_{xy}\\
+    Q_L&=ml_{yy}-U\\
+    Q_E&=\sum_{i=1}^{N}\sum_{j=1}^{m}(y_{ij}-\bar{y}_i)^2\\
+    S&=U+Q_L+Q_E
+\end{aligned}
+\right.
+\end{equation*}
+
+计算结果如下表所示，其中 $F$ 栏为用误差平方和和相应的自由度对各项进行 $F$ 检验的数学统计量。
+
+\begin{center}
+\small
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{c|c|c|c|c|c}
+\toprule
+来源 & 平方和$/\mathrm{mV}^2$ & 自由度 & 方差$/\mathrm{mV}^2$ & $F$ & 显著性\\
+\midrule
+回归 & 20932.2574 & 1 & 20932.2574 & $7.68\times10^6$ & $F_{0.01}=7.47$\\
+失拟 & 0.1386 & 9 & 0.0154 & 5.65 & $F_{0.01}=3.03$\\
+误差 & 0.0899 & 33 & 0.0027 & -- & --\\
+总计 & 20932.4859 & 43 & -- & -- & --\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+第一行有 $F = \frac{U/\nu_U}{Q_E/\nu_{Q_E}} = 7.68\times10^6$
+
+由于 $F>F_{0.01}(1,33)=7.47$ 故回归高度显著。
+
+第二行有 $F_1 = \frac{Q_L/\nu_{Q_L}}{Q_E/\nu_{Q_E}} = 5.65$
+
+由于 $F_1>F_{0.01}(9,33)=3.03$ 故失拟平方和的检验结果也高度显著，说明失拟误差相对于实验误差来说是不可忽略的。这时有如下几种可能：
+\begin{enumerate}[label=\arabic*)]
+    \item 影响 $y$ 的除 $x$ 外，至少还有一个不可忽略的因素；
+    \item $y$ 和 $x$ 是曲线关系；
+    \item $y$ 和 $x$ 无关。
+\end{enumerate}
+
+\problem{例6-4}
+
+\timu 对例6-1用分组法求回归方程。
+
+\jieda 因观测数据已按自变量从小到大的次序排列，故可按实验顺序分成两组，并建立两组相应的观测方程。取 $k=(N+1)/2=4$，然后分别相加：
+
+\begin{equation*}
+\left\{
+\begin{aligned}
+    76.30\Omega&=b_0+(19.1{}^\circ\mathrm{C})b\\
+    77.80\Omega&=b_0+(25.0{}^\circ\mathrm{C})b\\
+    79.75\Omega&=b_0+(30.1{}^\circ\mathrm{C})b\\
+    80.80\Omega&=b_0+(36.0{}^\circ\mathrm{C})b
+\end{aligned}
+\right.
+\end{equation*}
+
+相加得 $314.65\Omega=4b_0+(110.2{}^\circ\mathrm{C})b$。
+
+另一组为
+\begin{equation*}
+\left\{
+\begin{aligned}
+    82.35\Omega&=b_0+(40.0{}^\circ\mathrm{C})b\\
+    83.90\Omega&=b_0+(46.5{}^\circ\mathrm{C})b\\
+    85.10\Omega&=b_0+(50.0{}^\circ\mathrm{C})b
+\end{aligned}
+\right.
+\end{equation*}
+
+相加得 $251.35\Omega=3b_0+(136.5{}^\circ\mathrm{C})b$。
+
+解方程组
+\begin{equation*}
+\left\{
+\begin{aligned}
+    314.65\Omega&=4b_0+(110.2{}^\circ\mathrm{C})b\\
+    251.35\Omega&=3b_0+(136.5{}^\circ\mathrm{C})b
+\end{aligned}
+\right.
+\end{equation*}
+
+得 $b_0=70.80\Omega, \qquad b=0.2853\Omega/{}^\circ\mathrm{C}$
+
+故所求回归方程为 $\hat{y} = 70.80\Omega + (0.2853\Omega/{}^\circ\mathrm{C})x$
+
+这与用最小二乘法求得的回归方程比较接近。此法简单明了，拟合的直线就是通过第一组重心和第二组重心的一条直线，是工程实践中常用的一种简单方法。
+
+\problem{例6-5}
+
+\timu 用 X 射线机检查镁合金焊接件及铸件内部缺陷时，为达到最佳灵敏度，透照电压 $y$ 应随被透照件厚度 $x$ 而改变。经实验得如下二组数据：
+
+\begin{center}
+\small
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{c|cccccccccc}
+\toprule
+$x/\mathrm{mm}$ & 12 & 13 & 15 & 16 & 18 & 20 & 22 & 24 & 25 & 26\\
+\midrule
+$y/\mathrm{kV}$ & 53 & 55 & 60 & 65 & 70 & 75 & 80 & 85 & 88 & 90\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\jieda 把这组数据点在坐标纸上，然后通过点群作一直线。在接近直线的两端各取一点，如 $(12,53)$ 和 $(25,88)$，即可求系数 $b = \frac{(88-53)\mathrm{kV}}{(25-12)\mathrm{mm}} = 2.7\mathrm{kV}/\mathrm{mm}$
+
+将回归直线上任一点代入回归方程求出 $b_0$，如用 $53\mathrm{kV}=b_0+(2.7\mathrm{kV}/\mathrm{mm})\times12\mathrm{mm}$，得 $b_0=20.6\mathrm{kV}$
+
+所以求得回归方程为 $\hat{y} = 20.6\mathrm{kV} + (2.7\mathrm{kV}/\mathrm{mm})x$
+
+\problem{例6-6}
+
+\timu 若例6-1中电阻值 $y$ 是可以精确测定的，而把所有误差都归结于温度 $x$，试求另一回归方程。
+
+\jieda 如果认为 $y$ 可以精确测定，而所有误差都归结于 $x$，则根据 $\sum_{i=1}^{N}(x_i-\hat{x}_i)^2$ 为最小的原则，可得另一回归方程 $\hat{y} = 70.86\Omega+0.2836x$
+
+\problem{例6-7}
+
+\timu 通过实验测量某量 $x$、$y$ 的结果如下：
+
+\begin{center}
+\small
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{c|cccccc}
+\toprule
+$x$ & 2.560 & 2.319 & 2.058 & 1.911 & 1.598 & 0.548\\
+\midrule
+$y$ & 2.646 & 2.395 & 2.140 & 2.000 & 1.678 & 0.711\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+由重复测量已估计出 $\sigma_x=\sigma_y$，即 $\lambda=1$，试求 $y$ 对 $x$ 的回归直线方程。
+
+\jieda 根据有关公式，计算结果为 $\bar{x}=1.8398, \qquad l_{xx}=2.4495468, \qquad b=0.9747$
+
+$\bar{y}=1.9283, \qquad l_{yy}=2.3273297, \qquad l_{xy}=2.3874952$
+
+$\sum_{i=1}^{N}d_i^2=3.1382\times10^{-4}, \qquad \sigma_y^2=4.023\times10^{-5}, \qquad \sigma_x=\sigma_y=0.0063$
+
+又因为 $b_0=\bar{y}-b\bar{x}=0.1350$
+
+所以所求回归方程为 $\hat{y}=0.1350+0.9747x$
+
+\problem{例6-8}
+
+\timu 用此法说明下列一组数据是否可用 $y=ae^{bx}$ 表示。
+
+\begin{center}
+\small
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{c|ccccccccc}
+\toprule
+$x$ & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9\\
+\midrule
+$y$ & 1.78 & 2.24 & 2.74 & 3.74 & 4.45 & 5.31 & 6.92 & 8.85 & 10.97\\
+$\log y$ & 0.250 & 0.350 & 0.438 & 0.573 & 0.648 & 0.725 & 0.840 & 0.947 & 1.040\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\jieda 将$y=ae^{bx}$ 写成线性形式，即 $\log y=\log a+(b\log e)x$
+
+式中，$\log y$ 相当于 $z_1$，$x$ 相当于 $z_2$，$\log a$ 相当于 $A$，$b\log e$ 相当于 $B$。
+
+以 $\log y$ 与 $x$ 画图，选取 $x$ 为 $1,4,6,8$ 的点，可以看出所得图形基本为一直线，故选用函数类型 $y=ae^{bx}$ 是合适的。
+
+\problem{例6-9}
+
+\timu 检验表6-11所示观测数据可用$y=a+be^x$ 表示。
+
+\jieda 具体检验方法如下：第一步，将观测值 $x$ 与 $y$ 画图，得到一条上升曲线；第二步，自曲线上按 $\Delta x$ 为恒定值依次读取 $x$、$y$ 对应值；第三步，列入表中，再依次求出 $\Delta y$、$\log\Delta y$ 以及 $\Delta(\log\Delta y)$。
+
+\begin{center}
+\scriptsize
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{c|cc|cc|ccc}
+\toprule
+ & \multicolumn{2}{c|}{观测值} & \multicolumn{2}{c|}{自图上读数值} & \multicolumn{3}{c}{顺序差值}\\
+\cline{2-8}
+序号 & $x$ & $y$ & $x$ & $y$ & $\Delta y$ & $\log\Delta y$ & $\Delta(\log\Delta y)$\\
+\midrule
+1 & 0.50 & 17.3 & 0 & 16.6 & --  & --    & --\\
+2 & 1.75 & 19.0 & 1 & 17.9 & 1.3 & 0.114 & --\\
+3 & 2.75 & 21.0 & 2 & 19.5 & 1.6 & 0.204 & 0.090\\
+4 & 3.50 & 22.5 & 3 & 21.5 & 2.0 & 0.301 & 0.097\\
+5 & 4.50 & 25.1 & 4 & 23.9 & 2.4 & 0.380 & 0.079\\
+6 & 5.25 & 28.0 & 5 & 26.9 & 3.0 & 0.477 & 0.097\\
+7 & 6.00 & 30.3 & 6 & 30.6 & 3.7 & 0.568 & 0.091\\
+8 & 6.50 & 33.0 & 7 & 35.1 & 4.5 & 0.653 & 0.085\\
+9 & 7.50 & 38.0 & 8 & 40.8 & 5.7 & 0.756 & 0.103\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+由表中数据可以看出，$\Delta(\log\Delta y)$ 基本接近常数。因此，所给观测数据可以用 $y=a+be^x$ 表示。
+
+\newpage
+
+\problem{例6-10}
+
+\timu 为了测定椭圆齿轮流量计在介质黏度变化时的误差，先测定 $10$ 号变压器油的黏度 $y$ 与温度 $x$ 的变化曲线，以便试验时测出油温即可知道黏度。通过试验获得如下一组数据：
+
+\begin{center}
+\scriptsize
+\setlength{\tabcolsep}{4.5pt}
+\begin{tabular}{c|ccccccccccccccc}
+\toprule
+$x/{}^\circ\mathrm{C}$ & 10 & 15 & 20 & 25 & 30 & 35 & 40 & 45 & 50 & 55 & 60 & 65 & 70 & 75 & 80\\
+\midrule
+$y/{}^\circ\mathrm{E}$ & 4.24 & 3.51 & 2.92 & 2.52 & 2.20 & 2.00 & 1.81 & 1.70 & 1.60 & 1.50 & 1.43 & 1.37 & 1.32 & 1.29 & 1.25\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+试求出黏度与温度之间的经验公式。
+
+\jieda 首先把观测数据点在坐标纸上，并用一条曲线拟合。将该曲线与典型曲线比较，可以看出它很像幂函数 $y=ax^b$ 因此取函数类型为 $y=ax^b$
+
+对等式两边取自然对数，有 $\ln y=\ln a+b\ln x$
+
+令 $y'=\ln(y/{}^\circ\mathrm{E}), \qquad x'=\ln(x/{}^\circ\mathrm{C}), \qquad b_0=\ln a$
+
+则上式变为普通的直线方程 $y'=b_0+bx'$
+
+列表计算如下：
+
+\begin{center}
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{c|c|c|c|c|c|c|c}
+\toprule
+序号 & $x/{}^\circ\mathrm{C}$ & $y/{}^\circ\mathrm{E}$ & $x'=\ln(x/{}^\circ\mathrm{C})$ & $y'=\ln(y/{}^\circ\mathrm{E})$ & $x'^2$ & $y'^2$ & $x'y'$\\
+\midrule
+1  & 10 & 4.24 & 2.3026 & 1.4446 & 5.30190 & 2.08676 & 3.32623\\
+2  & 15 & 3.51 & 2.7081 & 1.2556 & 7.33354 & 1.57657 & 3.40027\\
+3  & 20 & 2.92 & 2.9957 & 1.0716 & 8.97441 & 1.14829 & 3.21018\\
+4  & 25 & 2.52 & 3.2189 & 0.9243 & 10.36116 & 0.85425 & 2.97507\\
+5  & 30 & 2.20 & 3.4012 & 0.7885 & 11.56814 & 0.62166 & 2.68170\\
+6  & 35 & 2.00 & 3.5553 & 0.6931 & 12.64050 & 0.48045 & 2.46438\\
+7  & 40 & 1.81 & 3.6889 & 0.5933 & 13.60783 & 0.35204 & 2.18871\\
+8  & 45 & 1.70 & 3.8067 & 0.5306 & 14.49068 & 0.28157 & 2.01992\\
+9  & 50 & 1.60 & 3.9120 & 0.4700 & 15.30392 & 0.22090 & 1.83867\\
+10 & 55 & 1.50 & 4.0073 & 0.4055 & 16.05872 & 0.16440 & 1.62483\\
+11 & 60 & 1.43 & 4.0943 & 0.3577 & 16.76366 & 0.12793 & 1.46444\\
+12 & 65 & 1.37 & 4.1744 & 0.3148 & 17.42551 & 0.09910 & 1.31414\\
+13 & 70 & 1.32 & 4.2485 & 0.2776 & 18.04971 & 0.07708 & 1.17952\\
+14 & 75 & 1.29 & 4.3175 & 0.2546 & 18.64070 & 0.06484 & 1.09941\\
+15 & 80 & 1.25 & 4.3820 & 0.2231 & 19.20216 & 0.04979 & 0.97782\\
+\midrule
+$\sum$ & 675 & 30.66 & 54.8134 & 9.6049 & 205.72254 & 8.20563 & 31.76529\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+由表可得 $\sum x'=54.8134, \qquad \bar{x}'=3.6542, \qquad \sum x'^2=205.72254$
+
+$\frac{(\sum x')^2}{N}=200.30080, \qquad l_{x'x'}=\sum x'^2-\frac{(\sum x')^2}{N}=5.42174$
+
+又有 $\sum y'=9.6049, \qquad \bar{y}'=0.6403, \qquad \sum y'^2=8.20563$
+
+$\frac{(\sum y')^2}{N}=6.15034, \qquad l_{y'y'}=\sum y'^2-\frac{(\sum y')^2}{N}=2.05529$
+
+同时 $\sum x'y'=31.76529, \qquad \frac{(\sum x')(\sum y')}{N}=35.09869$
+
+因此 $l_{x'y'} = \sum x'y'-\frac{(\sum x')(\sum y')}{N} = -3.33340$
+
+于是 $b = \frac{l_{x'y'}}{l_{x'x'}} = \frac{-3.33340}{5.42174} = -0.6147$
+
+$b_0 = \bar{y}'-b\bar{x}' = 0.6403+0.6147\times3.6542 = 2.8865$
+
+所以 $\ln(y/{}^\circ\mathrm{E}) = 2.8865-0.6147\ln(x/{}^\circ\mathrm{C})$
+
+即 $\hat{y} = 17.93(x/{}^\circ\mathrm{C})^{-0.6147}{}^\circ\mathrm{E}$
+
+\problem{例6-11}
+
+\timu 对例6-10计算残余平方和 $Q$、残余标准差 $\sigma$ 和相关指数 $R^2$。
+
+\jieda 计算可按下表进行：
+
+\begin{center}
+\scriptsize
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{c|c|c|c|c|c}
+\toprule
+序号 & $y/{}^\circ\mathrm{E}$ & $y^2/{}^\circ\mathrm{E}^2$ & $\hat{y}/{}^\circ\mathrm{E}$ & $(y-\hat{y})/{}^\circ\mathrm{E}$ & $(y-\hat{y})^2/{}^\circ\mathrm{E}^2$\\
+\midrule
+1  & 4.24 & 17.9776 & 4.355 & $-0.115$ & 0.013225\\
+2  & 3.51 & 12.3201 & 3.394 & 0.116 & 0.013456\\
+3  & 2.92 & 8.5264  & 2.844 & 0.076 & 0.005776\\
+4  & 2.52 & 6.3504  & 2.479 & 0.041 & 0.001681\\
+5  & 2.20 & 4.8400  & 2.216 & $-0.016$ & 0.000256\\
+6  & 2.00 & 4.0000  & 2.016 & $-0.016$ & 0.000256\\
+7  & 1.81 & 3.2761  & 1.857 & $-0.047$ & 0.002209\\
+8  & 1.70 & 2.8900  & 1.727 & $-0.027$ & 0.000729\\
+9  & 1.60 & 2.5600  & 1.619 & $-0.019$ & 0.000361\\
+10 & 1.50 & 2.2500  & 1.527 & $-0.027$ & 0.000729\\
+11 & 1.43 & 2.0449  & 1.447 & $-0.017$ & 0.000289\\
+12 & 1.37 & 1.8769  & 1.378 & $-0.008$ & 0.000064\\
+13 & 1.32 & 1.7427  & 1.316 & 0.004 & 0.000016\\
+14 & 1.29 & 1.6641  & 1.262 & 0.028 & 0.000784\\
+15 & 1.25 & 1.5625  & 1.213 & 0.037 & 0.001369\\
+\midrule
+$\sum$ & 30.66 & 73.8814 & -- & 0.010 & 0.041200\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+因此 $Q = \sum_{i=1}^{N}(y_i-\hat{y}_i)^2 = 0.0412\,{}^\circ\mathrm{E}^2$
+
+残余标准差为 $\sigma = \sqrt{\frac{Q}{N-2}} = \sqrt{\frac{0.0412}{15-2}}\,{}^\circ\mathrm{E} = 0.056{}^\circ\mathrm{E}$
+
+总离差平方和为
+\begin{equation*}
+    \sum_{i=1}^{N}(y_i-\bar{y})^2 = \sum_{i=1}^{N}y_i^2 - \frac{\left(\displaystyle\sum_{i=1}^{N}y_i\right)^2}{N} = 11.212\,{}^\circ\mathrm{E}^2
+\end{equation*}
+
+所以相关指数为
+\begin{equation*}
+    R^2 = 1- \frac{Q}{\displaystyle\sum_{i=1}^{N}(y_i-\bar{y})^2} = 0.9963
+\end{equation*}
+
+\newpage
+
+\problem{例6-12}
+
+\timu 根据经验知道某变量 $y$ 受变量 $x_1$、$x_2$ 影响，通过试验获得下表中的一批数据，试建立 $y$ 对 $x_1$、$x_2$ 的线性回归方程。
+
+\begin{center}
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+
+\begin{tabular}{c|ccccccccccccccc}
+\toprule
+序号 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14 & 15\\
+\midrule
+$x_1$ & 15.58 & 10.68 & 15.62 & 15.78 & 13.22 & 16.44 & 11.40 & 16.17 & 14.03 & 15.67 & 12.74 & 11.73 & 14.84 & 13.73 & 15.12\\
+$x_2$ & 1.95 & 1.37 & 2.39 & 1.14 & 1.85 & 1.32 & 2.05 & 1.11 & 1.47 & 1.38 & 1.35 & 1.33 & 1.09 & 1.27 & 1.78\\
+$y$   & 1.34 & 1.27 & 1.56 & 1.48 & 1.40 & 1.82 & 0.85 & 1.40 & 1.15 & 1.89 & 0.87 & 1.53 & 1.25 & 2.47 & 1.83\\
+\bottomrule
+\end{tabular}
+
+\vspace{0.5em}
+
+\begin{tabular}{c|cccccccccccccc}
+\toprule
+序号 & 16 & 17 & 18 & 19 & 20 & 21 & 22 & 23 & 24 & 25 & 26 & 27 & 28 & 29\\
+\midrule
+$x_1$ & 17.88 & 13.38 & 14.21 & 16.80 & 16.38 & 10.81 & 17.26 & 14.92 & 18.14 & 18.15 & 10.31 & 11.40 & 12.57 & 17.61\\
+$x_2$ & 2.52 & 1.43 & 2.27 & 1.41 & 1.78 & 1.32 & 1.31 & 1.42 & 2.13 & 1.20 & 0.98 & 1.27 & 0.87 & 1.21\\
+$y$   & 2.41 & 1.69 & 1.59 & 1.19 & 2.44 & 1.35 & 1.57 & 1.64 & 1.64 & 2.34 & 0.65 & 1.19 & 2.06 & 1.57\\
+\bottomrule
+\end{tabular}
+
+\end{center}
+
+\jieda 设欲求的回归方程形式为 $\hat{y} = \mu_0+b_1(x_1-\bar{x}_1)+b_2(x_2-\bar{x}_2)$
+
+由数据计算得 $N=29, \qquad \sum x_1=422.57, \qquad \sum x_2=43.97, \qquad \sum y=45.44$
+
+$\bar{x}_1=14.571, \qquad \bar{x}_2=1.516, \qquad \bar{y}=1.567$
+
+同时有 $\sum x_1^2=6317.3183, \qquad \sum x_1x_2=647.9873, \qquad \sum x_2^2=71.8675$
+
+$\sum x_1y=678.2800, \qquad \sum x_2y=69.7515, \qquad \sum y^2=77.2434$
+
+因此 $l_{11} = \sum x_1^2-\frac{1}{N}\left(\sum x_1\right)^2 = 159.8906$
+
+$l_{12} = \sum x_1x_2-\frac{1}{N}\left(\sum x_1\right)\left(\sum x_2\right) = 7.2838$
+
+$l_{22} = \sum x_2^2-\frac{1}{N}\left(\sum x_2\right)^2 = 5.1999$
+
+$l_{1y} = \sum x_1y-\frac{1}{N}\left(\sum x_1\right)\left(\sum y\right) = 16.1565$
+
+$l_{2y} = \sum x_2y-\frac{1}{N}\left(\sum x_2\right)\left(\sum y\right) = 0.8551$
+
+$l_{yy} = \sum y^2-\frac{1}{N}\left(\sum y\right)^2 = 6.0436$
+
+其矩阵 $L$ 为
+\begin{equation*}
+L=
+    \begin{pmatrix}
+        l_{11} & l_{12}\\
+        l_{21} & l_{22}
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+        159.8906 & 7.2838\\
+        7.2838 & 5.1999
+    \end{pmatrix}
+\end{equation*}
+
+其逆矩阵为
+\begin{equation*}
+L^{-1}
+    =
+    \begin{pmatrix}
+        0.006681 & -0.009358\\
+        -0.009358 & 0.205419
+    \end{pmatrix}
+\end{equation*}
+
+于是 $\mu_0=\bar{y}=1.567$
+
+\begin{equation*}
+\begin{pmatrix}
+        b_1\\
+        b_2
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+        0.006681 & -0.009358\\
+        -0.009358 & 0.205419
+    \end{pmatrix}
+    \begin{pmatrix}
+        16.1565\\
+        0.8551
+    \end{pmatrix}
+\end{equation*}
+
+即 $b_1=0.006681\times16.1565-0.009358\times0.8551=0.0999$
+
+$b_2=-0.009358\times16.1565+0.205419\times0.8551=0.0245$
+
+所以所求回归方程为 $\hat{y} = 1.567+0.0999(x_1-14.571)+0.0245(x_2-1.516)$
+
+\problem{例6-13}
+
+\timu 今测得一组小学生的身高 $x_1$、年龄 $x_2$ 和体重 $y$ 的数据如下表，试求体重、身高与年龄的回归关系并进行检验。
+
+\begin{center}
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{c|cccccccccccc}
+\toprule
+$x_1/\mathrm{cm}$ & 147 & 149 & 139 & 152 & 141 & 140 & 145 & 138 & 142 & 132 & 151 & 147\\
+\midrule
+$x_2/\text{岁}$ & 9 & 11 & 7 & 12 & 9 & 8 & 11 & 10 & 11 & 7 & 13 & 10\\
+\midrule
+$y/\mathrm{kg}$ & 34 & 41 & 23 & 37 & 25 & 28 & 47 & 27 & 26 & 21 & 46 & 38\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\jieda 设欲求的回归方程形式为 $\hat{y} = \mu_0+b_1(x_1-\bar{x}_1)+b_2(x_2-\bar{x}_2)$
+
+由数据计算得 $N=12, \qquad \sum x_1=1723, \qquad \sum x_2=118, \qquad \sum y=393$
+
+$\bar{x}_1=143.5833\approx143.58, \qquad \bar{x}_2=9.8333\approx9.83, \qquad \bar{y}=32.75$
+
+并有 $\sum x_1^2=247783, \qquad \sum x_2^2=1200, \qquad \sum x_1x_2=17042$
+
+$\sum y^2=13759, \qquad \sum x_1y=56910, \qquad \sum x_2y=4009$
+
+于是 $l_{11} = \sum x_1^2-\frac{1}{N}\left(\sum x_1\right)^2 = 388.92$
+
+$l_{22} = \sum x_2^2-\frac{1}{N}\left(\sum x_2\right)^2 = 39.67$
+
+$l_{12} = \sum x_1x_2-\frac{1}{N}\left(\sum x_1\right)\left(\sum x_2\right) = 99.17$
+
+$l_{yy} = \sum y^2-\frac{1}{N}\left(\sum y\right)^2 = 888.25$
+
+$l_{1y} = \sum x_1y-\frac{1}{N}\left(\sum x_1\right)\left(\sum y\right) = 481.75$
+
+$l_{2y} = \sum x_2y-\frac{1}{N}\left(\sum x_2\right)\left(\sum y\right) = 144.5$
+
+其矩阵 $L$ 为
+\begin{equation*}
+L=
+    \begin{pmatrix}
+        388.92 & 99.17\\
+        99.17 & 39.67
+    \end{pmatrix}
+\end{equation*}
+
+其逆矩阵为
+\begin{equation*}
+L^{-1}
+    =
+    \begin{pmatrix}
+        0.0071 & -0.0177\\
+        -0.0177 & 0.0695
+    \end{pmatrix}
+\end{equation*}
+
+根据公式得 $\mu_0=\bar{y}=32.75$
+
+\begin{equation*}
+\begin{pmatrix}
+        b_1\\
+        b_2
+    \end{pmatrix}
+    =
+    L^{-1}
+    \begin{pmatrix}
+        l_{1y}\\
+        l_{2y}
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+        0.0071 & -0.0177\\
+        -0.0177 & 0.0695
+    \end{pmatrix}
+    \begin{pmatrix}
+        481.75\\
+        144.5
+    \end{pmatrix}
+\end{equation*}
+
+即 $b_1=0.0071\times481.75-0.0177\times144.5=0.8546\approx0.85$
+
+$b_2=-0.0177\times481.75+0.0695\times144.5=1.5065\approx1.51$
+
+所求回归方程为 $\hat{y} = 32.75+0.85(x_1-143.58)+1.51(x_2-9.83)$
+
+\newpage
+
+\problem{例6-14}
+
+\timu 对例6-12中的回归进行方差分析。
+
+\jieda 方差分析表如下：
+
+\begin{center}
+\small
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{c|c|c|c|c|c}
+\toprule
+来源 & 平方和 & 自由度 & 方差 & $F$ & 显著性\\
+\midrule
+回归 & 1.6350 & 2 & 0.8175 & 4.82 & $\alpha=0.05$\\
+残余 & 4.4086 & 26 & 0.1696 & -- & --\\
+总计 & 6.0436 & 28 & -- & -- & --\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+总离差平方和为 $S=l_{yy}=6.0436$，自由度为 $\nu_S=29-1=28$；回归平方和为 $U=b_1l_{1y}+b_2l_{2y}=1.6350$，自由度为 $\nu_U=2$；残余平方和为 $Q=S-U=4.4086$，自由度为 $\nu_Q=28-2=26$。
+
+由于 $F=4.82>F_{0.05}(2,26)=3.37$，因此回归方程 $\hat{y}=0.074+0.0999x_1+0.0245x_2$ 在 $\alpha=0.05$ 水平上显著。
+
+残余标准差为 $\sigma=\sqrt{0.1696}=0.41$，于是 $2\sigma=0.82$。用该回归方程进行预报时，$95\%$ 的误差不会超过 $0.82$。
+
+\newpage
+
+\problem{例6-15}
+
+\timu 对例6-13中的回归进行方差分析。
+
+\jieda 方差分析表如下：
+
+\begin{center}
+\small
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{c|c|c|c|c|c}
+\toprule
+来源 & 平方和 & 自由度 & 方差 & $F$ & 显著性\\
+\midrule
+回归 & 627.6825 & 2 & 313.8413 & 10.84 & $F_{0.01}=8.02$\\
+残余 & 260.5675 & 9 & 28.9519 & -- & --\\
+总计 & 888.25 & 11 & -- & -- & --\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+总离差平方和为 $S=l_{yy}=888.25$，自由度为 $\nu_S=12-1=11$；回归平方和为 $U=b_1l_{1y}+b_2l_{2y}=627.6825$，自由度为 $\nu_U=2$；残余平方和为 $Q=l_{yy}-U=260.5675$，自由度为 $\nu_Q=11-2=9$。
+
+由于 $F=10.84>F_{0.01}(2,9)=8.02$，因此回归方程 $\hat{y}=0.85x_1+1.51x_2-104.14$ 在 $\alpha=0.01$ 水平上高度显著。
+
+残余标准差为 $\sigma=5.38\mathrm{kg}$，于是 $2\sigma=10.76\mathrm{kg}$。用该回归方程进行预报时，$99\%$ 的误差不会超过 $10.76\mathrm{kg}$。
+
+\problem{例6-16}
+
+\timu 分析例6-12中两个自变量在回归中所起的作用。
+
+\jieda 按有关公式计算：
+\begin{equation*}
+    P_1=\frac{b_1^2}{c_{11}}=\frac{0.0999^2}{0.006681}=1.4938,\quad P_2=\frac{b_2^2}{c_{22}}=\frac{0.0245^2}{0.205419}=0.0029
+\end{equation*}
+
+又因为例6-14中残余方差为 $\sigma^2=0.1696$
+
+所以
+\begin{equation*}
+    F_1=\frac{P_1}{\sigma^2} = \frac{1.4938}{0.1696} = 8.81,\quad F_2=\frac{P_2}{\sigma^2} = \frac{0.0029}{0.1696} = 0.017
+\end{equation*}
+
+查 $F$ 分布表，得 $F_{0.1}(1,26)=2.91, \qquad F_{0.01}(1,26)=7.72$
+
+因为 $F_1>F_{0.01}(1,26)$ 所以 $P_1$ 在 $\alpha=0.01$ 水平上显著。
+
+又因为 $F_2<F_{0.1}(1,26)$ 所以 $P_2$ 不显著。这说明 $x_1$ 是影响 $y$ 的一个主要因素，而 $x_2$ 对影响很小。
+
+因此，可以在回归方程 $\hat{y}=1.567+0.0999(x_1-14.571)+0.0245(x_2-1.516)$ 中把自变量 $x_2$ 删除。此时，$y$ 对 $x_1$ 的回归系数 $b_1'$ 可按 $b_1' = b_1-\frac{c_{12}}{c_{22}}b_2$ 求得，即 $b_1' = 0.0999- \frac{-0.009358}{0.205419}\times0.0245 = 0.1010$
+
+从而得到新的回归方程 $\hat{y} = 1.567+0.1010(x_1-14.571)$
+
+\end{document}

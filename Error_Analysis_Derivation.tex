@@ -1,0 +1,1027 @@
+\documentclass[UTF8,12pt,a4paper]{ctexart}
+\usepackage[a4paper,margin=2cm]{geometry}
+\usepackage{amsmath,amssymb,bm,booktabs,array,longtable,mathtools}
+\usepackage{enumitem}
+\usepackage{indentfirst}
+\usepackage{microtype}
+\linespread{1.4}
+\setlength{\parindent}{2em}
+\setlength{\parskip}{0em}
+\setlist[itemize]{leftmargin=2em,itemsep=0.02em,topsep=0.04em,parsep=0em,partopsep=0em}
+\setlist[enumerate]{leftmargin=2.2em,itemsep=0.03em,topsep=0.04em,parsep=0em,partopsep=0em}
+\renewcommand\arraystretch{1.04}
+\allowdisplaybreaks
+\sloppy
+\raggedbottom
+\setlength{\jot}{0.08em}
+\AtBeginDocument{\setlength{\abovedisplayskip}{0.16em}\setlength{\belowdisplayskip}{0.16em}\setlength{\abovedisplayshortskip}{0.08em}\setlength{\belowdisplayshortskip}{0.08em}}
+\ctexset{section={format=\large\bfseries,beforeskip=0.45ex,afterskip=0.22ex},subsection={format=\normalsize\bfseries,beforeskip=0.35ex,afterskip=0.12ex}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\T}{\mathrm{T}}
+\newcommand{\diag}{\mathrm{diag}}
+\newcommand{\abs}[1]{\left|#1\right|}
+\begin{document}
+
+\begin{center}
+    {\huge \textbf{误差理论与数据处理}}
+\end{center}
+\vspace{1em}
+
+\section{随机误差与残余误差公式推导}
+
+\subsection{测量误差、残余误差与平均值}
+设被测量真值为 $X$，第 $i$ 次测量值为 $l_i$，随机误差为 $\delta_i=l_i-X$。若共有 $n$ 次等精度测量，则算术平均值为 $\bar{x}=\dfrac{1}{n}\sum_{i=1}^{n}l_i$。残余误差通常取为测量值与算术平均值之差，即 $v_i=l_i-\bar{x}$。于是有
+\begin{equation*}
+    \sum_{i=1}^{n}v_i=\sum_{i=1}^{n}(l_i-\bar{x})
+    =\sum_{i=1}^{n}l_i-n\bar{x} .
+\end{equation*}
+若 $\bar{x}$ 由原始数据精确算出，满足 $n\bar{x}=\sum l_i$，所以
+\begin{equation*}
+    \sum_{i=1}^{n}v_i=0 .
+\end{equation*}
+这就是残余误差代数和为零的来源。
+
+\subsection{残余误差代数和的凑整校核}
+实际计算时，$\bar{x}$ 常常需要凑整。设精确平均值为 $\bar{x}_0$，凑整后的平均值为 $\bar{x}$，二者相差
+\begin{equation*}
+    \varepsilon=\bar{x}-\bar{x}_0,\qquad
+    \sum_{i=1}^{n}v_i
+    =\sum_{i=1}^{n}(l_i-\bar{x})
+    =\sum_{i=1}^{n}l_i-n\bar{x}
+    =n\bar{x}_0-n\bar{x}
+    =-n\varepsilon .
+\end{equation*}
+若平均值按末位单位 $A$ 凑整，则 $\abs{\varepsilon}\le A/2$。因此 $\abs{\sum_{i=1}^{n}v_i}=n\abs{\varepsilon}\le nA/2$。若 $n$ 为偶数，$\sum v_i$ 的最大可能绝对值可达到 $nA/2$，故 $\abs{\sum_{i=1}^{n}v_i}\le nA/2$；若 $n$ 为奇数，$\sum v_i$ 通常只能取末位单位 $A$ 的整数倍，而 $nA/2$ 是半整数倍的 $A$，所以最大不超过 $(n-1)A/2$，即
+\begin{equation*}
+    \abs{\sum_{i=1}^{n}v_i}\le \frac{n-1}{2}A=\left(\frac{n}{2}-0.5\right)A .
+\end{equation*}
+这就是偶数、奇数两个校核公式的来源。
+
+\subsection{真误差标准差公式}
+若真值 $X$ 已知，随机误差为 $\delta_i=l_i-X$。等精度测量中，随机误差的数学期望为零，即
+\begin{equation*}
+    \E(\delta)=0 .
+\end{equation*}
+标准差由方差开方得到：
+\begin{equation*}
+    \sigma=\sqrt{\Var(\delta)}=\sqrt{\E(\delta^2)-[\E(\delta)]^2}.
+\end{equation*}
+由于 $\E(\delta)=0$，所以
+\begin{equation*}
+    \sigma=\sqrt{\E(\delta^2)} .
+\end{equation*}
+用有限次测量的平均平方误差代替数学期望，有
+\begin{equation*}
+    \sigma=\sqrt{\frac{1}{n}\sum_{i=1}^{n}\delta_i^2} .
+\end{equation*}
+该式适用于真值已知或可认为已知的情形。
+
+\newpage
+
+\subsection{贝塞尔公式推导}
+真值未知时，不能直接计算 $\delta_i=l_i-X$，只能使用残余误差
+\begin{equation*}
+    v_i=l_i-\bar{x} .
+\end{equation*}
+由
+\begin{equation*}
+    l_i-X=(l_i-\bar{x})+(\bar{x}-X)=v_i+(\bar{x}-X)
+\end{equation*}
+得
+\begin{equation*}
+\begin{aligned}
+    \sum_{i=1}^{n}(l_i-X)^2
+    &=\sum_{i=1}^{n}\left[v_i+(\bar{x}-X)\right]^2 \\
+    &=\sum_{i=1}^{n}v_i^2
+      +2(\bar{x}-X)\sum_{i=1}^{n}v_i
+      +n(\bar{x}-X)^2 .
+\end{aligned}
+\end{equation*}
+由于 $\sum v_i=0$，中间项消失，因此
+\begin{equation*}
+    \sum_{i=1}^{n}(l_i-X)^2=\sum_{i=1}^{n}v_i^2+n(\bar{x}-X)^2 .
+\end{equation*}
+对两边取数学期望。因为 $\E[(l_i-X)^2]=\sigma^2$，所以
+\begin{equation*}
+    \E\left[\sum_{i=1}^{n}(l_i-X)^2\right]=n\sigma^2 .
+\end{equation*}
+又因为
+\begin{equation*}
+    \Var(\bar{x})=\frac{\sigma^2}{n},
+\end{equation*}
+所以
+\begin{equation*}
+    \E\left[n(\bar{x}-X)^2\right]=n\Var(\bar{x})=\sigma^2 .
+\end{equation*}
+因此
+\begin{equation*}
+    n\sigma^2=\E\left(\sum_{i=1}^{n}v_i^2\right)+\sigma^2,
+\end{equation*}
+即
+\begin{equation*}
+    \E\left(\sum_{i=1}^{n}v_i^2\right)=(n-1)\sigma^2 .
+\end{equation*}
+于是得到无偏估计式
+\begin{equation*}
+    s^2=\frac{\sum_{i=1}^{n}v_i^2}{n-1},
+    \qquad
+    s=\sqrt{\frac{\sum_{i=1}^{n}v_i^2}{n-1}} .
+\end{equation*}
+这就是贝塞尔公式。分母不是 $n$，而是 $n-1$，原因是平均值 $\bar{x}$ 已由数据估计出来，残余误差满足 $\sum v_i=0$，只有 $n-1$ 个独立信息量。
+
+\newpage
+
+\subsection{算术平均值标准差推导}
+设 $l_1,l_2,\ldots,l_n$ 相互独立，且方差均为 $\sigma^2$。算术平均值为
+\begin{equation*}
+    \bar{x}=\frac{1}{n}\sum_{i=1}^{n}l_i .
+\end{equation*}
+根据方差性质，常数可以平方提出，独立变量和的方差等于方差之和，所以
+\begin{equation*}
+    \Var(\bar{x})=\Var\left(\frac{1}{n}\sum_{i=1}^{n}l_i\right)=\frac{1}{n^2}\sum_{i=1}^{n}\Var(l_i)=\frac{\sigma^2}{n}.
+\end{equation*}
+故算术平均值标准差为
+\begin{equation*}
+    \sigma_{\bar{x}}=\sqrt{\Var(\bar{x})}=\frac{\sigma}{\sqrt{n}} .
+\end{equation*}
+用贝塞尔公式估计 $\sigma$，可得
+\begin{equation*}
+    \sigma_{\bar{x}}=\sqrt{\frac{\sum_{i=1}^{n}v_i^2}{n(n-1)}} .
+\end{equation*}
+
+\subsection{或然误差与平均误差系数来源}
+若随机误差服从正态分布 $N(0,\sigma^2)$，则误差落在 $[-\rho,\rho]$ 内的概率为 $1/2$ 时，$\rho$ 称为或然误差。令 $Z=\delta/\sigma$，则 $P(-\rho\le \delta\le \rho)=P(-\rho/\sigma\le Z\le \rho/\sigma)=1/2$。查标准正态分布表得 $\rho/\sigma=0.6745$，工程计算中常取 $0.6745\approx 2/3$，于是
+\begin{equation*}
+    \rho\approx \frac{2}{3}\sigma
+    =\frac{2}{3}\sqrt{\frac{\sum_{i=1}^{n}v_i^2}{n-1}} .
+\end{equation*}
+平均误差常指绝对误差的数学期望。若 $\delta\sim N(0,\sigma^2)$，则
+\begin{equation*}
+\begin{aligned}
+    \theta
+    &=\E\abs{\delta}
+      =\int_{-\infty}^{+\infty}\abs{x}\frac{1}{\sigma\sqrt{2\pi}}
+        e^{-x^2/(2\sigma^2)}\dd x       \\
+    &=2\int_{0}^{+\infty}x\frac{1}{\sigma\sqrt{2\pi}}
+        e^{-x^2/(2\sigma^2)}\dd x       \\
+    &=\sigma\sqrt{\frac{2}{\pi}}
+      \approx 0.7979\sigma
+      \approx \frac{4}{5}\sigma .
+\end{aligned}
+\end{equation*}
+故有
+\begin{equation*}
+    \theta\approx \frac{4}{5}\sqrt{\frac{\sum_{i=1}^{n}v_i^2}{n-1}} .
+\end{equation*}
+算术平均值的或然误差与平均误差分别为
+\begin{equation*}
+    R=\frac{\rho}{\sqrt{n}},
+    \qquad
+    T=\frac{\theta}{\sqrt{n}} .
+\end{equation*}
+代入上式，得到
+\begin{equation*}
+    R=\frac{2}{3}\sqrt{\frac{\sum v_i^2}{n(n-1)}},
+    \qquad
+    T=\frac{4}{5}\sqrt{\frac{\sum v_i^2}{n(n-1)}} .
+\end{equation*}
+
+\newpage
+
+\subsection{别捷尔斯法公式推导}
+正态分布下，真误差的平均绝对值满足
+\begin{equation*}
+    \E\abs{\delta}=\sigma\sqrt{\frac{2}{\pi}} .
+\end{equation*}
+若使用残余误差 $v_i=l_i-\bar{x}$，则 $v_i$ 的方差不是 $\sigma^2$，而是
+\begin{equation*}
+    \Var(v_i)=\Var(l_i-\bar{x})=\sigma^2\left(1-\frac{1}{n}\right)=\frac{n-1}{n}\sigma^2 .
+\end{equation*}
+因此可近似认为
+\begin{equation*}
+    \E\abs{v_i}\approx \sqrt{\frac{n-1}{n}}\sigma\sqrt{\frac{2}{\pi}} .
+\end{equation*}
+将 $\E\abs{v_i}$ 用样本平均值 $\dfrac{1}{n}\sum\abs{v_i}$ 代替，得
+\begin{equation*}
+    \frac{1}{n}\sum_{i=1}^{n}\abs{v_i}
+    \approx \sqrt{\frac{n-1}{n}}\sigma\sqrt{\frac{2}{\pi}} .
+\end{equation*}
+解出 $\sigma$：
+\begin{equation*}
+    \sigma\approx\sqrt{\frac{\pi}{2}}\sqrt{\frac{n}{n-1}}\frac{1}{n}\sum_{i=1}^{n}\abs{v_i}=\sqrt{\frac{\pi}{2}}\frac{\sum_{i=1}^{n}\abs{v_i}}{\sqrt{n(n-1)}}.
+\end{equation*}
+由于 $\sqrt{\pi/2}=1.253\cdots$，所以
+\begin{equation*}
+    \sigma=1.253\frac{\sum_{i=1}^{n}\abs{v_i}}{\sqrt{n(n-1)}} .
+\end{equation*}
+
+\section{不等精度测量公式推导}
+
+\subsection{权与方差倒数成正比的推导}
+设有 $m$ 个独立测量结果 $x_1,x_2,\ldots,x_m$，它们都测量同一个真值 $X$，且
+\begin{equation*}
+    \E(x_i)=X,
+    \qquad
+    \Var(x_i)=\sigma_i^2 .
+\end{equation*}
+构造线性无偏估计
+\begin{equation*}
+    \hat{X}=\sum_{i=1}^{m}a_i x_i .
+\end{equation*}
+无偏条件为
+\begin{equation*}
+    \E(\hat{X})=\sum_{i=1}^{m}a_i\E(x_i)=X\sum_{i=1}^{m}a_i=X,
+\end{equation*}
+所以必须满足
+\begin{equation*}
+    \sum_{i=1}^{m}a_i=1 .
+\end{equation*}
+由于各测量结果独立，估计量方差为
+\begin{equation*}
+    \Var(\hat{X})=\sum_{i=1}^{m}a_i^2\sigma_i^2 .
+\end{equation*}
+为了让估计最可靠，应在约束 $\sum a_i=1$ 下使方差最小。构造拉格朗日函数
+\begin{equation*}
+    \Phi=\sum_{i=1}^{m}a_i^2\sigma_i^2-\lambda\left(\sum_{i=1}^{m}a_i-1\right) .
+\end{equation*}
+对 $a_i$ 求偏导并令其为零：
+\begin{equation*}
+    \frac{\partial\Phi}{\partial a_i}=2a_i\sigma_i^2-\lambda=0 .
+\end{equation*}
+所以
+\begin{equation*}
+    a_i=\frac{\lambda}{2\sigma_i^2} .
+\end{equation*}
+代入 $\sum a_i=1$，得
+\begin{equation*}
+    \frac{\lambda}{2}\sum_{i=1}^{m}\frac{1}{\sigma_i^2}=1,
+    \qquad
+    \frac{\lambda}{2}=\frac{1}{\sum_{i=1}^{m}1/\sigma_i^2} .
+\end{equation*}
+于是
+\begin{equation*}
+    a_i=\frac{1/\sigma_i^2}{\sum_{j=1}^{m}1/\sigma_j^2} .
+\end{equation*}
+这说明权应与方差成反比，即
+\begin{equation*}
+    p_i\propto \frac{1}{\sigma_i^2} .
+\end{equation*}
+如果 $x_i$ 本身是第 $i$ 组测量的平均值，则
+\begin{equation*}
+    p_i\propto \frac{1}{\sigma_{\bar{x}_i}^2},
+\end{equation*}
+即
+\begin{equation*}
+    p_1:p_2:\cdots:p_m
+    =\frac{1}{\sigma_{\bar{x}_1}^2}:\frac{1}{\sigma_{\bar{x}_2}^2}:\cdots:\frac{1}{\sigma_{\bar{x}_m}^2} .
+\end{equation*}
+
+\subsection{加权算术平均值推导}
+由上节得到
+\begin{equation*}
+    \hat{X}=\sum_{i=1}^{m}a_i x_i,
+    \qquad
+    a_i=\frac{p_i}{\sum_{j=1}^{m}p_j} .
+\end{equation*}
+因此
+\begin{equation*}
+    \bar{x}=\hat{X}=\frac{\sum_{i=1}^{m}p_i x_i}{\sum_{i=1}^{m}p_i} .
+\end{equation*}
+为了减小数字运算量，常引入接近各 $x_i$ 的辅助值 $x_0$。因为
+\begin{equation*}
+    x_i=x_0+(x_i-x_0),
+\end{equation*}
+所以
+\begin{equation*}
+\begin{aligned}
+    \bar{x}
+    &=\frac{\sum_{i=1}^{m}p_i\left[x_0+(x_i-x_0)\right]}{\sum_{i=1}^{m}p_i} \\
+    &=\frac{x_0\sum_{i=1}^{m}p_i+\sum_{i=1}^{m}p_i(x_i-x_0)}{\sum_{i=1}^{m}p_i} \\
+    &=x_0+\frac{\sum_{i=1}^{m}p_i(x_i-x_0)}{\sum_{i=1}^{m}p_i} .
+\end{aligned}
+\end{equation*}
+这就是加权平均值的常用计算形式。
+
+\newpage
+
+\subsection{加权平均值标准差推导}
+若权的定义采用
+\begin{equation*}
+    p_i=\frac{\sigma_0^2}{\sigma_i^2},
+\end{equation*}
+其中 $\sigma_0$ 为单位权标准差，则
+\begin{equation*}
+    \sigma_i^2=\frac{\sigma_0^2}{p_i} .
+\end{equation*}
+加权平均值为
+\begin{equation*}
+    \bar{x}=\sum_{i=1}^{m}\frac{p_i}{\sum p_i}x_i .
+\end{equation*}
+由于各 $x_i$ 独立，故
+\begin{equation*}
+    \Var(\bar{x})=\sum_{i=1}^{m}\left(\frac{p_i}{\sum p_i}\right)^2\Var(x_i)=\frac{\sigma_0^2}{(\sum p_i)^2}\sum_{i=1}^{m}p_i=\frac{\sigma_0^2}{\sum_{i=1}^{m}p_i}.
+\end{equation*}
+所以
+\begin{equation*}
+    \sigma_{\bar{x}}=\frac{\sigma_0}{\sqrt{\sum_{i=1}^{m}p_i}} .
+\end{equation*}
+若 $\sigma_0$ 未知，用加权残差估计单位权方差：
+\begin{equation*}
+    s_0^2=\frac{\sum_{i=1}^{m}p_i v_i^2}{m-1},
+    \qquad
+    v_i=x_i-\bar{x} .
+\end{equation*}
+这是因为只估计了一个未知量 $X$，自由度为 $m-1$。代入得
+\begin{equation*}
+    \sigma_{\bar{x}}
+    =\frac{s_0}{\sqrt{\sum p_i}}
+    =\sqrt{\frac{\sum_{i=1}^{m}p_i v_i^2}{(m-1)\sum_{i=1}^{m}p_i}} .
+\end{equation*}
+
+\section{常见误差分布标准差推导}
+
+\subsection{统一思路}
+若误差 $\delta$ 的概率密度为 $f(\delta)$，则均值和方差为
+\begin{equation*}
+    \mu=\E(\delta)=\int \delta f(\delta)\dd\delta,
+    \qquad
+    \sigma^2=\Var(\delta)=\int(\delta-\mu)^2f(\delta)\dd\delta .
+\end{equation*}
+若分布关于零点对称，则 $\mu=0$，此时
+\begin{equation*}
+    \sigma^2=\int \delta^2 f(\delta)\dd\delta .
+\end{equation*}
+
+\subsection{均匀分布}
+均匀分布为
+\begin{equation*}
+f(\delta)=\frac{1}{2a},\qquad -a\le \delta\le a .
+\end{equation*}
+该分布关于零点对称，故 $\mu=0$。于是
+\begin{equation*}
+\sigma^2=\int_{-a}^{a}\delta^2\frac{1}{2a}\dd\delta
+=\frac{1}{2a}\left[\frac{\delta^3}{3}\right]_{-a}^{a}
+=\frac{a^2}{3},\qquad
+\sigma=\frac{a}{\sqrt{3}} .
+\end{equation*}
+
+\subsection{反正弦分布}
+反正弦分布为
+\begin{equation*}
+f(\delta)=\frac{1}{\pi\sqrt{a^2-\delta^2}},\qquad \abs{\delta}<a .
+\end{equation*}
+该分布关于零点对称。令 $\delta=a\sin\theta$，则 $\dd\delta=a\cos\theta\dd\theta$，$\sqrt{a^2-\delta^2}=a\cos\theta$。当 $\delta$ 从 $-a$ 到 $a$ 时，$\theta$ 从 $-\pi/2$ 到 $\pi/2$。因此
+\begin{equation*}
+\sigma^2=\int_{-a}^{a}\delta^2\frac{1}{\pi\sqrt{a^2-\delta^2}}\dd\delta
+=\frac{1}{\pi}\int_{-\pi/2}^{\pi/2}a^2\sin^2\theta\dd\theta
+=\frac{a^2}{2},\qquad
+\sigma=\frac{a}{\sqrt{2}} .
+\end{equation*}
+
+\subsection{三角分布}
+三角分布为
+\begin{equation*}
+f(\delta)=
+\begin{cases}
+\dfrac{a+\delta}{a^2}, & -a\le \delta<0,\\[4pt]
+\dfrac{a-\delta}{a^2}, & 0\le \delta\le a .
+\end{cases}
+\end{equation*}
+它关于零点对称，因此均值为零。方差为
+\begin{equation*}
+\sigma^2=2\int_{0}^{a}\delta^2\frac{a-\delta}{a^2}\dd\delta
+=\frac{2}{a^2}\int_{0}^{a}(a\delta^2-\delta^3)\dd\delta
+=\frac{a^2}{6},\qquad
+\sigma=\frac{a}{\sqrt{6}} .
+\end{equation*}
+
+\subsection{直角分布}
+直角分布为
+\begin{equation*}
+f(\delta)=\frac{\delta+a}{2a^2},\qquad -a\le \delta\le a .
+\end{equation*}
+该分布不关于零点对称，必须先求均值：
+\begin{equation*}
+\mu=\int_{-a}^{a}\delta\frac{\delta+a}{2a^2}\dd\delta
+=\frac{1}{2a^2}\int_{-a}^{a}(\delta^2+a\delta)\dd\delta
+=\frac{a}{3} .
+\end{equation*}
+再求二阶原点矩：
+\begin{equation*}
+\E(\delta^2)=\int_{-a}^{a}\delta^2\frac{\delta+a}{2a^2}\dd\delta
+=\frac{1}{2a^2}\int_{-a}^{a}(\delta^3+a\delta^2)\dd\delta
+=\frac{a^2}{3} .
+\end{equation*}
+于是
+\begin{equation*}
+\sigma^2=\E(\delta^2)-\mu^2=\frac{a^2}{3}-\frac{a^2}{9}=\frac{2a^2}{9},
+\qquad
+\sigma=\frac{\sqrt{2}a}{3} .
+\end{equation*}
+
+\subsection{椭圆分布}
+椭圆分布为
+\begin{equation*}
+f(\delta)=\frac{2}{\pi a^2}\sqrt{a^2-\delta^2},\qquad \abs{\delta}\le a .
+\end{equation*}
+它关于零点对称。令 $\delta=a\sin\theta$，则
+\begin{equation*}
+\sigma^2=\int_{-a}^{a}\delta^2\frac{2}{\pi a^2}\sqrt{a^2-\delta^2}\dd\delta
+=\frac{2a^2}{\pi}\int_{-\pi/2}^{\pi/2}\sin^2\theta\cos^2\theta\dd\theta .
+\end{equation*}
+由 $\sin^2\theta\cos^2\theta=\dfrac{1}{8}(1-\cos4\theta)$，得
+\begin{equation*}
+\int_{-\pi/2}^{\pi/2}\sin^2\theta\cos^2\theta\dd\theta=\frac{\pi}{8}.
+\end{equation*}
+因此
+\begin{equation*}
+\sigma^2=\frac{2a^2}{\pi}\cdot\frac{\pi}{8}=\frac{a^2}{4},
+\qquad
+\sigma=\frac{a}{2} .
+\end{equation*}
+
+\subsection{双三角分布}
+双三角分布为
+\begin{equation*}
+f(\delta)=\frac{\abs{\delta}}{a^2},\qquad \abs{\delta}\le a .
+\end{equation*}
+它关于零点对称。方差为
+\begin{equation*}
+\sigma^2=2\int_{0}^{a}\delta^2\frac{\delta}{a^2}\dd\delta
+=\frac{2}{a^2}\int_{0}^{a}\delta^3\dd\delta
+=\frac{a^2}{2},\qquad
+\sigma=\frac{a}{\sqrt{2}} .
+\end{equation*}
+
+\newpage
+
+\section{系统误差与粗大误差判别公式说明}
+
+\subsection{两个平均值比较公式}
+设两组测量平均值分别为 $\bar{x}_i$ 和 $\bar{x}_j$，其标准差分别为 $\sigma_i$ 和 $\sigma_j$，并假定二者独立。考虑差值
+\begin{equation*}
+    D=\bar{x}_i-\bar{x}_j .
+\end{equation*}
+若两组数据之间不存在显著系统差异，则 $D$ 的理论均值应为零。由独立变量方差相加得
+\begin{equation*}
+    \Var(D)=\Var(\bar{x}_i)+\Var(\bar{x}_j)=\sigma_i^2+\sigma_j^2 .
+\end{equation*}
+因此差值的标准差为
+\begin{equation*}
+    \sigma_D=\sqrt{\sigma_i^2+\sigma_j^2} .
+\end{equation*}
+若采用约 $2\sigma$ 的经验界限，则比较量为
+\begin{equation*}
+    \abs{\bar{x}_i-\bar{x}_j}
+    \quad \text{与}\quad
+    2\sqrt{\sigma_i^2+\sigma_j^2} .
+\end{equation*}
+若差值超过该界限，通常认为两组平均值之间存在显著差异；若没有超过，则认为差异可由随机误差解释。
+
+\subsection{秩和检验大样本近似推导}
+将两组数据合并后按大小排序，并给出秩次。设第一组样本量为 $n_1$，第二组样本量为 $n_2$，第一组秩和为 $T$。在无系统差异的原假设下，第一组相当于从 $1,2,\ldots,n_1+n_2$ 这些秩次中随机抽取 $n_1$ 个。
+
+设总样本量
+\begin{equation*}
+    N=n_1+n_2 .
+\end{equation*}
+所有秩次的平均值为
+\begin{equation*}
+    \frac{1+N}{2} .
+\end{equation*}
+故秩和的数学期望为
+\begin{equation*}
+    a=\E(T)=n_1\frac{N+1}{2}
+    =\frac{n_1(n_1+n_2+1)}{2} .
+\end{equation*}
+不放回抽样秩和的方差为
+\begin{equation*}
+    \sigma_T^2=\frac{n_1n_2(N+1)}{12}
+    =\frac{n_1n_2(n_1+n_2+1)}{12} .
+\end{equation*}
+当 $n_1,n_2$ 较大时，秩和近似服从正态分布，因此标准化统计量为
+\begin{equation*}
+    Z=\frac{T-a}{\sigma_T}
+    =\frac{T-\dfrac{n_1(n_1+n_2+1)}{2}}
+    {\sqrt{\dfrac{n_1n_2(n_1+n_2+1)}{12}}} .
+\end{equation*}
+若
+\begin{equation*}
+    \abs{Z}>t_\alpha,
+\end{equation*}
+则认为两组数据的中心位置差异显著，从而可判断存在系统差异。
+
+\newpage
+
+\subsection{两样本 $t$ 检验公式推导}
+设两组样本均值分别为 $\bar{x},\bar{y}$，样本容量分别为 $n_x,n_y$，样本标准差分别为 $\sigma_x,\sigma_y$。若认为两组总体方差相同，则合并方差估计通常为
+\begin{equation*}
+    s_p^2=\frac{n_x\sigma_x^2+n_y\sigma_y^2}{n_x+n_y-2} .
+\end{equation*}
+这里分母为 $n_x+n_y-2$，是因为两组数据各自估计了一个均值，共损失两个自由度。
+
+均值差的标准差为
+\begin{equation*}
+    s_{\bar{x}-\bar{y}}=s_p\sqrt{\frac{1}{n_x}+\frac{1}{n_y}}
+    =s_p\sqrt{\frac{n_x+n_y}{n_xn_y}} .
+\end{equation*}
+所以
+\begin{equation*}
+    \abs{t}
+    =\frac{\abs{\bar{x}-\bar{y}}}{s_p\sqrt{(n_x+n_y)/(n_xn_y)}}
+    =\abs{\bar{x}-\bar{y}}\sqrt{\frac{n_xn_y(n_x+n_y-2)}{(n_x+n_y)(n_x\sigma_x^2+n_y\sigma_y^2)}} .
+\end{equation*}
+若 $\abs{t}\ge t_\alpha$，则认为两组均值差异显著。
+
+\subsection{莱以特准则的概率依据}
+若误差服从正态分布，则
+\begin{equation*}
+    P(\abs{\delta}\le 3\sigma)\approx 0.9973 .
+\end{equation*}
+这说明正常随机误差落在 $[-3\sigma,3\sigma]$ 外的概率约为 $0.27\%$。所以若某个残余误差满足
+\begin{equation*}
+    \abs{v_i}>3\sigma,
+\end{equation*}
+则它很难仅由正常随机波动产生，因而可怀疑为粗大误差。实际使用时，$\sigma$ 常用贝塞尔公式估计：
+\begin{equation*}
+    \sigma=\sqrt{\frac{\sum_{i=1}^{n}v_i^2}{n-1}} .
+\end{equation*}
+
+\subsection{罗曼诺夫斯基准则的留一思想}
+判断第 $j$ 个观测值 $x_j$ 是否异常时，为避免异常值本身影响平均值，常把它从样本中临时剔除，用其余 $n-1$ 个数据计算平均值：
+\begin{equation*}
+    \bar{x}_{(-j)}=\frac{1}{n-1}\sum_{i=1,i\ne j}^{n}x_i .
+\end{equation*}
+再用其余数据估计标准差。因为剔除了一个可疑值，还剩 $n-1$ 个数据，并估计了一个平均值，所以自由度为 $n-2$：
+\begin{equation*}
+    s_{(-j)}=\sqrt{\frac{\sum_{i=1}^{n}v_i^2}{n-2}} .
+\end{equation*}
+于是构造标准化偏离量
+\begin{equation*}
+    \frac{\abs{x_j-\bar{x}_{(-j)}}}{s_{(-j)}}
+    =
+    \frac{
+    \left|x_j-\dfrac{1}{n-1}\sum_{i=1,i\ne j}^{n}x_i\right|
+    }{
+    \sqrt{\dfrac{\sum_{i=1}^{n}v_i^2}{n-2}}
+    } .
+\end{equation*}
+若该值超过临界值 $K(n,\alpha)$，则判为粗大误差。
+
+\newpage
+
+\subsection{格罗布斯准则与狄克松准则的统计量含义}
+格罗布斯准则先将数据从小到大排列为
+\begin{equation*}
+    x_{(1)}\le x_{(2)}\le\cdots\le x_{(n)} .
+\end{equation*}
+若怀疑最小值异常，则考察
+\begin{equation*}
+    g_{(1)}=\frac{\bar{x}-x_{(1)}}{\sigma};
+\end{equation*}
+若怀疑最大值异常，则考察
+\begin{equation*}
+    g_{(n)}=\frac{x_{(n)}-\bar{x}}{\sigma} .
+\end{equation*}
+其本质是把端点偏离平均值的距离用标准差标准化，再与临界值 $g_0(n,\alpha)$ 比较。
+
+狄克松准则不计算标准差，而是用“可疑端点与邻近点的间隔”除以“样本总体跨度”或修正后的跨度。例如当 $n\le 7$ 时，最小端异常的统计量为
+\begin{equation*}
+    r_{10}=\frac{x_{(2)}-x_{(1)}}{x_{(n)}-x_{(1)}} .
+\end{equation*}
+若 $x_{(1)}$ 远离其他数据，则 $x_{(2)}-x_{(1)}$ 大，$r_{10}$ 也大。最大端异常时可写为
+\begin{equation*}
+    r_{10}=\frac{x_{(n)}-x_{(n-1)}}{x_{(n)}-x_{(1)}} .
+\end{equation*}
+样本量变大后，分母需要排除一个或两个端点以降低另一端异常值的干扰，因此出现 \\$r_{11},r_{21},r_{22}$ 等不同形式。
+
+\section{误差合成与误差分配推导}
+
+\subsection{函数标准差合成公式推导}
+设输入误差为随机量 $\Delta x_i$，输出误差的一阶近似为
+\begin{equation*}
+    \Delta y=\sum_{i=1}^{n}a_i\Delta x_i,
+    \qquad
+    a_i=\frac{\partial f}{\partial x_i} .
+\end{equation*}
+输出方差为
+\begin{equation*}
+    \sigma_y^2=\Var(\Delta y)=\Var\left(\sum_{i=1}^{n}a_i\Delta x_i\right) .
+\end{equation*}
+展开方差：
+\begin{equation*}
+    \Var\left(\sum_{i=1}^{n}a_i\Delta x_i\right)
+    =\sum_{i=1}^{n}a_i^2\Var(\Delta x_i)
+    +2\sum_{1\le i<j\le n}a_i a_j\Cov(\Delta x_i,\Delta x_j) .
+\end{equation*}
+令
+\begin{equation*}
+    \Var(\Delta x_i)=\sigma_{x_i}^2,
+    \qquad
+    \Cov(\Delta x_i,\Delta x_j)=\rho_{ij}\sigma_{x_i}\sigma_{x_j},
+\end{equation*}
+其中 $\rho_{ij}$ 为相关系数。代入得
+\begin{equation*}
+    \sigma_y^2
+    =\sum_{i=1}^{n}a_i^2\sigma_{x_i}^2
+    +2\sum_{1\le i<j\le n}a_i a_j\rho_{ij}\sigma_{x_i}\sigma_{x_j} .
+\end{equation*}
+再开方：
+\begin{equation*}
+    \sigma_y=\bigg[
+    \sum_{i=1}^{n}\left(\frac{\partial f}{\partial x_i}\right)^2\sigma_{x_i}^2
+    +2\sum_{1\le i<j\le n}
+    \frac{\partial f}{\partial x_i}\frac{\partial f}{\partial x_j}
+    \rho_{ij}\sigma_{x_i}\sigma_{x_j}
+    \bigg]^{1/2} .
+\end{equation*}
+
+\subsection{等作用原则误差分配推导}
+设输出函数一阶误差为
+\begin{equation*}
+    \Delta y=\sum_{i=1}^{n}a_i\Delta x_i .
+\end{equation*}
+若各输入互不相关，则
+\begin{equation*}
+    \sigma_y^2=\sum_{i=1}^{n}a_i^2\sigma_i^2 .
+\end{equation*}
+等作用原则要求每个误差源对输出方差的贡献相等，即
+\begin{equation*}
+    a_i^2\sigma_i^2=\frac{\sigma_y^2}{n} .
+\end{equation*}
+两边开方，得
+\begin{equation*}
+    \abs{a_i}\sigma_i=\frac{\sigma_y}{\sqrt{n}} .
+\end{equation*}
+若取 $a_i>0$ 或用绝对值表示灵敏度，则
+\begin{equation*}
+    \sigma_i=\frac{\sigma_y}{\sqrt{n}}\frac{1}{\abs{a_i}}
+    =\frac{\sigma_y}{\sqrt{n}}\frac{1}{\abs{\partial f/\partial x_i}} .
+\end{equation*}
+同理，对极限误差有
+\begin{equation*}
+    \delta_i=\frac{\delta}{\sqrt{n}}\frac{1}{\abs{a_i}} .
+\end{equation*}
+
+\section{不确定度合成公式推导}
+
+设测量结果由
+\begin{equation*}
+    y=f(x_1,x_2,\ldots,x_N)
+\end{equation*}
+给出。对函数作一阶展开：
+\begin{equation*}
+    \Delta y\approx \sum_{i=1}^{N}\frac{\partial f}{\partial x_i}\Delta x_i .
+\end{equation*}
+令输入量的标准不确定度为 $u_{x_i}$，灵敏系数为
+\begin{equation*}
+    c_i=\frac{\partial f}{\partial x_i} .
+\end{equation*}
+若各输入量独立，则
+\begin{equation*}
+    u_c^2(y)=\sum_{i=1}^{N}c_i^2u_{x_i}^2 .
+\end{equation*}
+记每个输入量对输出量贡献的标准不确定度为
+\begin{equation*}
+    u_i=c_i u_{x_i},
+\end{equation*}
+则
+\begin{equation*}
+    u_c=\sqrt{\sum_{i=1}^{N}\left(\frac{\partial f}{\partial x_i}\right)^2u_{x_i}^2}
+    =\sqrt{\sum_{i=1}^{N}u_i^2} .
+\end{equation*}
+这与误差合成公式形式完全一致，只是把标准差符号换成标准不确定度符号。
+
+\newpage
+
+\section{最小二乘法公式推导}
+
+\subsection{线性误差方程}
+设有 $n$ 个观测方程，$t$ 个未知参数。写成矩阵形式为
+\begin{equation*}
+    L=A X+\varepsilon,
+\end{equation*}
+
+\begin{equation*}
+    L=\begin{pmatrix}l_1\\l_2\\\vdots\\l_n\end{pmatrix},
+    \qquad
+    X=\begin{pmatrix}x_1\\x_2\\\vdots\\x_t\end{pmatrix},
+    \qquad
+    A=(a_{ij})_{n\times t} .
+\end{equation*}
+用估计量 $\hat{X}$ 代替真参数后，拟合值为 $A\hat{X}$，残差向量为 $V=L-A\hat{X}$。
+
+\subsection{等精度最小二乘正规方程}
+等精度时，各观测方程可靠程度相同，应使残差平方和最小：
+\begin{equation*}
+    \Phi=V^\T V=(L-A\hat{X})^\T(L-A\hat{X}) .
+\end{equation*}
+展开：
+\begin{equation*}
+\begin{aligned}
+    \Phi
+    &=L^\T L-L^\T A\hat{X}-\hat{X}^\T A^\T L+
+      \hat{X}^\T A^\T A\hat{X} .
+\end{aligned}
+\end{equation*}
+由于 $L^\T A\hat{X}$ 是标量，等于其转置 $\hat{X}^\T A^\T L$，所以
+\begin{equation*}
+    \Phi=L^\T L-2\hat{X}^\T A^\T L+
+    \hat{X}^\T A^\T A\hat{X} .
+\end{equation*}
+对 $\hat{X}$ 求导并令其为零：
+\begin{equation*}
+    \frac{\partial\Phi}{\partial \hat{X}}
+    =-2A^\T L+2A^\T A\hat{X}=0 .
+\end{equation*}
+故
+\begin{equation*}
+    A^\T A\hat{X}=A^\T L .
+\end{equation*}
+这就是正规方程。若 $A^\T A$ 可逆，则
+\begin{equation*}
+    \hat{X}=(A^\T A)^{-1}A^\T L .
+\end{equation*}
+记 $C=A^\T A$，则 $\hat{X}=C^{-1}A^\T L$。
+
+\subsection{不等精度最小二乘正规方程}
+不等精度时，各观测值的方差不同。方差小的观测值应有更大权重。设权阵为
+\begin{equation*}
+    P=\diag(p_1,p_2,\ldots,p_n)=
+    \begin{bmatrix}
+p_1 & 0 & \cdots & 0\\
+0 & p_2 & \cdots & 0\\
+\vdots & \vdots & \ddots & \vdots\\
+0 & 0 & \cdots & p_n
+\end{bmatrix}.
+\end{equation*}
+此时应最小化加权残差平方和
+\begin{equation*}
+    \Phi=V^\T P V=(L-A\hat{X})^\T P(L-A\hat{X}) .
+\end{equation*}
+展开并求导：
+\begin{equation*}
+\begin{aligned}
+    \Phi
+    &=L^\T P L-2\hat{X}^\T A^\T P L+
+      \hat{X}^\T A^\T P A\hat{X},\\
+    \frac{\partial\Phi}{\partial\hat{X}}
+    &=-2A^\T P L+2A^\T P A\hat{X}=0 .
+\end{aligned}
+\end{equation*}
+于是
+\begin{equation*}
+    A^\T P A\hat{X}=A^\T P L .
+\end{equation*}
+若 $A^\T P A$ 可逆，则
+\begin{equation*}
+    \hat{X}=(A^\T P A)^{-1}A^\T P L .
+\end{equation*}
+记 $C=A^\T P A$，则 $\hat{X}=C^{-1}A^\T P L$。等精度是 $P=I$ 的特殊情况。
+
+\subsection{单位权标准差与自由度}
+设共有 $n$ 个观测方程、$t$ 个未知参数。最小二乘中，$t$ 个参数由数据估计出来，因此残差的独立个数为
+\begin{equation*}
+    r=n-t .
+\end{equation*}
+这就是自由度。等精度时，单位权标准差估计为
+\begin{equation*}
+    \sigma_0=\sqrt{\frac{V^\T V}{n-t}}
+    =\sqrt{\frac{\sum_{i=1}^{n}v_i^2}{n-t}} .
+\end{equation*}
+不等精度时，采用加权残差平方和：
+\begin{equation*}
+    \sigma_0=\sqrt{\frac{V^\T P V}{n-t}}
+    =\sqrt{\frac{\sum_{i=1}^{n}p_i v_i^2}{n-t}} .
+\end{equation*}
+
+\subsection{参数估计量标准差推导}
+在不等精度线性模型中，有
+\begin{equation*}
+    \hat{X}=(A^\T P A)^{-1}A^\T P L .
+\end{equation*}
+若观测误差协方差阵与权阵满足
+\begin{equation*}
+    \Cov(L)=\sigma_0^2P^{-1},
+\end{equation*}
+则估计量协方差阵为
+\begin{equation*}
+\begin{aligned}
+    \Cov(\hat{X})
+    &=(A^\T P A)^{-1}A^\T P\Cov(L)P A(A^\T P A)^{-1} \\
+    &=(A^\T P A)^{-1}A^\T P(\sigma_0^2P^{-1})P A(A^\T P A)^{-1} \\
+    &=\sigma_0^2(A^\T P A)^{-1} .
+\end{aligned}
+\end{equation*}
+设
+\begin{equation*}
+    (A^\T P A)^{-1}=
+    \begin{pmatrix}
+    d_{11}&d_{12}&\cdots&d_{1t}\\
+    d_{21}&d_{22}&\cdots&d_{2t}\\
+    \vdots&\vdots&\ddots&\vdots\\
+    d_{t1}&d_{t2}&\cdots&d_{tt}
+    \end{pmatrix} .
+\end{equation*}
+则第 $i$ 个估计量的方差为
+\begin{equation*}
+    \sigma_{x_i}^2=\sigma_0^2 d_{ii} .
+\end{equation*}
+所以
+\begin{equation*}
+    \sigma_{x_i}=\sigma_0\sqrt{d_{ii}},
+    \qquad i=1,2,\ldots,t .
+\end{equation*}
+
+\newpage
+
+\section{一元线性回归公式推导}
+
+\subsection{最小二乘目标函数}
+设一元线性回归模型为
+\begin{equation*}
+    \hat{y}_t=b_0+bx_t,
+    \qquad t=1,2,\ldots,N .
+\end{equation*}
+残差为
+\begin{equation*}
+    e_t=y_t-\hat{y}_t=y_t-b_0-bx_t .
+\end{equation*}
+最小二乘法要求残差平方和最小：
+\begin{equation*}
+    Q(b_0,b)=\sum_{t=1}^{N}(y_t-b_0-bx_t)^2 .
+\end{equation*}
+
+\subsection{回归系数与截距推导}
+对 $b_0$ 和 $b$ 分别求偏导：
+\begin{equation*}
+\begin{aligned}
+    \frac{\partial Q}{\partial b_0}
+    &=-2\sum_{t=1}^{N}(y_t-b_0-bx_t)=0,\\
+    \frac{\partial Q}{\partial b}
+    &=-2\sum_{t=1}^{N}x_t(y_t-b_0-bx_t)=0 .
+\end{aligned}
+\end{equation*}
+化简第一式：
+\begin{equation*}
+    \sum_{t=1}^{N}y_t-Nb_0-b\sum_{t=1}^{N}x_t=0 .
+\end{equation*}
+两边除以 $N$，得
+\begin{equation*}
+    \bar{y}-b_0-b\bar{x}=0,
+    \qquad
+    b_0=\bar{y}-b\bar{x} .
+\end{equation*}
+代入第二个正规方程：
+\begin{equation*}
+    \sum_{t=1}^{N}x_t\left[y_t-(\bar{y}-b\bar{x})-bx_t\right]=0 .
+\end{equation*}
+即
+\begin{equation*}
+    \sum_{t=1}^{N}x_t(y_t-\bar{y})-b\sum_{t=1}^{N}x_t(x_t-\bar{x})=0 .
+\end{equation*}
+注意
+\begin{equation*}
+    \sum_{t=1}^{N}x_t(y_t-\bar{y})
+    =\sum_{t=1}^{N}(x_t-\bar{x})(y_t-\bar{y})=l_{xy},
+\end{equation*}
+以及
+\begin{equation*}
+    \sum_{t=1}^{N}x_t(x_t-\bar{x})
+    =\sum_{t=1}^{N}(x_t-\bar{x})^2=l_{xx} .
+\end{equation*}
+所以
+\begin{equation*}
+    l_{xy}-b l_{xx}=0,
+    \qquad
+    b=\frac{l_{xy}}{l_{xx}} .
+\end{equation*}
+再代回得到
+\begin{equation*}
+    b_0=\bar{y}-b\bar{x} .
+\end{equation*}
+
+\newpage
+
+\subsection{离差平方和恒等式}
+自变量离差平方和为
+\begin{equation*}
+    l_{xx}=\sum_{t=1}^{N}(x_t-\bar{x})^2 .
+\end{equation*}
+展开：
+\begin{equation*}
+\begin{aligned}
+    l_{xx}
+    &=\sum_{t=1}^{N}(x_t^2-2x_t\bar{x}+\bar{x}^2) \\
+    &=\sum_{t=1}^{N}x_t^2-2\bar{x}\sum_{t=1}^{N}x_t+N\bar{x}^2 .
+\end{aligned}
+\end{equation*}
+由于 $\sum x_t=N\bar{x}$，所以
+\begin{equation*}
+    l_{xx}=\sum_{t=1}^{N}x_t^2-2N\bar{x}^2+N\bar{x}^2
+    =\sum_{t=1}^{N}x_t^2-N\bar{x}^2 .
+\end{equation*}
+又
+\begin{equation*}
+    N\bar{x}^2=N\left(\frac{1}{N}\sum_{t=1}^{N}x_t\right)^2
+    =\frac{1}{N}\left(\sum_{t=1}^{N}x_t\right)^2 .
+\end{equation*}
+故
+\begin{equation*}
+    l_{xx}=\sum_{t=1}^{N}x_t^2-\frac{1}{N}\left(\sum_{t=1}^{N}x_t\right)^2 .
+\end{equation*}
+同理可得
+\begin{equation*}
+    l_{yy}=\sum_{t=1}^{N}y_t^2-\frac{1}{N}\left(\sum_{t=1}^{N}y_t\right)^2 .
+\end{equation*}
+
+\subsection{离差积和恒等式}
+离差积和为
+\begin{equation*}
+    l_{xy}=\sum_{t=1}^{N}(x_t-\bar{x})(y_t-\bar{y}) .
+\end{equation*}
+展开：
+\begin{equation*}
+\begin{aligned}
+    l_{xy}
+    &=\sum_{t=1}^{N}\left(x_ty_t-x_t\bar{y}-\bar{x}y_t+\bar{x}\bar{y}\right) \\
+    &=\sum_{t=1}^{N}x_ty_t-\bar{y}\sum_{t=1}^{N}x_t-\bar{x}\sum_{t=1}^{N}y_t+N\bar{x}\bar{y} .
+\end{aligned}
+\end{equation*}
+由 $\sum x_t=N\bar{x}$、$\sum y_t=N\bar{y}$，得
+\begin{equation*}
+    l_{xy}=\sum_{t=1}^{N}x_ty_t-N\bar{x}\bar{y} .
+\end{equation*}
+而
+\begin{equation*}
+    N\bar{x}\bar{y}=\frac{1}{N}\left(\sum_{t=1}^{N}x_t\right)
+    \left(\sum_{t=1}^{N}y_t\right) .
+\end{equation*}
+所以
+\begin{equation*}
+    l_{xy}=\sum_{t=1}^{N}x_ty_t-\frac{1}{N}\left(\sum_{t=1}^{N}x_t\right)
+    \left(\sum_{t=1}^{N}y_t\right) .
+\end{equation*}
+
+\subsection{平方和分解推导}
+总离差平方和为
+\begin{equation*}
+    S=\sum_{t=1}^{N}(y_t-\bar{y})^2=l_{yy} .
+\end{equation*}
+将 $y_t-\bar{y}$ 分解为
+\begin{equation*}
+    y_t-\bar{y}=(\hat{y}_t-\bar{y})+(y_t-\hat{y}_t) .
+\end{equation*}
+于是
+\begin{equation*}
+\begin{aligned}
+    S
+    &=\sum_{t=1}^{N}\left[(\hat{y}_t-\bar{y})+(y_t-\hat{y}_t)\right]^2 \\
+    &=\sum_{t=1}^{N}(\hat{y}_t-\bar{y})^2
+      +\sum_{t=1}^{N}(y_t-\hat{y}_t)^2
+      +2\sum_{t=1}^{N}(\hat{y}_t-\bar{y})(y_t-\hat{y}_t) .
+\end{aligned}
+\end{equation*}
+最小二乘回归中，残差与拟合值正交，因此
+\begin{equation*}
+    \sum_{t=1}^{N}(\hat{y}_t-\bar{y})(y_t-\hat{y}_t)=0 .
+\end{equation*}
+所以
+\begin{equation*}
+    S=U+Q,
+\end{equation*}
+其中
+\begin{equation*}
+    U=\sum_{t=1}^{N}(\hat{y}_t-\bar{y})^2,
+    \qquad
+    Q=\sum_{t=1}^{N}(y_t-\hat{y}_t)^2 .
+\end{equation*}
+由于
+\begin{equation*}
+    \hat{y}_t-\bar{y}=b_0+bx_t-\bar{y}=b(x_t-\bar{x}),
+\end{equation*}
+因此
+\begin{equation*}
+    U=\sum_{t=1}^{N}b^2(x_t-\bar{x})^2=b^2l_{xx} .
+\end{equation*}
+又 $b=l_{xy}/l_{xx}$，故
+\begin{equation*}
+    U=b^2l_{xx}=b\,l_{xy} .
+\end{equation*}
+因此
+\begin{equation*}
+    Q=S-U=l_{yy}-b\,l_{xy} .
+\end{equation*}
+
+\subsection{回归方差分析与 $F$ 统计量}
+一元线性回归中，回归平方和对应一个回归系数 $b$，故自由度为 $\nu_U=1$。总平方和自由度为 $N-1$，因为估计了一个总体均值 $\bar{y}$。残差平方和在估计 $b_0,b$ 两个参数后还剩 $\nu_Q=N-2$ 个自由度。于是回归均方和残差均方分别为
+\begin{equation*}
+    M_U=\frac{U}{\nu_U}=\frac{U}{1},
+    \qquad
+    M_Q=\frac{Q}{\nu_Q}=\frac{Q}{N-2} .
+\end{equation*}
+
+\end{document}
